@@ -397,3 +397,37 @@ main {
   }
 
 }
+.card-actions button.selected {
+  background: #c9ff3d;
+  color: #09090d;
+  border-color: #c9ff3d;
+}
+.verdict-section {
+  margin-top: 10px;
+}
+
+.verdict-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.verdict-buttons button {
+  background: #171720;
+  color: #9999a8;
+
+  border: 1px solid #272733;
+
+  padding: 6px 8px;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+}
+
+.verdict-buttons button:hover {
+  background: #c9ff3d;
+  color: #09090d;
+  border-color: #c9ff3d;
+}

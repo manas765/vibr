@@ -1,6 +1,44 @@
+import { useState } from "react";
 import MusicCard from "./MusicCard";
 
 function MusicSection() {
+
+  const [selectedGenre, setSelectedGenre] = useState("Everything");
+
+  const music = [
+  {
+    title: "Paper Moons",
+    artist: "Luna Park",
+    genre: "Indie",
+    verdict: "🔥 GOD LEVEL",
+    emoji: "🌙"
+  },
+  {
+    title: "After Hours",
+    artist: "47th Street",
+    genre: "Hip-Hop",
+    verdict: "💜 PERFECT",
+    emoji: "🌃"
+  },
+  {
+    title: "Neon Weather",
+    artist: "Nia Ellis",
+    genre: "Pop",
+    verdict: "👍 GOOD",
+    emoji: "🌈"
+  },
+  {
+    title: "Night Drive FM",
+    artist: "Mira Vale",
+    genre: "Electronic",
+    verdict: "💜 PERFECT",
+    emoji: "🚗"
+  }
+];
+  const filteredMusic =
+  selectedGenre === "Everything"
+    ? music
+    : music.filter(song => song.genre === selectedGenre);
 
   return (
     <section className="music-section">
@@ -21,42 +59,50 @@ function MusicSection() {
         </button>
 
       </div>
+      <div className="genre-list">
 
-      <div className="music-grid">
+  {[
+    "Everything",
+    "Indie",
+    "Hip-Hop",
+    "Pop",
+    "Electronic",
+    "R&B",
+    "Rock"
+  ].map(genre => (
 
-        <MusicCard
-          title="Paper Moons"
-          artist="Luna Park"
-          genre="Indie"
-          verdict="🔥 GOD LEVEL"
-          emoji="🌙"
-        />
+    <button
+      key={genre}
+      className={
+        selectedGenre === genre
+          ? "genre active"
+          : "genre"
+      }
+      onClick={() => setSelectedGenre(genre)}
+    >
+      {genre}
+    </button>
 
-        <MusicCard
-          title="After Hours"
-          artist="47th Street"
-          genre="Hip-Hop"
-          verdict="💜 PERFECT"
-          emoji="🌃"
-        />
+  ))}
 
-        <MusicCard
-          title="Neon Weather"
-          artist="Nia Ellis"
-          genre="Pop"
-          verdict="👍 GOOD"
-          emoji="🌈"
-        />
+</div>
 
-        <MusicCard
-          title="Night Drive FM"
-          artist="Mira Vale"
-          genre="Electronic"
-          verdict="💜 PERFECT"
-          emoji="🚗"
-        />
+     <div className="music-grid">
 
-      </div>
+  {filteredMusic.map((song) => (
+
+    <MusicCard
+      key={song.title}
+      title={song.title}
+      artist={song.artist}
+      genre={song.genre}
+      verdict={song.verdict}
+      emoji={song.emoji}
+    />
+
+  ))}
+
+</div>
 
     </section>
   );

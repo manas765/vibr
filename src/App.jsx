@@ -1,6 +1,5 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Genres from "./components/Genres";
 import MusicSection from "./components/MusicSection";
 
 function App() {
@@ -27,7 +26,7 @@ function App() {
 
         <Hero />
 
-        <Genres />
+      
 
         <MusicSection />
 

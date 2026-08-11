@@ -1,4 +1,10 @@
+import { useState } from "react";
+
 function MusicCard({ title, artist, genre, verdict, emoji }) {
+
+  const [saved, setSaved] = useState(false);
+  const [heard, setHeard] = useState(false);
+  const [userVerdict, setUserVerdict] = useState(null);
 
   return (
     <div className="music-card">
@@ -13,18 +19,56 @@ function MusicCard({ title, artist, genre, verdict, emoji }) {
         {artist} · {genre}
       </p>
 
-      <span className="verdict">
-        {verdict}
-      </span>
+      <div className="verdict-section">
+
+  <span className="verdict">
+    {userVerdict || verdict}
+  </span>
+
+  <div className="verdict-buttons">
+
+    <button
+      onClick={() => setUserVerdict("🔥 GOD LEVEL")}
+    >
+      GOD LEVEL
+    </button>
+
+    <button
+      onClick={() => setUserVerdict("💜 PERFECT")}
+    >
+      PERFECT
+    </button>
+
+    <button
+      onClick={() => setUserVerdict("👍 GOOD")}
+    >
+      GOOD
+    </button>
+
+    <button
+      onClick={() => setUserVerdict("😐 MEHHHHH")}
+    >
+      MEHHHHH
+    </button>
+
+  </div>
+
+</div>
 
       <div className="card-actions">
 
-        <button>
-          ＋ Save
+        <button
+          onClick={() => setSaved(!saved)}
+          className={saved ? "selected" : ""}
+        >
+          {saved ? "✓ Saved" : "＋ Save"}
         </button>
 
-        <button>
-          ✓ Heard
+        <button
+          onClick={() => setHeard(!heard)}
+          className={heard ? "selected" : ""}
+        >
+          {heard ? "✓ Heard" : "Mark Heard"}
         </button>
 
       </div>
