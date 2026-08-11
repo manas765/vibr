@@ -1,15 +1,38 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Genres from "./components/Genres";
+import MusicSection from "./components/MusicSection";
+
 function App() {
+
   return (
-    <div>
-      <h1>VIBR 🎵</h1>
+    <div className="app">
 
-      <h2>Find your next obsession.</h2>
+      <Navbar />
 
-      <p>
-        Music discovery without the endless scrolling.
-      </p>
+      <main>
 
-      <button>Get Started</button>
+        <header className="topbar">
+
+          <input
+            type="text"
+            placeholder="🔍 Search music, artists, genres..."
+          />
+
+          <button className="profile">
+            MS ✦
+          </button>
+
+        </header>
+
+        <Hero />
+
+        <Genres />
+
+        <MusicSection />
+
+      </main>
+
     </div>
   );
 }
