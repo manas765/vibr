@@ -1,4 +1,4 @@
-function Navbar() {
+function Navbar({ activePage, setActivePage }) {
   return (
     <aside className="sidebar">
 
@@ -8,16 +8,22 @@ function Navbar() {
 
       <nav>
 
-        <button className="nav-item active">
-          🏠 Discover
-        </button>
+        <button
+        onClick={() => setActivePage("discover")}
+          className={activePage === "discover" ? "active" : ""}
+>
+        Discover
+         </button>
 
         <button className="nav-item">
           ◉ Your Feed
         </button>
 
-        <button className="nav-item">
-          ▣ Collections
+        <button
+         onClick={() => setActivePage("collections")}
+             className={activePage === "collections" ? "active" : ""}
+>
+        Collections
         </button>
 
         <button className="nav-item">

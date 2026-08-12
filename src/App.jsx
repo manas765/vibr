@@ -7,6 +7,7 @@ import Collections from "./components/Collections";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
+  const [activePage, setActivePage] = useState("discover");
 
   const toggleSavedSong = (song) => {
   setSavedSongs((current) => {
@@ -27,7 +28,10 @@ function App() {
   return (
     <div className="app">
 
-      <Navbar />
+      <Navbar
+       activePage={activePage}
+       setActivePage={setActivePage} 
+      />
 
       <main>
 
@@ -45,20 +49,33 @@ function App() {
 
         </header>
 
-        <Hero />
+        {activePage === "discover" && (
+  <>
+    <Hero />
 
-      
+    <MusicSection
+      searchTerm={searchTerm}
+      savedSongs={savedSongs}
+      setSavedSongs={setSavedSongs}
+    />
+  </>
+)}
 
-        <MusicSection
-        searchTerm={searchTerm}
-        savedSongs={savedSongs}
-        setSavedSongs={setSavedSongs}
-        />
+{activePage === "collections" && (
+  <Collections savedSongs={savedSongs} />
+)}
 
-        <Collections savedSongs={savedSongs} />
+{["feed", "releases", "people"].includes(activePage) && (
+  <section className="coming-soon">
+    <h1>Coming Soon</h1>
+    <p>
+      We're building this part of VIBR.
+    </p>
+  </section>
+)}
 
-      </main>
-
+    </main>
+    
     </div>
   );
 }
