@@ -6,9 +6,10 @@ function MusicCard({
   genre,
   verdict,
   emoji,
+  savedSongs,
+  setSavedSongs
 }) {
 
-  const [saved, setSaved] = useState(false);
   const [heard, setHeard] = useState(false);
   const [userVerdict, setUserVerdict] = useState(null);
 
@@ -56,11 +57,38 @@ function MusicCard({
       <div className="card-actions">
 
         <button
-          onClick={() => setSaved(!saved)}
-          className={saved ? "selected" : ""}
-        >
-          {saved ? "✓ Saved" : "＋ Save"}
-        </button>
+  onClick={() => {
+    const alreadySaved = savedSongs.some(
+      song => song.title === title
+    );
+
+    if (alreadySaved) {
+      setSavedSongs(
+        savedSongs.filter(song => song.title !== title)
+      );
+    } else {
+      setSavedSongs([
+        ...savedSongs,
+        {
+          title,
+          artist,
+          genre,
+          verdict,
+          emoji
+        }
+      ]);
+    }
+  }}
+  className={
+    savedSongs.some(song => song.title === title)
+      ? "selected"
+      : ""
+  }
+>
+  {savedSongs.some(song => song.title === title)
+    ? "✓ Saved"
+    : "＋ Save"}
+</button>
 
         <button
           onClick={() => setHeard(!heard)}

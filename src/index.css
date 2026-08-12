@@ -431,3 +431,124 @@ main {
   color: #09090d;
   border-color: #c9ff3d;
 }
+
+.collections-page {
+  margin-top: 60px;
+  padding-bottom: 80px;
+}
+
+.collections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 45px;
+}
+
+.collections-header h1 {
+  font-size: 40px;
+  margin: 0 0 10px;
+}
+
+.collections-header p {
+  margin: 0;
+  color: #a6a6b0;
+  font-size: 17px;
+}
+
+.create-collection {
+  background: #b8ff20;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create-collection:hover {
+  transform: translateY(-2px);
+}
+
+/* Saved Music heading */
+
+.saved-section {
+  margin-top: 20px;
+}
+
+.saved-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 25px;
+}
+
+.saved-header h2 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.saved-header p {
+  margin: 0;
+  color: #8f8f99;
+}
+
+.song-count {
+  color: #b8ff20;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Collection cards */
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.collection-card {
+  background: #111118;
+  border: 1px solid #292933;
+  border-radius: 16px;
+  padding: 16px;
+  transition: 0.2s ease;
+}
+
+.collection-card:hover {
+  border-color: #b8ff20;
+  transform: translateY(-3px);
+}
+
+.collection-icon {
+  height: 180px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #b8ff20
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 55px;
+  margin-bottom: 16px;
+}
+
+.collection-card h3 {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+
+.collection-card p {
+  margin: 0;
+  color: #8f8f99;
+  font-size: 14px;
+}
+
+.empty-message {
+  color: #8f8f99;
+  padding: 30px 0;
+}

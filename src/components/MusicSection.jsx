@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MusicCard from "./MusicCard";
 
-function MusicSection({ searchTerm }) {
+function MusicSection({ searchTerm, savedSongs, setSavedSongs }) {
 
   const [selectedGenre, setSelectedGenre] = useState("Everything");
 
@@ -105,6 +105,8 @@ function MusicSection({ searchTerm }) {
       genre={song.genre}
       verdict={song.verdict}
       emoji={song.emoji}
+      savedSongs={savedSongs}
+      setSavedSongs={setSavedSongs}
     />
 
   ))}
