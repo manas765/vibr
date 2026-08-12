@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function MusicCard({ title, artist, genre, verdict, emoji }) {
+function MusicCard({
+  title,
+  artist,
+  genre,
+  verdict,
+  emoji,
+}) {
 
   const [saved, setSaved] = useState(false);
   const [heard, setHeard] = useState(false);
@@ -27,29 +33,21 @@ function MusicCard({ title, artist, genre, verdict, emoji }) {
 
   <div className="verdict-buttons">
 
-    <button
-      onClick={() => setUserVerdict("🔥 GOD LEVEL")}
-    >
-      GOD LEVEL
-    </button>
+   <button onClick={() => setUserVerdict("🔥 GOD LEVEL")}>
+  GOD LEVEL
+</button>
 
-    <button
-      onClick={() => setUserVerdict("💜 PERFECT")}
-    >
-      PERFECT
-    </button>
+<button onClick={() => setUserVerdict("💜 PERFECT")}>
+  PERFECT
+</button>
 
-    <button
-      onClick={() => setUserVerdict("👍 GOOD")}
-    >
-      GOOD
-    </button>
+<button onClick={() => setUserVerdict("👍 GOOD")}>
+  GOOD
+</button>
 
-    <button
-      onClick={() => setUserVerdict("😐 MEHHHHH")}
-    >
-      MEHHHHH
-    </button>
+<button onClick={() => setUserVerdict("😐 MEHHHHH")}>
+  MEHHHHH
+</button>
 
   </div>
 
