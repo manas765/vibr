@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MusicCard from "./MusicCard";
 
-function MusicSection() {
+function MusicSection({ searchTerm }) {
 
   const [selectedGenre, setSelectedGenre] = useState("Everything");
 
@@ -35,11 +35,18 @@ function MusicSection() {
     emoji: "🚗"
   }
 ];
-  const filteredMusic =
-  selectedGenre === "Everything"
-    ? music
-    : music.filter(song => song.genre === selectedGenre);
+  const filteredMusic = music.filter((song) => {
+  const matchesGenre =
+    selectedGenre === "Everything" ||
+    song.genre === selectedGenre;
 
+  const matchesSearch =
+    song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    song.genre.toLowerCase().includes(searchTerm.toLowerCase());
+
+  return matchesGenre && matchesSearch;
+});
   return (
     <section className="music-section">
 
