@@ -552,3 +552,182 @@ main {
   color: #8f8f99;
   padding: 30px 0;
 }
+.coming-soon {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.coming-soon h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.coming-soon p {
+  color: #8f8f99;
+  font-size: 17px;
+}
+/* =========================
+   YOUR FEED
+   ========================= */
+
+.feed-page {
+  max-width: 900px;
+  margin: 60px auto;
+  padding-bottom: 80px;
+}
+
+.feed-header {
+  margin-bottom: 35px;
+}
+
+.feed-header h1 {
+  font-size: 40px;
+  margin: 0 0 10px;
+}
+
+.feed-header p {
+  color: #8f8f99;
+  margin: 0;
+  font-size: 16px;
+}
+
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feed-card {
+  background: #111118;
+  border: 1px solid #292933;
+  border-radius: 18px;
+  padding: 22px;
+  transition: 0.2s ease;
+}
+
+.feed-card:hover {
+  border-color: #b8ff20;
+  transform: translateY(-2px);
+}
+
+.feed-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #292933;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info h3 {
+  margin: 0 0 4px;
+}
+
+.user-info p {
+  margin: 0;
+  color: #8f8f99;
+  font-size: 13px;
+}
+
+.follow-button,
+.following {
+  border: 1px solid #383842;
+  background: transparent;
+  color: white;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.follow-button:hover {
+  border-color: #b8ff20;
+}
+
+.following {
+  background: #b8ff20;
+  color: #111;
+  border-color: #b8ff20;
+}
+
+.feed-song {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  background: #191920;
+  border-radius: 14px;
+}
+
+.feed-cover {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 40px;
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #b8ff20
+  );
+}
+
+.feed-song h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+}
+
+.feed-song p {
+  margin: 0 0 10px;
+  color: #8f8f99;
+}
+
+.feed-verdict {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.feed-actions {
+  margin-top: 16px;
+}
+
+.feed-actions button {
+  background: transparent;
+  border: none;
+  color: #8f8f99;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.feed-actions button:hover {
+  color: white;
+}
+
+.feed-actions .liked {
+  color: #ff5c8a;
+}

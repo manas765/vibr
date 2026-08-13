@@ -11,27 +11,36 @@ function Navbar({ activePage, setActivePage }) {
         <button
         onClick={() => setActivePage("discover")}
           className={activePage === "discover" ? "active" : ""}
->
+        >
         Discover
          </button>
 
-        <button className="nav-item">
-          ◉ Your Feed
-        </button>
+        <button
+        onClick={() => setActivePage("feed")}
+          className={activePage === "feed" ? "active" : ""}
+        >
+        Your Feed
+         </button>
 
         <button
          onClick={() => setActivePage("collections")}
              className={activePage === "collections" ? "active" : ""}
->
+        >
         Collections
         </button>
 
-        <button className="nav-item">
-          ◷ Releases
+        <button
+        onClick={() => setActivePage("releases")}
+         className={activePage === "releases" ? "active" : ""}
+        >
+         Releases
         </button>
 
-        <button className="nav-item">
-          ♧ People
+        <button
+        onClick={() => setActivePage("people")}
+         className={activePage === "people" ? "active" : ""}
+        >
+        People
         </button>
 
       </nav>

@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
 import Collections from "./components/Collections";
+import Feed from "./components/Feed";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,6 +64,9 @@ function App() {
 
 {activePage === "collections" && (
   <Collections savedSongs={savedSongs} />
+)}
+{activePage === "feed" && (
+  <Feed />
 )}
 
 {["feed", "releases", "people"].includes(activePage) && (
