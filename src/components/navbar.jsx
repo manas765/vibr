@@ -33,7 +33,7 @@ function Navbar({ activePage, setActivePage }) {
         onClick={() => setActivePage("releases")}
          className={activePage === "releases" ? "active" : ""}
         >
-         Releases
+          New Releases
         </button>
 
         <button

@@ -4,11 +4,15 @@ import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
 import Collections from "./components/Collections";
 import Feed from "./components/Feed";
+import Releases from "./components/Releases";
+import People from "./components/People";
+import Profile from "./components/Profile";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
   const [activePage, setActivePage] = useState("discover");
+  const [savedReleases, setSavedReleases] = useState([]);
 
   const toggleSavedSong = (song) => {
   setSavedSongs((current) => {
@@ -44,9 +48,12 @@ function App() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
 />
-          <button className="profile">
-            MS ✦
-          </button>
+          <button
+  className="profile"
+  onClick={() => setActivePage("profile")}
+>
+  MS ✦
+</button>
 
         </header>
 
@@ -63,20 +70,30 @@ function App() {
 )}
 
 {activePage === "collections" && (
-  <Collections savedSongs={savedSongs} />
+  <Collections
+    savedSongs={savedSongs}
+    setSavedSongs={setSavedSongs}
+    savedReleases={savedReleases}
+  />
 )}
 {activePage === "feed" && (
   <Feed />
 )}
-
-{["feed", "releases", "people"].includes(activePage) && (
-  <section className="coming-soon">
-    <h1>Coming Soon</h1>
-    <p>
-      We're building this part of VIBR.
-    </p>
-  </section>
+{activePage === "releaseas" && (
+  <Releases
+    savedReleases={savedReleases}
+    setSavedReleases={setSavedReleases}
+  />
 )}
+
+{activePage === "people" && (
+  <People />
+)}
+{activePage === "profile" && (
+  <Profile savedSongs={savedSongs} />
+)}
+
+
 
     </main>
     
