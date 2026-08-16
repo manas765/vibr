@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
 import Collections from "./components/Collections";
-import Feed from "./components/Feed";
+import Feed from "./components/feed";
 import Releases from "./components/Releases";
 import People from "./components/People";
 import Profile from "./components/Profile";
@@ -79,7 +79,7 @@ function App() {
 {activePage === "feed" && (
   <Feed />
 )}
-{activePage === "releaseas" && (
+{activePage === "releases" && (
   <Releases
     savedReleases={savedReleases}
     setSavedReleases={setSavedReleases}
