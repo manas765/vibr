@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
-import Collections from "./components/Collections";
+import Collections from "./components/collections";
 import Feed from "./components/feed";
 import Releases from "./components/Releases";
 import People from "./components/People";
