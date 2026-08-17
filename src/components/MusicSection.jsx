@@ -98,7 +98,7 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs }) {
 
   {filteredMusic.map((song) => (
 
-    <MusicCard
+    <MusicCard3D
       key={song.title}
       title={song.title}
       artist={song.artist}
