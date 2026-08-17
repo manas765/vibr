@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
@@ -7,96 +8,91 @@ import Feed from "./components/feed";
 import Releases from "./components/Releases";
 import People from "./components/People";
 import Profile from "./components/Profile";
+import ArtistPage from "./components/ArtistPage";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
+  const [followedArtists, setFollowedArtists] = useState([]);
 
-  const toggleSavedSong = (song) => {
-  setSavedSongs((current) => {
-    const alreadySaved = current.some(
-      (saved) => saved.title === song.title
+  const toggleFollowArtist = (artistName) => {
+    setFollowedArtists((current) =>
+      current.includes(artistName)
+        ? current.filter((name) => name !== artistName)
+        : [...current, artistName]
     );
+  };
 
-    if (alreadySaved) {
-      return current.filter(
-        (saved) => saved.title !== song.title
-      );
-    }
+  const mainContent = (
+    <>
+      <header className="topbar">
+        <input
+          type="text"
+          placeholder="🔍 Search music, artists, genres..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button className="profile" onClick={() => setActivePage("profile")}>
+          MS ✦
+        </button>
+      </header>
 
-    return [...current, song];
-  });
-};
+      {activePage === "discover" && (
+        <>
+          <Hero />
+          <MusicSection
+            searchTerm={searchTerm}
+            savedSongs={savedSongs}
+            setSavedSongs={setSavedSongs}
+          />
+        </>
+      )}
+
+      {activePage === "collections" && (
+        <Collections
+          savedSongs={savedSongs}
+          setSavedSongs={setSavedSongs}
+          savedReleases={savedReleases}
+        />
+      )}
+
+      {activePage === "feed" && <Feed />}
+
+      {activePage === "releases" && (
+        <Releases
+          savedReleases={savedReleases}
+          setSavedReleases={setSavedReleases}
+        />
+      )}
+
+      {activePage === "people" && <People />}
+
+      {activePage === "profile" && <Profile savedSongs={savedSongs} />}
+    </>
+  );
 
   return (
     <div className="app">
-
-      <Navbar
-       activePage={activePage}
-       setActivePage={setActivePage} 
-      />
+      <Navbar activePage={activePage} setActivePage={setActivePage} />
 
       <main>
-
-        <header className="topbar">
-
-          <input
-             type="text"
-              placeholder="🔍 Search music, artists, genres..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-/>
-          <button
-  className="profile"
-  onClick={() => setActivePage("profile")}
->
-  MS ✦
-</button>
-
-        </header>
-
-        {activePage === "discover" && (
-  <>
-    <Hero />
-
-    <MusicSection
-      searchTerm={searchTerm}
-      savedSongs={savedSongs}
-      setSavedSongs={setSavedSongs}
-    />
-  </>
-)}
-
-{activePage === "collections" && (
-  <Collections
-    savedSongs={savedSongs}
-    setSavedSongs={setSavedSongs}
-    savedReleases={savedReleases}
-  />
-)}
-{activePage === "feed" && (
-  <Feed />
-)}
-{activePage === "releases" && (
-  <Releases
-    savedReleases={savedReleases}
-    setSavedReleases={setSavedReleases}
-  />
-)}
-
-{activePage === "people" && (
-  <People />
-)}
-{activePage === "profile" && (
-  <Profile savedSongs={savedSongs} />
-)}
-
-
-
-    </main>
-    
+        <Routes>
+          <Route path="/" element={mainContent} />
+          <Route
+            path="/artist/:artistName"
+            element={
+              <ArtistPage
+                savedSongs={savedSongs}
+                setSavedSongs={setSavedSongs}
+                followedArtists={followedArtists}
+                toggleFollowArtist={toggleFollowArtist}
+              />
+            }
+          />
+        </Routes>
+      </main>
     </div>
   );
 }
