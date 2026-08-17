@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { music } from "../data/music";
 import MusicCard3D from "./MusicCard3D";
+import "./ArtistPage.css";
 
 function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowArtist }) {
   const { artistName } = useParams();
