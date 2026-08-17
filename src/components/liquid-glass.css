@@ -1,11 +1,9 @@
-
-Liquid glass · CSS
 /* ============================================
    LIQUID GLASS — adapted for vibr's dark/neon palette
    Sharper than a plain backdrop-blur: adds a subtle
    gradient stroke that reads as light catching an edge.
    ============================================ */
- 
+
 .liquid-glass {
   background: rgba(255, 255, 255, 0.02);
   background-blend-mode: luminosity;
@@ -16,14 +14,13 @@ Liquid glass · CSS
   position: relative;
   overflow: hidden;
 }
- 
+
 .liquid-glass::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1.4px;
-  /* stroke picks up your lime + violet accents instead of plain white */
   background: linear-gradient(
     180deg,
     rgba(198, 255, 61, 0.35) 0%,
@@ -40,17 +37,11 @@ Liquid glass · CSS
   mask-composite: exclude;
   pointer-events: none;
 }
- 
-/* Slightly stronger variant for elements that need to stand out more
-   (e.g. the search bar, primary CTAs) */
+
 .liquid-glass--bright {
   background: rgba(255, 255, 255, 0.05);
 }
- 
-/* ============================================
-   FADE-UP ENTRANCE ANIMATION
-   ============================================ */
- 
+
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -61,28 +52,19 @@ Liquid glass · CSS
     transform: none;
   }
 }
- 
+
 .animate-fade-up {
   animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
- 
+
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.25s; }
 .delay-3 { animation-delay: 0.4s; }
 .delay-4 { animation-delay: 0.55s; }
 .delay-5 { animation-delay: 0.75s; }
- 
-/* IMPORTANT: fill-mode is "backwards", not "both"/"forwards".
-   Those leave a lingering transform on the element after the
-   animation ends, which breaks backdrop-filter on any
-   .liquid-glass child nested inside it. "backwards" applies the
-   "from" state before the animation starts, then fully releases
-   all properties when it finishes — so glass blur still works
-   correctly on anything inside once the animation is done. */
- 
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up {
     animation: none;
   }
 }
- 
