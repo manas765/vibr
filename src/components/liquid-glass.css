@@ -1,0 +1,88 @@
+
+Liquid glass · CSS
+/* ============================================
+   LIQUID GLASS — adapted for vibr's dark/neon palette
+   Sharper than a plain backdrop-blur: adds a subtle
+   gradient stroke that reads as light catching an edge.
+   ============================================ */
+ 
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.02);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+ 
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  /* stroke picks up your lime + violet accents instead of plain white */
+  background: linear-gradient(
+    180deg,
+    rgba(198, 255, 61, 0.35) 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(139, 92, 246, 0.18) 80%,
+    rgba(198, 255, 61, 0.35) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+ 
+/* Slightly stronger variant for elements that need to stand out more
+   (e.g. the search bar, primary CTAs) */
+.liquid-glass--bright {
+  background: rgba(255, 255, 255, 0.05);
+}
+ 
+/* ============================================
+   FADE-UP ENTRANCE ANIMATION
+   ============================================ */
+ 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+ 
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+ 
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+.delay-5 { animation-delay: 0.75s; }
+ 
+/* IMPORTANT: fill-mode is "backwards", not "both"/"forwards".
+   Those leave a lingering transform on the element after the
+   animation ends, which breaks backdrop-filter on any
+   .liquid-glass child nested inside it. "backwards" applies the
+   "from" state before the animation starts, then fully releases
+   all properties when it finishes — so glass blur still works
+   correctly on anything inside once the animation is done. */
+ 
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none;
+  }
+}
+ 

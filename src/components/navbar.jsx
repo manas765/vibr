@@ -1,6 +1,6 @@
 function Navbar({ activePage, setActivePage }) {
   return (
-    <aside className="sidebar">
+    <aside className="sidebar liquid-glass">
 
       <div className="logo">
         VIBR<span>•</span>
