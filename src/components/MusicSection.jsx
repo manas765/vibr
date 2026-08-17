@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MusicCard from "./MusicCard";
+import MusicCard3D from "./MusicCard3D";
 
 function MusicSection({ searchTerm, savedSongs, setSavedSongs }) {
 
