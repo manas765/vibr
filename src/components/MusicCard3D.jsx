@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import "./MusicCard3D.css";
 
@@ -62,8 +63,11 @@ function MusicCard3D({
           <h3>{title}</h3>
 
           <p className="artist">
-            {artist} · {genre}
-          </p>
+          <Link to={`/artist/${encodeURIComponent(artist)}`} className="artist-link">
+         {artist}
+         </Link>{" "}
+        · {genre}
+        </p>
 
           <div className="verdict-section">
             <span className="verdict">{userVerdict || verdict}</span>
