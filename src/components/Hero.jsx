@@ -1,5 +1,6 @@
 
 import { motion } from "motion/react";
+  import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -51,6 +52,7 @@ function Hero() {
           and connect with people who just get your taste.
         </motion.p>
 
+         <Link to="/explore" style={{ textDecoration: "none" }}>
         <motion.button
           className="hero-explore"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -65,6 +67,7 @@ function Hero() {
           Explore Now
           <span>→</span>
         </motion.button>
+        </Link>
 
       </div>
 

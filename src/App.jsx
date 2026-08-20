@@ -10,6 +10,7 @@ import People from "./components/People";
 import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
 import { usePersistedState } from "./hooks/usePersistedState";
+import ExplorePage from "./components/ExplorePage";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,6 +84,7 @@ function App() {
         <Routes>
           <Route path="/" element={mainContent} />
           <Route
+           
             path="/artist/:artistName"
             element={
               <ArtistPage
@@ -93,6 +95,7 @@ function App() {
               />
             }
           />
+             <Route path="/explore" element={<ExplorePage />} />
         </Routes>
       </main>
     </div>
