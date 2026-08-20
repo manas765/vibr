@@ -122,3 +122,44 @@
   font-family: "Instrument Serif", serif;
   color: #f2f2f5;
 }
+
+.artist-page-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.artist-tab {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.15);
+  background: transparent;
+  color: #8f8fa3;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.artist-tab:hover:not(:disabled) {
+  color: #f2f2f5;
+  border-color: rgba(242, 242, 245, 0.35);
+}
+
+.artist-tab.active {
+  background: #c6ff3d;
+  border-color: #c6ff3d;
+  color: #0a0a0f;
+}
+
+.artist-tab:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.artist-empty {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  color: #8f8fa3;
+}
