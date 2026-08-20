@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MusicCard3D from "./MusicCard3D";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 
 function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }) {
 
@@ -109,24 +110,36 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
   </div>
 )}
 
-     <div className="music-grid">
-
+     <motion.div
+  className="music-grid"
+  initial="hidden"
+  animate="show"
+  variants={{
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08 } },
+  }}
+>
   {filteredMusic.map((song) => (
-
-    <MusicCard3D
+    <motion.div
       key={song.title}
-      title={song.title}
-      artist={song.artist}
-      genre={song.genre}
-      verdict={song.verdict}
-      emoji={song.emoji}
-      savedSongs={savedSongs}
-      setSavedSongs={setSavedSongs}
-    />
-
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 },
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <MusicCard3D
+        title={song.title}
+        artist={song.artist}
+        genre={song.genre}
+        verdict={song.verdict}
+        emoji={song.emoji}
+        savedSongs={savedSongs}
+        setSavedSongs={setSavedSongs}
+      />
+    </motion.div>
   ))}
-
-</div>
+</motion.div>
 
     </section>
   );

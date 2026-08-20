@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReleaseCard from "./ReleaseCard";
 import "./Releases.css";
+import { motion } from "motion/react";
 
 function Releases({ savedReleases, setSavedReleases }) {
   const [heardReleases, setHeardReleases] = useState([]);
@@ -67,20 +68,36 @@ function Releases({ savedReleases, setSavedReleases }) {
         </div>
       </div>
 
-      <div className="release-grid">
-        {releases.map((release) => (
-          <ReleaseCard
-            key={release.title}
-            release={release}
-            isHeard={heardReleases.includes(release.title)}
-            onToggleHeard={() => toggleHeard(release.title)}
-            isSaved={savedReleases.some(
-              (saved) => saved.title === release.title
-            )}
-            onToggleSave={() => toggleSave(release)}
-          />
-        ))}
-      </div>
+      <motion.div
+  className="release-grid"
+  initial="hidden"
+  animate="show"
+  variants={{
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08 } },
+  }}
+>
+  {releases.map((release) => (
+    <motion.div
+      key={release.title}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 },
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <ReleaseCard
+        release={release}
+        isHeard={heardReleases.includes(release.title)}
+        onToggleHeard={() => toggleHeard(release.title)}
+        isSaved={savedReleases.some(
+          (saved) => saved.title === release.title
+        )}
+        onToggleSave={() => toggleSave(release)}
+      />
+    </motion.div>
+  ))}
+</motion.div>
     </section>
   );
 }

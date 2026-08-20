@@ -11,6 +11,9 @@ import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
 import { usePersistedState } from "./hooks/usePersistedState";
 import ExplorePage from "./components/ExplorePage";
+import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
+import PageTransition from "./components/PageTransition";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +21,7 @@ function App() {
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
   const [followedArtists, setFollowedArtists] = usePersistedState("followedArtists", []);
+  const location = useLocation();
 
   const toggleFollowArtist = (artistName) => {
     setFollowedArtists((current) =>
@@ -80,24 +84,37 @@ function App() {
     <div className="app">
       <Navbar activePage={activePage} setActivePage={setActivePage} />
 
-      <main>
-        <Routes>
-          <Route path="/" element={mainContent} />
-          <Route
-           
-            path="/artist/:artistName"
-            element={
-              <ArtistPage
-                savedSongs={savedSongs}
-                setSavedSongs={setSavedSongs}
-                followedArtists={followedArtists}
-                toggleFollowArtist={toggleFollowArtist}
-              />
-            }
-          />
-             <Route path="/explore" element={<ExplorePage />} />
-        </Routes>
-      </main>
+     <main>
+  <AnimatePresence mode="wait">
+    <Routes location={location} key={location.pathname}>
+      <Route
+        path="/"
+        element={<PageTransition>{mainContent}</PageTransition>}
+      />
+      <Route
+        path="/artist/:artistName"
+        element={
+          <PageTransition>
+            <ArtistPage
+              savedSongs={savedSongs}
+              setSavedSongs={setSavedSongs}
+              followedArtists={followedArtists}
+              toggleFollowArtist={toggleFollowArtist}
+            />
+          </PageTransition>
+        }
+      />
+      <Route
+        path="/explore"
+        element={
+          <PageTransition>
+            <ExplorePage />
+          </PageTransition>
+        }
+      />
+    </Routes>
+  </AnimatePresence>
+</main>
     </div>
   );
 }
