@@ -9,13 +9,14 @@ import Releases from "./components/Releases";
 import People from "./components/People";
 import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
+import { usePersistedState } from "./hooks/usePersistedState";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
-  const [followedArtists, setFollowedArtists] = useState([]);
+  const [followedArtists, setFollowedArtists] = usePersistedState("followedArtists", []);
 
   const toggleFollowArtist = (artistName) => {
     setFollowedArtists((current) =>
@@ -46,6 +47,7 @@ function App() {
             searchTerm={searchTerm}
             savedSongs={savedSongs}
             setSavedSongs={setSavedSongs}
+            followedArtists={followedArtists}
           />
         </>
       )}

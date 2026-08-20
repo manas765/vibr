@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { usePersistedState } from "../hooks/usePersistedState";
 
 function People() {
 
-  const [followedUsers, setFollowedUsers] = useState([]);
+  const [followedUsers, setFollowedUsers] = usePersistedState("followedUsers", []);
 
   const people = [
     {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import MusicCard3D from "./MusicCard3D";
+import { Link } from "react-router-dom";
 
-function MusicSection({ searchTerm, savedSongs, setSavedSongs }) {
+function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }) {
 
   const [selectedGenre, setSelectedGenre] = useState("Everything");
 
@@ -93,6 +94,20 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs }) {
   ))}
 
 </div>
+{followedArtists.length > 0 && (
+  <div className="following-strip">
+    <span className="following-strip__label">Following:</span>
+    {followedArtists.map((name) => (
+      <Link
+        key={name}
+        to={`/artist/${encodeURIComponent(name)}`}
+        className="following-chip"
+      >
+        {name}
+      </Link>
+    ))}
+  </div>
+)}
 
      <div className="music-grid">
 

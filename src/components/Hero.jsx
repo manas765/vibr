@@ -20,7 +20,8 @@ function Hero() {
       <div className="hero-content">
 
         <motion.div
-          className="hero-badge"
+          
+          className="hero-badge liquid-glass"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
@@ -119,7 +120,8 @@ function Hero() {
 
         {/* Floating album card */}
         <motion.div
-          className="floating-album album-left"
+          
+         className="floating-album album-left liquid-glass"
           animate={{
             y: [0, -12, 0],
             rotate: [-6, -3, -6]
@@ -137,7 +139,8 @@ function Hero() {
         </motion.div>
 
         <motion.div
-          className="floating-album album-right"
+          
+         className="floating-album album-right liquid-glass"
           animate={{
             y: [0, 14, 0],
             rotate: [5, 2, 5]
