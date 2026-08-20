@@ -1,0 +1,123 @@
+.release-card-scene {
+  perspective: 1000px;
+  width: 100%;
+}
+
+.release-card {
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  border: 1px solid rgba(61, 156, 255, 0.15);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 120ms ease-out, box-shadow 200ms ease-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.release-card-scene:hover .release-card {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(61, 156, 255, 0.16),
+    0 0 0 1px rgba(198, 255, 61, 0.2);
+}
+
+.release-card__glow {
+  position: absolute;
+  inset: -35%;
+  background: radial-gradient(circle at 25% 15%, rgba(61, 156, 255, 0.25), transparent 60%),
+    radial-gradient(circle at 85% 90%, rgba(198, 255, 61, 0.15), transparent 55%);
+  filter: blur(26px);
+  transform: translateZ(-50px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.release-card__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.06) 45%, transparent 60%);
+  transform: translateZ(30px);
+  pointer-events: none;
+}
+
+.release-card__body {
+  position: relative;
+  transform: translateZ(35px);
+  padding: 20px;
+}
+
+.release-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 30%, rgba(61, 156, 255, 0.18), rgba(20, 20, 28, 0.9) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin-bottom: 14px;
+}
+
+.release-card__body h2 {
+  font-family: "Instrument Serif", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 4px 0;
+}
+
+.release-card__body p {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  color: #8f8fa3;
+  margin: 0 0 8px 0;
+}
+
+.release-date {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: #6b6b78;
+  margin-bottom: 16px;
+}
+
+.release-card__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.heard-button,
+.release-save {
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.25);
+  background: transparent;
+  color: #f2f2f5;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.heard-button:hover,
+.release-save:hover {
+  border-color: #3d9cff;
+  color: #3d9cff;
+}
+
+.heard-button.heard,
+.release-save.saved {
+  background: #c6ff3d;
+  border-color: #c6ff3d;
+  color: #0a0a0f;
+}
+
+@media (hover: none) {
+  .release-card {
+    transform: none !important;
+  }
+}

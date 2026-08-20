@@ -1,8 +1,9 @@
 import { useState } from "react";
+import ReleaseCard from "./ReleaseCard";
+import "./Releases.css";
 
 function Releases({ savedReleases, setSavedReleases }) {
-
-    const [heardReleases, setHeardReleases] = useState([]);
+  const [heardReleases, setHeardReleases] = useState([]);
 
   const releases = [
     {
@@ -10,145 +11,76 @@ function Releases({ savedReleases, setSavedReleases }) {
       artist: "Nova Lane",
       genre: "Indie",
       date: "Aug 14, 2026",
-      emoji: "🌌"
+      emoji: "🌌",
     },
     {
       title: "City Lights",
       artist: "The Weekenders",
       genre: "Pop",
       date: "Aug 12, 2026",
-      emoji: "🌃"
+      emoji: "🌃",
     },
     {
       title: "After Dark",
       artist: "Kairo",
       genre: "Hip-Hop",
       date: "Aug 10, 2026",
-      emoji: "🌙"
+      emoji: "🌙",
     },
     {
       title: "Electric Dreams",
       artist: "Mira Vale",
       genre: "Electronic",
       date: "Aug 8, 2026",
-      emoji: "⚡"
-    }
+      emoji: "⚡",
+    },
   ];
 
-  return (
-    <section className="releases-page">
-
-      <div className="releases-header">
-
-        <div>
-          <h1>New Releases</h1>
-
-          <p>
-            Discover what's fresh in the music world.
-          </p>
-        </div>
-
-      </div>
-
-
-      <div className="release-grid">
-
-        {releases.map((release) => (
-
-          <div
-            className="release-card"
-            key={release.title}
-          >
-
-            <div className="release-cover">
-              {release.emoji}
-            </div>
-
-            <h2>{release.title}</h2>
-
-            <p>
-              {release.artist} · {release.genre}
-            </p>
-
-            <span>
-              Released {release.date}
-            </span>
-            <button
-  className={
-    heardReleases.includes(release.title)
-      ? "heard-button heard"
-      : "heard-button"
+  function toggleHeard(title) {
+    setHeardReleases((current) =>
+      current.includes(title)
+        ? current.filter((t) => t !== title)
+        : [...current, title]
+    );
   }
-  onClick={() => {
 
-    if (heardReleases.includes(release.title)) {
-
-      setHeardReleases(
-        heardReleases.filter(
-          title => title !== release.title
-        )
-      );
-
-    } else {
-
-      setHeardReleases([
-        ...heardReleases,
-        release.title
-      ]);
-
-    }
-
-  }}
->
-  {heardReleases.includes(release.title)
-    ? "✓ Heard"
-    : "Mark Heard"}
-</button>
-<button
-  className={
-    savedReleases.some(
-      saved => saved.title === release.title
-    )
-      ? "release-save saved"
-      : "release-save"
-  }
-  onClick={() => {
-
+  function toggleSave(release) {
     const alreadySaved = savedReleases.some(
-      saved => saved.title === release.title
+      (saved) => saved.title === release.title
     );
 
     if (alreadySaved) {
-
       setSavedReleases(
-        savedReleases.filter(
-          saved => saved.title !== release.title
-        )
+        savedReleases.filter((saved) => saved.title !== release.title)
       );
-
     } else {
-
-      setSavedReleases([
-        ...savedReleases,
-        release
-      ]);
-
+      setSavedReleases([...savedReleases, release]);
     }
+  }
 
-  }}
->
-  {savedReleases.some(
-    saved => saved.title === release.title
-  )
-    ? "✓ Saved"
-    : "＋ Save"}
-</button>
-          </div>
-
-        ))}
-
+  return (
+    <section className="releases-page">
+      <div className="releases-header">
+        <div>
+          <h1>New Releases</h1>
+          <p>Discover what's fresh in the music world.</p>
+        </div>
       </div>
 
+      <div className="release-grid">
+        {releases.map((release) => (
+          <ReleaseCard
+            key={release.title}
+            release={release}
+            isHeard={heardReleases.includes(release.title)}
+            onToggleHeard={() => toggleHeard(release.title)}
+            isSaved={savedReleases.some(
+              (saved) => saved.title === release.title
+            )}
+            onToggleSave={() => toggleSave(release)}
+          />
+        ))}
+      </div>
     </section>
   );
 }

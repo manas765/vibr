@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePersistedState } from "../hooks/usePersistedState";
+import "./People.css";
 
 function People() {
 
