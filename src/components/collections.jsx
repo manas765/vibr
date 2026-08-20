@@ -1,3 +1,5 @@
+import "./collections.css";
+
 function Collections({ savedSongs, savedReleases }) {
   return (
     <section className="collections-page">

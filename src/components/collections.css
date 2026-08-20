@@ -1,0 +1,168 @@
+.collections-page {
+  padding: 32px 40px 60px;
+}
+
+.collections-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.collections-header h1 {
+  font-family: "Instrument Serif", serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 6px 0;
+}
+
+.collections-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #8f8fa3;
+  margin: 0;
+}
+
+.create-collection {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 255, 61, 0.3);
+  background: rgba(198, 255, 61, 0.08);
+  color: #c6ff3d;
+  cursor: pointer;
+  transition: all 150ms ease;
+  flex-shrink: 0;
+}
+
+.create-collection:hover {
+  background: rgba(198, 255, 61, 0.15);
+  border-color: #c6ff3d;
+}
+
+.saved-section {
+  margin-bottom: 44px;
+}
+
+.saved-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.saved-header h2 {
+  font-family: "Instrument Serif", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 4px 0;
+}
+
+.saved-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #8f8fa3;
+  margin: 0;
+}
+
+.song-count {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #b794f6;
+  flex-shrink: 0;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.empty-message {
+  grid-column: 1 / -1;
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  color: #6b6b78;
+  padding: 32px;
+  text-align: center;
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.collection-card {
+  position: relative;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  border: 1px solid rgba(198, 255, 61, 0.1);
+  overflow: hidden;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.collection-card::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 25% 15%, rgba(139, 92, 246, 0.2), transparent 60%);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.collection-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(198, 255, 61, 0.3);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+}
+
+.collection-icon {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 35% 30%, rgba(198, 255, 61, 0.18), rgba(20, 20, 28, 0.9) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.collection-card h3 {
+  position: relative;
+  font-family: "Instrument Serif", serif;
+  font-size: 16.5px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 3px 0;
+}
+
+.collection-card p {
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8f8fa3;
+  margin: 0;
+}
+
+.collection-card span {
+  position: relative;
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 10.5px;
+  color: #6b6b78;
+  margin-top: 6px;
+}

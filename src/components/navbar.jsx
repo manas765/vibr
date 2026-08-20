@@ -45,14 +45,7 @@ function Navbar({ activePage, setActivePage }) {
 
       </nav>
 
-      <div className="sidebar-note">
-        <strong>Stop scrolling.</strong>
-
-        <p>
-          Find something worth hearing,
-          from people whose taste you trust.
-        </p>
-      </div>
+      
 
     </aside>
   );
