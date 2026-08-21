@@ -42,13 +42,12 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Link to="/browse" className="profile" style={{ textDecoration: "none" }}>
-          ⊞
+        <Link to="/browse" className="profile" style={{ textDecoration: "none", fontSize: "13px" }}>
+          Browse
         </Link>
-        <Link to="/spaces" className="profile" style={{ textDecoration: "none" }}>
-          ☕
+        <Link to="/spaces" className="profile" style={{ textDecoration: "none", fontSize: "13px" }}>
+          Spaces
         </Link>
-          
      
      <NotificationBell />
      <button className="profile" onClick={() => setActivePage("profile")}>
