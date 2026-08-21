@@ -14,7 +14,9 @@ import ExplorePage from "./components/ExplorePage";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import PageTransition from "./components/PageTransition";
-   import NotificationBell from "./components/NotificationBell";
+import NotificationBell from "./components/NotificationBell";
+import BrowsePage from "./components/BrowsePage";
+import SpacesPage from "./components/SpacesPage";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +43,13 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-           <header className="topbar">
+        <Link to="/browse" className="profile" style={{ textDecoration: "none" }}>
+    ⊞
+  </Link>
+  <Link to="/spaces" className="profile" style={{ textDecoration: "none" }}>
+    ☕
+  </Link>
+          
      
      <NotificationBell />
      <button className="profile" onClick={() => setActivePage("profile")}>
@@ -49,7 +57,7 @@ function App() {
      </button>
    </header>
        
-      </header>
+      
 
       {activePage === "discover" && (
         <>
@@ -115,6 +123,30 @@ function App() {
         element={
           <PageTransition>
             <ExplorePage />
+          </PageTransition>
+        }
+      />
+        <Route
+        path="/explore"
+        element={
+          <PageTransition>
+            <ExplorePage />
+          </PageTransition>
+        }
+      />
+      <Route
+        path="/browse"
+        element={
+          <PageTransition>
+            <BrowsePage />
+          </PageTransition>
+        }
+      />
+      <Route
+        path="/spaces"
+        element={
+          <PageTransition>
+            <SpacesPage />
           </PageTransition>
         }
       />

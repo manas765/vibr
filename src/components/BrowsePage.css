@@ -1,0 +1,66 @@
+.browse-page {
+  padding: 32px 40px 60px;
+}
+
+.browse-header {
+  margin-bottom: 28px;
+}
+
+.browse-header h1 {
+  font-family: "Instrument Serif", serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 6px 0;
+}
+
+.browse-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #8f8fa3;
+  margin: 0;
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.browse-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px 16px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  text-decoration: none;
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.browse-tile:hover {
+  transform: translateY(-4px);
+  border-color: rgba(198, 255, 61, 0.3);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+.browse-tile__icon {
+  font-size: 28px;
+}
+
+.browse-tile__label {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f2f2f5;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .browse-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
