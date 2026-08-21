@@ -1728,3 +1728,27 @@ main {
     gap: 8px;
   }
 }
+/* Fix: .hero-tagline had no position rule, so it rendered at default
+   top-left and overlapped the badge/headline. Anchors it bottom-left
+   of the hero instead. */
+.hero-tagline {
+  position: absolute;
+  left: 5%;
+  bottom: 28px;
+  z-index: 15;
+
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hero-tagline strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .hero-tagline {
+    display: none;
+  }
+}

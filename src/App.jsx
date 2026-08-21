@@ -14,6 +14,7 @@ import ExplorePage from "./components/ExplorePage";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import PageTransition from "./components/PageTransition";
+   import NotificationBell from "./components/NotificationBell";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,6 +41,18 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+           <header className="topbar">
+     <input
+       type="text"
+       placeholder="🔍 Search music, artists, genres..."
+       value={searchTerm}
+       onChange={(e) => setSearchTerm(e.target.value)}
+     />
+     <NotificationBell />
+     <button className="profile" onClick={() => setActivePage("profile")}>
+       MS ✦
+     </button>
+   </header>
         <button className="profile" onClick={() => setActivePage("profile")}>
           MS ✦
         </button>

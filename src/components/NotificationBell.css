@@ -1,0 +1,96 @@
+.notification-bell {
+  position: relative;
+}
+
+.notification-bell__button {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 17px;
+
+  background: linear-gradient(145deg, #15151c, #0d0d12);
+  color: var(--text);
+
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 150ms ease;
+}
+
+.notification-bell__button:hover {
+  color: var(--lime);
+  border-color: rgba(168, 255, 0, 0.5);
+  box-shadow: 0 0 25px rgba(168, 255, 0, 0.12);
+}
+
+.notification-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 200;
+
+  width: 300px;
+
+  border-radius: 18px;
+  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  border: 1px solid rgba(198, 255, 61, 0.12);
+
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+
+  overflow: hidden;
+  animation: fade-up 0.2s ease backwards;
+}
+
+.notification-panel__header {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.notification-panel__header h3 {
+  font-family: "Instrument Serif", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0;
+}
+
+.notification-panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 36px 24px;
+}
+
+.notification-panel__bell {
+  font-size: 26px;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.notification-panel__empty p {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #f2f2f5;
+  margin: 0 0 4px 0;
+}
+
+.notification-panel__empty span {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #6b6b78;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .notification-panel {
+    width: 260px;
+    right: -20px;
+  }
+}
