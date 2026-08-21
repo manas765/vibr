@@ -1607,153 +1607,124 @@ main {
    TABLET / MOBILE
    ========================================================= */
 
+/* =========================================================
+   MOBILE — PAGES ADDED AFTER THE ORIGINAL RESPONSIVE PASS
+   (People, Collections, Releases, Profile, Feed, ArtistPage,
+   ExplorePage) — sits alongside the existing breakpoints above.
+   ========================================================= */
+
 @media (max-width: 800px) {
 
-  nav,
-  .navbar {
+  .people-page,
+  .collections-page,
+  .releases-page,
+  .profile-page,
+  .feed-page,
+  .artist-page,
+  .explore-page {
+    padding: 20px 18px 40px;
+  }
+
+  .people-grid,
+  .collection-grid,
+  .release-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .collections-header,
+  .saved-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .artist-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .artist-page-header .follow-button,
+  .artist-page-header .following {
     width: 100%;
-    min-width: 0;
-
-    height: auto;
-
-    position: relative;
-
-    flex-direction: row;
-
-    padding: 15px;
-
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-
-    overflow-x: auto;
   }
 
-  .logo,
-  .brand,
-  .navbar-logo {
-    margin: 0 20px 0 0;
-
-    font-size: 27px;
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  nav button,
-  .navbar button,
-  .nav-link {
-    width: auto;
-
-    white-space: nowrap;
-
-    margin: 0 3px;
+  .profile-stats {
+    gap: 10px;
   }
 
-  main {
-    width: 100%;
-    margin-left: 0;
+  .profile-stat {
+    padding: 14px;
   }
 
-  .topbar {
-    width: 100%;
-
-    padding: 18px;
+  .profile-stat strong {
+    font-size: 22px;
   }
 
-  .vibr-hero {
-    width: calc(100% - 30px);
-
-    height: 850px;
-    min-height: 850px;
-
-    margin: 15px auto 50px;
-  }
-
-  .hero-content {
-    position: relative;
-
-    left: auto;
-    top: auto;
-
-    width: 100%;
-
-    padding: 55px 25px 0;
-  }
-
-  .hero-content h1 {
-    font-size: 75px;
-  }
-
-  .headphone-stage {
-    width: 650px;
-
-    left: 50%;
-    right: auto;
-
-    bottom: -20px;
-
-    transform:
-      translateX(-50%)
-      scale(0.72);
-  }
-
-  .floating-album {
-    display: none;
+  .feed-list {
+    max-width: 100%;
   }
 }
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
 
 @media (max-width: 600px) {
 
-  .topbar {
-    padding: 15px;
+  .people-grid,
+  .collection-grid,
+  .release-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .profile {
-    width: 70px;
+  .people-header h1,
+  .collections-header h1,
+  .releases-header h1,
+  .feed-header h1,
+  .explore-header h1 {
+    font-size: 26px;
   }
 
-  .vibr-hero {
-    height: 760px;
-    min-height: 760px;
-
-    border-radius: 22px;
+  .artist-page-header {
+    padding: 20px;
+    gap: 14px;
   }
 
-  .hero-content {
-    padding-top: 45px;
+  .artist-page-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
   }
 
-  .hero-content h1 {
-    font-size: 61px;
+  .artist-page-header h1 {
+    font-size: 24px;
   }
 
-  .hero-content p {
-    font-size: 13px;
+  .artist-page-tabs {
+    flex-wrap: wrap;
   }
 
-  .headphone-stage {
-    bottom: -70px;
-
-    transform:
-      translateX(-50%)
-      scale(0.55);
+  .platform-scroll {
+    gap: 12px;
   }
 
-  .section-heading {
-    align-items: flex-start;
+  .pick-card {
+    width: 140px;
+  }
 
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 22px;
+  }
+
+  .profile-stats {
     flex-direction: column;
-
-    gap: 15px;
   }
 
-  .section-heading h2 {
-    font-size: 34px;
-  }
-
-  .music-grid {
-    grid-template-columns: 1fr;
+  .music-taste {
+    gap: 8px;
   }
 }
-
