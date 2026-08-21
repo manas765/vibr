@@ -43,11 +43,11 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <Link to="/browse" className="profile" style={{ textDecoration: "none" }}>
-    ⊞
-  </Link>
-  <Link to="/spaces" className="profile" style={{ textDecoration: "none" }}>
-    ☕
-  </Link>
+          ⊞
+        </Link>
+        <Link to="/spaces" className="profile" style={{ textDecoration: "none" }}>
+          ☕
+        </Link>
           
      
      <NotificationBell />
