@@ -168,3 +168,193 @@
   color: #c6ff3d;
   border-bottom-color: #c6ff3d;
 }
+.music-card-scene {
+  perspective: 1000px;
+  width: 100%;
+}
+
+.music-card {
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  border: 1px solid rgba(198, 255, 61, 0.1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 120ms ease-out, box-shadow 200ms ease-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.music-card-scene:hover .music-card {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(139, 92, 246, 0.14),
+    0 0 0 1px rgba(198, 255, 61, 0.22);
+}
+
+.music-card__glow {
+  position: absolute;
+  inset: -35%;
+  background: radial-gradient(circle at 25% 15%, rgba(139, 92, 246, 0.3), transparent 60%),
+    radial-gradient(circle at 85% 90%, rgba(61, 156, 255, 0.22), transparent 55%);
+  filter: blur(26px);
+  transform: translateZ(-50px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.music-card__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.06) 45%, transparent 60%);
+  transform: translateZ(30px);
+  pointer-events: none;
+}
+
+.music-card__body {
+  position: relative;
+  transform: translateZ(35px);
+  padding: 20px;
+}
+
+.album-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 30%, rgba(198, 255, 61, 0.15), rgba(20, 20, 28, 0.9) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  margin-bottom: 14px;
+  transform: translateZ(10px);
+}
+
+.music-card__body h3 {
+  font-family: "Instrument Serif", serif;
+  font-size: 21px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 4px 0;
+  line-height: 1.15;
+}
+
+.music-card__body .artist {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  color: #8f8fa3;
+  margin: 0 0 14px 0;
+}
+
+.verdict-section {
+  margin-bottom: 14px;
+}
+
+.verdict {
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c6ff3d;
+  margin-bottom: 8px;
+}
+
+.verdict-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.verdict-buttons button {
+  font-family: "Inter", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 7px 4px;
+  border-radius: 8px;
+  border: 1px solid rgba(242, 242, 245, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: #d5d5dc;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.verdict-buttons button:hover {
+  border-color: rgba(198, 255, 61, 0.5);
+  color: #c6ff3d;
+  background: rgba(198, 255, 61, 0.06);
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.card-actions button {
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.25);
+  background: transparent;
+  color: #f2f2f5;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.card-actions button:hover {
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+}
+
+.card-actions button.selected {
+  background: #c6ff3d;
+  border-color: #c6ff3d;
+  color: #0a0a0f;
+}
+
+@media (hover: none) {
+  .music-card {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-card {
+    transition: none;
+  }
+}
+
+.verdict-buttons button.voted {
+  border-color: #c6ff3d;
+  color: #c6ff3d;
+  background: rgba(198, 255, 61, 0.08);
+}
+
+.verdict-meter {
+  margin-top: 10px;
+}
+
+.verdict-meter__bar {
+  display: flex;
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 5px;
+}
+
+.verdict-meter__bar span {
+  display: block;
+  height: 100%;
+}
+
+.verdict-meter__label {
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  color: #6b6b78;
+}

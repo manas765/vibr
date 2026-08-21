@@ -26,3 +26,92 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
+.releases-page {
+  padding: 32px 40px 60px;
+}
+
+.releases-header {
+  margin-bottom: 28px;
+}
+
+.releases-header h1 {
+  font-family: "Instrument Serif", serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #f2f2f5;
+  margin: 0 0 6px 0;
+}
+
+.releases-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #8f8fa3;
+  margin: 0;
+}
+
+.release-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.schedule-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.schedule-tab {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.15);
+  background: transparent;
+  color: #8f8fa3;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.schedule-tab:hover {
+  color: #f2f2f5;
+  border-color: rgba(242, 242, 245, 0.35);
+}
+
+.schedule-tab.active {
+  background: #c6ff3d;
+  border-color: #c6ff3d;
+  color: #0a0a0f;
+}
+
+.year-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.year-chip {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: transparent;
+  color: #8f8fa3;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.year-chip:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #b794f6;
+}
+
+.year-chip.active {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: #8b5cf6;
+  color: #b794f6;
+}
