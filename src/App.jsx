@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
@@ -11,7 +11,6 @@ import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
 import { usePersistedState } from "./hooks/usePersistedState";
 import ExplorePage from "./components/ExplorePage";
-import { useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import PageTransition from "./components/PageTransition";
 import NotificationBell from "./components/NotificationBell";
