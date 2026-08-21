@@ -53,9 +53,7 @@ function App() {
        MS ✦
      </button>
    </header>
-        <button className="profile" onClick={() => setActivePage("profile")}>
-          MS ✦
-        </button>
+       
       </header>
 
       {activePage === "discover" && (
