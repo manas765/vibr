@@ -42,12 +42,7 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
            <header className="topbar">
-     <input
-       type="text"
-       placeholder="🔍 Search music, artists, genres..."
-       value={searchTerm}
-       onChange={(e) => setSearchTerm(e.target.value)}
-     />
+     
      <NotificationBell />
      <button className="profile" onClick={() => setActivePage("profile")}>
        MS ✦
