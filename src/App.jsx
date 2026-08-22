@@ -16,6 +16,9 @@ import PageTransition from "./components/PageTransition";
 import NotificationBell from "./components/NotificationBell";
 import BrowsePage from "./components/BrowsePage";
 import SpacesPage from "./components/SpacesPage";
+import { useAuth } from "./hooks/useAuth";
+import AuthPage from "./components/AuthPage";
+import { supabase } from "./supabaseClient";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
