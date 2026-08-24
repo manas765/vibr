@@ -2,53 +2,32 @@ import { useState } from "react";
 import MusicCard3D from "./MusicCard3D";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
+import { useEffect } from "react";
 
 function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }) {
 
   const [selectedGenre, setSelectedGenre] = useState("Everything");
 
-  const music = [
-  {
-    title: "Paper Moons",
-    artist: "Luna Park",
-    genre: "Indie",
-    verdict: "GOD LEVEL",
-    emoji: "🌙"
-  },
-  {
-    title: "After Hours",
-    artist: "47th Street",
-    genre: "Hip-Hop",
-    verdict: "PERFECT",
-    emoji: "🌃"
-  },
-  {
-    title: "Neon Weather",
-    artist: "Nia Ellis",
-    genre: "Pop",
-    verdict: "GOOD",
-    emoji: "🌈"
-  },
-  {
-    title: "Night Drive FM",
-    artist: "Mira Vale",
-    genre: "Electronic",
-    verdict: "PERFECT",
-    emoji: "🚗"
+  const [tracks, setTracks] = useState([]);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  if (!searchTerm) {
+    setTracks([]);
+    return;
   }
-];
-  const filteredMusic = music.filter((song) => {
-  const matchesGenre =
-    selectedGenre === "Everything" ||
-    song.genre === selectedGenre;
 
-  const matchesSearch =
-    song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    song.genre.toLowerCase().includes(searchTerm.toLowerCase());
+  setLoading(true);
+  fetch(`/api/youtube-search?q=${encodeURIComponent(searchTerm)}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setTracks(data.tracks || []);
+      setLoading(false);
+    });
 
-  return matchesGenre && matchesSearch;
-});
+}, [searchTerm]);
+
+
   return (
     <section className="music-section">
 
@@ -119,7 +98,7 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
     show: { transition: { staggerChildren: 0.08 } },
   }}
 >
-  {filteredMusic.map((song) => (
+  {tracks.map((song) => (
     <motion.div
       key={song.title}
       variants={{
@@ -129,13 +108,13 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >
       <MusicCard3D
-        title={song.title}
-        artist={song.artist}
-        genre={song.genre}
-        verdict={song.verdict}
-        emoji={song.emoji}
-        savedSongs={savedSongs}
-        setSavedSongs={setSavedSongs}
+      title={song.title}
+      artist={song.artist}
+      genre="Music"
+      verdict="NEW"
+      emoji="🎵"
+      savedSongs={savedSongs}
+      setSavedSongs={setSavedSongs}
       />
     </motion.div>
   ))}
