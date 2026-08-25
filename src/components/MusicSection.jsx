@@ -3,13 +3,15 @@ import MusicCard3D from "./MusicCard3D";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { useEffect } from "react";
+import MovieModal from "./MovieModal";
 
 function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }) {
 
   const [selectedGenre, setSelectedGenre] = useState("Everything");
 
   const [tracks, setTracks] = useState([]);
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedTrack, setSelectedTrack] = useState(null);
 
 useEffect(() => {
   if (!searchTerm) {
@@ -17,16 +19,18 @@ useEffect(() => {
     return;
   }
 
-  setLoading(true);
-  fetch(`/api/youtube-search?q=${encodeURIComponent(searchTerm)}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setTracks(data.tracks || []);
-      setLoading(false);
-    });
+  const timeoutId = setTimeout(() => {
+    setLoading(true);
+    fetch(`/api/youtube-search?q=${encodeURIComponent(searchTerm)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTracks(data.tracks || []);
+        setLoading(false);
+      });
+  }, 500);
 
+  return () => clearTimeout(timeoutId);
 }, [searchTerm]);
-
 
   return (
     <section className="music-section">
@@ -100,12 +104,13 @@ useEffect(() => {
 >
   {tracks.map((song) => (
     <motion.div
-      key={song.title}
+      key={song.id}
       variants={{
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0 },
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      onClick={() => setSelectedTrack(song)}
     >
       <MusicCard3D
       title={song.title}
@@ -119,6 +124,21 @@ useEffect(() => {
     </motion.div>
   ))}
 </motion.div>
+  <MovieModal
+  movie={
+    selectedTrack
+      ? {
+          title: selectedTrack.title,
+          artist: selectedTrack.artist,
+          duration: "",
+          type: "Music",
+          videoUrl: selectedTrack.embedUrl,
+          emoji: "🎵",
+        }
+      : null
+  }
+  onClose={() => setSelectedTrack(null)}
+  />
 
     </section>
   );
