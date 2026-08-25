@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.YOUTUBE_API_KEY;
+  return res.status(200).json({ debugKeyLength: apiKey ? apiKey.length : 0, debugKeyStart: apiKey ? apiKey.slice(0, 6) : 'MISSING' });
 
   const searchResponse = await fetch(
     `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&maxResults=10&q=${encodeURIComponent(q)}&key=${apiKey}`
