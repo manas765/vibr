@@ -118,9 +118,12 @@ useEffect(() => {
       genre="Music"
       verdict="NEW"
       emoji="🎵"
+      videoId={song.id}
+      thumbnail={song.thumbnail}
+      embedUrl={song.embedUrl}
       savedSongs={savedSongs}
       setSavedSongs={setSavedSongs}
-      />
+    />
     </motion.div>
   ))}
 </motion.div>

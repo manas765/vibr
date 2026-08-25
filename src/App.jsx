@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
@@ -20,6 +20,7 @@ import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./components/AuthPage";
 import { supabase } from "./supabaseClient";
 
+
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
@@ -28,6 +29,20 @@ function App() {
   const [followedArtists, setFollowedArtists] = usePersistedState("followedArtists", []);
   const location = useLocation();
   const { user, loading } = useAuth();
+
+  useEffect(() => {
+  if (!user) return;
+
+  supabase
+    .from("saved_songs")
+    .select("*")
+    .eq("user_id", user.id)
+    .then(({ data, error }) => {
+      if (!error && data) {
+        setSavedSongs(data);
+      }
+    });
+    }, [user]);
 
   const toggleFollowArtist = (artistName) => {
     setFollowedArtists((current) =>

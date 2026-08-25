@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePersistedState } from "../hooks/usePersistedState";
 import "./MusicCard3D.css";
+import { supabase } from "../supabaseClient";
 
 const VERDICT_OPTIONS = [
   { key: "godLevel", label: "GOD LEVEL", display: "🔥 GOD LEVEL", color: "#c6ff3d" },
@@ -16,6 +17,9 @@ function MusicCard3D({
   genre,
   verdict,
   emoji,
+  videoId,
+  thumbnail,
+  embedUrl,
   savedSongs,
   setSavedSongs,
 }) {
@@ -30,7 +34,7 @@ function MusicCard3D({
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
-  const isSaved = savedSongs.some((song) => song.title === title);
+  const isSaved = savedSongs.some((song) => song.song_title === title || song.title === title);
   const totalVotes = Object.values(entry.counts).reduce((a, b) => a + b, 0);
 
   function handleMouseMove(e) {
@@ -49,13 +53,38 @@ function MusicCard3D({
     setTilt({ x: 0, y: 0 });
   }
 
-  function toggleSave() {
-    if (isSaved) {
-      setSavedSongs(savedSongs.filter((song) => song.title !== title));
-    } else {
-      setSavedSongs([...savedSongs, { title, artist, genre, verdict, emoji }]);
+  async function toggleSave() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  if (isSaved) {
+    await supabase
+      .from("saved_songs")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("song_title", title);
+
+    setSavedSongs(savedSongs.filter((song) => song.title !== title));
+  } else {
+    const { data, error } = await supabase
+      .from("saved_songs")
+      .insert({
+        user_id: user.id,
+        song_title: title,
+        artist,
+        genre,
+        emoji,
+        video_id: videoId,
+        thumbnail,
+        embed_url: embedUrl,
+      })
+      .select();
+
+    if (!error) {
+      setSavedSongs([...savedSongs, data[0]]);
     }
   }
+}
 
   function castVote(key) {
     if (entry.mine === key) return; // already voted this way
