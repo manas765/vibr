@@ -57,7 +57,7 @@ function App() {
     });
      }, [user]);
 
-  const toggleFollowArtist = async (artistName) => {
+  const toggleFollowArtist = async (artistName, channelId) => {
   if (!user) return;
 
   const isFollowing = followedArtists.includes(artistName);
@@ -73,7 +73,7 @@ function App() {
   } else {
     await supabase
       .from("followed_artists")
-      .insert({ user_id: user.id, artist_name: artistName });
+      .insert({ user_id: user.id, artist_name: artistName, channel_id: channelId });
 
     setFollowedArtists((current) => [...current, artistName]);
   }
