@@ -24,14 +24,15 @@ export default async function handler(req, res) {
 
   // Simplify the response to just what vibr needs
   const tracks = searchData.items.map((item) => ({
-    id: item.id.videoId,
-    title: item.snippet.title,
-    artist: item.snippet.channelTitle,
-    thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.default?.url,
-    publishedAt: item.snippet.publishedAt,
-    videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-    embedUrl: `https://www.youtube.com/embed/${item.id.videoId}`,
-  }));
+  id: item.id.videoId,
+  title: item.snippet.title,
+  artist: item.snippet.channelTitle,
+  channelId: item.snippet.channelId,
+  thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.default?.url,
+  publishedAt: item.snippet.publishedAt,
+  videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+  embedUrl: `https://www.youtube.com/embed/${item.id.videoId}`,
+}));
 
   return res.status(200).json({ tracks });
 }

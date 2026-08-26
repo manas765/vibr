@@ -9,7 +9,6 @@ import Releases from "./components/Releases";
 import People from "./components/People";
 import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
-import { usePersistedState } from "./hooks/usePersistedState";
 import ExplorePage from "./components/ExplorePage";
 import { AnimatePresence } from "motion/react";
 import PageTransition from "./components/PageTransition";
@@ -26,7 +25,7 @@ function App() {
   const [savedSongs, setSavedSongs] = useState([]);
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
-  const [followedArtists, setFollowedArtists] = usePersistedState("followedArtists", []);
+  const [followedArtists, setFollowedArtists] = useState([]);
   const location = useLocation();
   const { user, loading } = useAuth();
 
@@ -44,13 +43,41 @@ function App() {
     });
     }, [user]);
 
-  const toggleFollowArtist = (artistName) => {
-    setFollowedArtists((current) =>
-      current.includes(artistName)
-        ? current.filter((name) => name !== artistName)
-        : [...current, artistName]
-    );
-  };
+    useEffect(() => {
+  if (!user) return;
+
+  supabase
+    .from("followed_artists")
+    .select("*")
+    .eq("user_id", user.id)
+    .then(({ data, error }) => {
+      if (!error && data) {
+        setFollowedArtists(data.map((row) => row.artist_name));
+      }
+    });
+     }, [user]);
+
+  const toggleFollowArtist = async (artistName) => {
+  if (!user) return;
+
+  const isFollowing = followedArtists.includes(artistName);
+
+  if (isFollowing) {
+    await supabase
+      .from("followed_artists")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("artist_name", artistName);
+
+    setFollowedArtists((current) => current.filter((name) => name !== artistName));
+  } else {
+    await supabase
+      .from("followed_artists")
+      .insert({ user_id: user.id, artist_name: artistName });
+
+    setFollowedArtists((current) => [...current, artistName]);
+  }
+};
     if (loading) {
     return (
       <div
