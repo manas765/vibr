@@ -101,3 +101,51 @@
   color: #8f8fa3;
   margin: 0;
 }
+.movie-modal__credits {
+  padding: 16px 24px 24px;
+  border-top: 1px solid rgba(242, 242, 245, 0.08);
+  margin-top: 12px;
+}
+
+.movie-modal__credits h4 {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8f8fa3;
+  margin: 0 0 12px 0;
+}
+
+.credits-empty {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #6b6b78;
+  margin: 0;
+}
+
+.credits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credits-list li {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+
+.credits-role {
+  color: #8f8fa3;
+  text-transform: capitalize;
+}
+
+.credits-name {
+  color: #f2f2f5;
+  font-weight: 500;
+}
