@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./SpacesPage.css";
 
@@ -48,6 +49,7 @@ function SpacesPage() {
 
   return (
     <section className="spaces-page">
+      <Link to="/" className="back-link">← Back to Discover</Link>
       <div className="spaces-header">
         <h1>Spaces</h1>
         <p>What people on VIBR are talking about right now.</p>

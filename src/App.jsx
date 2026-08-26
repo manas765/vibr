@@ -212,12 +212,12 @@ function App() {
         }
       />
       <Route
-        path="/browse"
-        element={
-          <PageTransition>
-            <BrowsePage />
-          </PageTransition>
-        }
+  path="/browse"
+  element={
+    <PageTransition>
+      <BrowsePage setActivePage={setActivePage} />
+    </PageTransition>
+     }
       />
       <Route
         path="/spaces"
