@@ -120,7 +120,13 @@ function MusicCard3D({
         <div className="music-card__sheen" />
 
         <div className="music-card__body">
-          <div className="album-cover">{emoji}</div>
+          <div className="album-cover">
+        {thumbnail ? (
+        <img src={thumbnail} alt={title} className="album-cover__img" />
+        ) : (
+       emoji
+       )}
+        </div>
 
           <h3>{title}</h3>
 

@@ -358,3 +358,9 @@
   font-size: 10px;
   color: #6b6b78;
 }
+.album-cover__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
