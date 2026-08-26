@@ -14,6 +14,7 @@ const VERDICT_OPTIONS = [
 function MusicCard3D({
   title,
   artist,
+  channelId,
   genre,
   verdict,
   emoji,
@@ -124,11 +125,14 @@ function MusicCard3D({
           <h3>{title}</h3>
 
           <p className="artist">
-            <Link to={`/artist/${encodeURIComponent(artist)}`} className="artist-link">
-              {artist}
-            </Link>{" "}
-            · {genre}
-          </p>
+  <Link
+    to={`/artist/${encodeURIComponent(artist)}`}
+    state={{ channelId: channelId }}
+  >
+    {artist}
+  </Link>{" "}
+  · {genre}
+</p>
 
           <div className="verdict-section">
             <span className="verdict">{currentVerdictDisplay}</span>

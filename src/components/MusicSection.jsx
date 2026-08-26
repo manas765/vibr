@@ -11,7 +11,7 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
 
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [selectedTrack, setSelectedTrack] = useState(null);    
 
 useEffect(() => {
   if (!searchTerm) {
@@ -113,17 +113,18 @@ useEffect(() => {
       onClick={() => setSelectedTrack(song)}
     >
       <MusicCard3D
-      title={song.title}
-      artist={song.artist}
-      genre="Music"
-      verdict="NEW"
-      emoji="🎵"
-      videoId={song.id}
-      thumbnail={song.thumbnail}
-      embedUrl={song.embedUrl}
-      savedSongs={savedSongs}
-      setSavedSongs={setSavedSongs}
-    />
+        title={song.title}
+        artist={song.artist}
+        channelId={song.channelId}
+        genre="Music"
+        verdict="NEW"
+        emoji="🎵"
+        videoId={song.id}
+        thumbnail={song.thumbnail}
+        embedUrl={song.embedUrl}
+        savedSongs={savedSongs}
+        setSavedSongs={setSavedSongs}
+      />
     </motion.div>
   ))}
 </motion.div>
