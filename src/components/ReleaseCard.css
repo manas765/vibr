@@ -59,6 +59,12 @@
   font-size: 52px;
   margin-bottom: 14px;
 }
+.release-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
 
 .release-card__body h2 {
   font-family: "Instrument Serif", serif;

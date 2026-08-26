@@ -21,6 +21,11 @@ function ReleaseCard({ release, isHeard, onToggleHeard, isSaved, onToggleSave })
     setTilt({ x: 0, y: 0 });
   }
 
+  const CardTag = release.videoUrl ? "a" : "div";
+  const linkProps = release.videoUrl
+    ? { href: release.videoUrl, target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
   return (
     <div
       className="release-card-scene"
@@ -36,7 +41,13 @@ function ReleaseCard({ release, isHeard, onToggleHeard, isSaved, onToggleSave })
         <div className="release-card__sheen" />
 
         <div className="release-card__body">
-          <div className="release-cover">{release.emoji}</div>
+          <CardTag className="release-cover" {...linkProps}>
+            {release.thumbnail ? (
+              <img src={release.thumbnail} alt={release.title} />
+            ) : (
+              release.emoji
+            )}
+          </CardTag>
 
           <h2>{release.title}</h2>
 

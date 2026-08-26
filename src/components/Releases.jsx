@@ -1,82 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReleaseCard from "./ReleaseCard";
 import { motion } from "motion/react";
 import "./Releases.css";
+
+const upcomingReleases = [
+  {
+    title: "Glass Horizon",
+    artist: "Luna Park",
+    genre: "Indie",
+    date: "Sep 20, 2026",
+    year: 2026,
+    status: "upcoming",
+    emoji: "🌤️",
+  },
+  {
+    title: "Static & Silence",
+    artist: "47th Street",
+    genre: "Hip-Hop",
+    date: "Nov 3, 2026",
+    year: 2026,
+    status: "upcoming",
+    emoji: "📻",
+  },
+  {
+    title: "Untitled Project",
+    artist: "Nia Ellis",
+    genre: "Pop",
+    date: "TBA",
+    year: 2027,
+    status: "announced",
+    emoji: "🎤",
+  },
+];
 
 function Releases({ savedReleases, setSavedReleases }) {
   const [heardReleases, setHeardReleases] = useState([]);
   const [activeTab, setActiveTab] = useState("released");
   const [activeYear, setActiveYear] = useState("All");
+  const [liveReleases, setLiveReleases] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const releases = [
-    {
-      title: "Midnight Signals",
-      artist: "Nova Lane",
-      genre: "Indie",
-      date: "Aug 14, 2026",
-      year: 2026,
-      status: "released",
-      emoji: "🌌",
-    },
-    {
-      title: "City Lights",
-      artist: "The Weekenders",
-      genre: "Pop",
-      date: "Aug 12, 2026",
-      year: 2026,
-      status: "released",
-      emoji: "🌃",
-    },
-    {
-      title: "After Dark",
-      artist: "Kairo",
-      genre: "Hip-Hop",
-      date: "Aug 10, 2026",
-      year: 2026,
-      status: "released",
-      emoji: "🌙",
-    },
-    {
-      title: "Electric Dreams",
-      artist: "Mira Vale",
-      genre: "Electronic",
-      date: "Aug 8, 2026",
-      year: 2026,
-      status: "released",
-      emoji: "⚡",
-    },
-    {
-      title: "Glass Horizon",
-      artist: "Luna Park",
-      genre: "Indie",
-      date: "Sep 20, 2026",
-      year: 2026,
-      status: "upcoming",
-      emoji: "🌤️",
-    },
-    {
-      title: "Static & Silence",
-      artist: "47th Street",
-      genre: "Hip-Hop",
-      date: "Nov 3, 2026",
-      year: 2026,
-      status: "upcoming",
-      emoji: "📻",
-    },
-    {
-      title: "Untitled Project",
-      artist: "Nia Ellis",
-      genre: "Pop",
-      date: "TBA",
-      year: 2027,
-      status: "announced",
-      emoji: "🎤",
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/youtube-search?q=${encodeURIComponent("official music video 2026")}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const tracks = (data.tracks || []).map((t) => ({
+          title: t.title,
+          artist: t.artist,
+          genre: "Music",
+          date: new Date(t.publishedAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }),
+          year: new Date(t.publishedAt).getFullYear(),
+          status: "released",
+          emoji: "🎵",
+          thumbnail: t.thumbnail,
+          videoUrl: t.videoUrl,
+        }));
+        setLiveReleases(tracks);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-  const years = ["All", ...new Set(releases.map((r) => r.year))].sort();
+  const allReleases = [...liveReleases, ...upcomingReleases];
+  const years = ["All", ...new Set(allReleases.map((r) => r.year))].sort();
 
-  const filteredReleases = releases.filter((release) => {
+  const filteredReleases = allReleases.filter((release) => {
     const matchesTab = release.status === activeTab;
     const matchesYear = activeYear === "All" || release.year === activeYear;
     return matchesTab && matchesYear;
@@ -134,6 +127,12 @@ function Releases({ savedReleases, setSavedReleases }) {
         </button>
       </div>
 
+      {activeTab !== "released" && (
+        <p className="empty-message" style={{ marginBottom: 16 }}>
+          Preview data — real release-calendar tracking is coming soon.
+        </p>
+      )}
+
       <div className="year-filter">
         {years.map((year) => (
           <button
@@ -146,40 +145,44 @@ function Releases({ savedReleases, setSavedReleases }) {
         ))}
       </div>
 
-      <motion.div
-        className="release-grid"
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: {},
-          show: { transition: { staggerChildren: 0.08 } },
-        }}
-      >
-        {filteredReleases.length === 0 && (
-          <p className="empty-message">Nothing here yet.</p>
-        )}
+      {loading && activeTab === "released" ? (
+        <p className="empty-message">Loading releases...</p>
+      ) : (
+        <motion.div
+          className="release-grid"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.08 } },
+          }}
+        >
+          {filteredReleases.length === 0 && (
+            <p className="empty-message">Nothing here yet.</p>
+          )}
 
-        {filteredReleases.map((release) => (
-          <motion.div
-            key={release.title}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              show: { opacity: 1, y: 0 },
-            }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <ReleaseCard
-              release={release}
-              isHeard={heardReleases.includes(release.title)}
-              onToggleHeard={() => toggleHeard(release.title)}
-              isSaved={savedReleases.some(
-                (saved) => saved.title === release.title
-              )}
-              onToggleSave={() => toggleSave(release)}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
+          {filteredReleases.map((release) => (
+            <motion.div
+              key={release.title}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <ReleaseCard
+                release={release}
+                isHeard={heardReleases.includes(release.title)}
+                onToggleHeard={() => toggleHeard(release.title)}
+                isSaved={savedReleases.some(
+                  (saved) => saved.title === release.title
+                )}
+                onToggleSave={() => toggleSave(release)}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
     </section>
   );
 }
