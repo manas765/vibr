@@ -46,7 +46,7 @@ function Releases({ savedReleases, setSavedReleases }) {
       .then((res) => res.json())
       .then((data) => {
         const tracks = (data.tracks || []).map((t) => ({
-          title: t.title,
+          title: decodeHtmlEntities(t.title),
           artist: t.artist,
           genre: "Music",
           date: new Date(t.publishedAt).toLocaleDateString("en-US", {
