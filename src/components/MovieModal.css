@@ -1,113 +1,10 @@
-.movie-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(6, 6, 10, 0.85);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  padding: 24px;
-  animation: fade-up 0.25s ease backwards;
-}
-
-.movie-modal {
-  position: relative;
-  width: 100%;
-  max-width: 780px;
-  border-radius: 20px;
-  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  overflow: hidden;
-}
-
-.movie-modal__close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f2f2f5;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 2;
-  transition: all 150ms ease;
-}
-
-.movie-modal__close:hover {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
-}
-
-.movie-modal__player {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-}
-
-.movie-modal__player iframe,
-.movie-modal__player video {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.movie-modal__placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: #8f8fa3;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-}
-
-.movie-modal__placeholder span {
-  font-size: 48px;
-}
-
-.movie-modal__info {
-  padding: 20px 24px 24px;
-}
-
-.movie-modal__type {
-  display: block;
-  font-family: "Inter", sans-serif;
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #8b5cf6;
-  margin-bottom: 6px;
-}
-
-.movie-modal__info h3 {
-  font-family: "Instrument Serif", serif;
-  font-size: 24px;
-  font-weight: 400;
-  color: #f2f2f5;
-  margin: 0 0 4px 0;
-}
-
-.movie-modal__info p {
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  color: #8f8fa3;
-  margin: 0;
-}
-.movie-modal__credits {
+.movie-modal__comments {
   padding: 16px 24px 24px;
   border-top: 1px solid rgba(242, 242, 245, 0.08);
   margin-top: 12px;
 }
 
-.movie-modal__credits h4 {
+.movie-modal__comments h4 {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -117,35 +14,59 @@
   margin: 0 0 12px 0;
 }
 
-.credits-empty {
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  color: #6b6b78;
-  margin: 0;
+.comment-composer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-.credits-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.comment-composer input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.15);
+  background: transparent;
+  color: #f2f2f5;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+
+.comment-composer button {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #c6ff3d;
+  color: #0a0a0f;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.comment-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
-.credits-list li {
-  display: flex;
-  justify-content: space-between;
+.comment-item {
   font-family: "Inter", sans-serif;
   font-size: 13px;
 }
 
-.credits-role {
-  color: #8f8fa3;
-  text-transform: capitalize;
+.comment-item strong {
+  color: #f2f2f5;
 }
 
-.credits-name {
-  color: #f2f2f5;
-  font-weight: 500;
+.comment-item p {
+  color: #c4c4cc;
+  margin: 4px 0;
+}
+
+.comment-delete {
+  background: none;
+  border: none;
+  color: #6b6b78;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
 }
