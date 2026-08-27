@@ -137,6 +137,7 @@ useEffect(() => {
           duration: "",
           type: "Music",
           videoUrl: selectedTrack.embedUrl,
+          videoId: selectedTrack.id,
           emoji: "🎵",
         }
       : null
