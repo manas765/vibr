@@ -1,134 +1,108 @@
-import { useState } from "react";
-import { usePersistedState } from "../hooks/usePersistedState";
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 import "./People.css";
 
 function People() {
+  const [people, setPeople] = useState([]);
+  const [followedIds, setFollowedIds] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const [followedUsers, setFollowedUsers] = usePersistedState("followedUsers", []);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUser(user);
+      loadPeople(user);
+      if (user) loadFollows(user);
+    });
+  }, []);
 
-  const people = [
-    {
-      name: "Manas",
-      username: "@manas",
-      avatar: "M",
-      bio: "Indie, late-night drives & discovering hidden gems.",
-      favoriteGenre: "Indie"
-    },
-    {
-      name: "Akshata",
-      username: "@akshata",
-      avatar: "A",
-      bio: "Always looking for the next perfect track.",
-      favoriteGenre: "Pop"
-    },
-    {
-      name: "Pushkar",
-      username: "@pushkar",
-      avatar: "P",
-      bio: "Hip-Hop enthusiast. Music on repeat.",
-      favoriteGenre: "Hip-Hop"
-    },
-    {
-      name: "Aakash",
-      username: "@aakash",
-      avatar: "A",
-      bio: "Electronic sounds and midnight playlists.",
-      favoriteGenre: "Electronic"
-    }
-  ];
+  function loadPeople(user) {
+    setLoading(true);
+    supabase
+      .from("profiles")
+      .select("id, username, bio")
+      .then(({ data, error }) => {
+        if (!error) {
+          const others = user
+            ? (data || []).filter((p) => p.id !== user.id)
+            : data || [];
+          setPeople(others);
+        }
+        setLoading(false);
+      });
+  }
 
-  const toggleFollow = (username) => {
+  function loadFollows(user) {
+    supabase
+      .from("followed_users")
+      .select("followed_id")
+      .eq("follower_id", user.id)
+      .then(({ data, error }) => {
+        if (!error) {
+          setFollowedIds((data || []).map((row) => row.followed_id));
+        }
+      });
+  }
 
-    if (followedUsers.includes(username)) {
+  async function toggleFollow(personId) {
+    if (!currentUser) return;
 
-      setFollowedUsers(
-        followedUsers.filter(
-          user => user !== username
-        )
-      );
+    const isFollowing = followedIds.includes(personId);
 
+    if (isFollowing) {
+      await supabase
+        .from("followed_users")
+        .delete()
+        .eq("follower_id", currentUser.id)
+        .eq("followed_id", personId);
+
+      setFollowedIds(followedIds.filter((id) => id !== personId));
     } else {
+      await supabase
+        .from("followed_users")
+        .insert({ follower_id: currentUser.id, followed_id: personId });
 
-      setFollowedUsers([
-        ...followedUsers,
-        username
-      ]);
-
+      setFollowedIds([...followedIds, personId]);
     }
-
-  };
+  }
 
   return (
     <section className="people-page">
-
       <div className="people-header">
-
         <div>
           <h1>People</h1>
-
-          <p>
-            Discover people with music taste worth following.
-          </p>
+          <p>Discover people with music taste worth following.</p>
         </div>
-
       </div>
 
+      {loading && <p>Loading people...</p>}
+
+      {!loading && people.length === 0 && (
+        <p>No other members have joined yet — invite some friends!</p>
+      )}
 
       <div className="people-grid">
-
         {people.map((person) => (
-
-          <div
-            className="person-card"
-            key={person.username}
-          >
-
+          <div className="person-card" key={person.id}>
             <div className="person-avatar">
-              {person.avatar}
+              {person.username ? person.username.slice(0, 1).toUpperCase() : "?"}
             </div>
 
+            <h2>{person.username || "Unnamed"}</h2>
 
-            <h2>{person.name}</h2>
+            <span className="username">@{person.username}</span>
 
-            <span className="username">
-              {person.username}
-            </span>
-
-
-            <p className="person-bio">
-              {person.bio}
-            </p>
-
-
-            <span className="favorite-genre">
-              🎵 {person.favoriteGenre}
-            </span>
-
+            <p className="person-bio">{person.bio || "No bio yet."}</p>
 
             <button
-              className={
-                followedUsers.includes(person.username)
-                  ? "following"
-                  : "follow-button"
-              }
-
-              onClick={() =>
-                toggleFollow(person.username)
-              }
+              className={followedIds.includes(person.id) ? "following" : "follow-button"}
+              onClick={() => toggleFollow(person.id)}
             >
-
-              {followedUsers.includes(person.username)
-                ? "Following"
-                : "Follow"}
-
+              {followedIds.includes(person.id) ? "Following" : "Follow"}
             </button>
-
           </div>
-
         ))}
-
       </div>
-
     </section>
   );
 }
