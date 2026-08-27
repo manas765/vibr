@@ -1,298 +1,343 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
 import "./Feed.css";
 
+const VERDICT_OPTIONS = [
+  { key: "🔥 GOD LEVEL", label: "🔥 GOD LEVEL" },
+  { key: "💜 PERFECT", label: "💜 PERFECT" },
+  { key: "👍 GOOD", label: "👍 GOOD" },
+  { key: "😐 MEHHHHH", label: "😐 MEHHHHH" },
+];
+
 function Feed() {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [likedPosts, setLikedPosts] = useState([]);
   const [followedUsers, setFollowedUsers] = useState([]);
   const [commentingPost, setCommentingPost] = useState(null);
-  const [comments, setComments] = useState({});
+  const [commentsByReview, setCommentsByReview] = useState({});
   const [commentText, setCommentText] = useState("");
 
-  const posts = [
-    {
-      user: "Manas",
-      avatar: "M",
-      action: "rated a song",
-      title: "Paper Moons",
-      artist: "Luna Park",
-      genre: "Indie",
-      verdict: "🔥 GOD LEVEL",
-      emoji: "🌙"
-    },
-    {
-      user: "Akshata",
-      avatar: "A",
-      action: "recommended",
-      title: "After Hours",
-      artist: "47th Street",
-      genre: "Hip-Hop",
-      verdict: "💜 PERFECT",
-      emoji: "🌃"
-    },
-    {
-      user: "Pushkar",
-      avatar: "P",
-      action: "rated a song",
-      title: "Neon Weather",
-      artist: "Nia Ellis",
-      genre: "Pop",
-      verdict: "👍 GOOD",
-      emoji: "🌈"
-    },
-    {
-      user: "Aakash",
-      avatar: "A",
-      action: "discovered",
-      title: "Night Drive FM",
-      artist: "Mira Vale",
-      genre: "Electronic",
-      verdict: "💜 PERFECT",
-      emoji: "🚗"
+  const [showComposer, setShowComposer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [selectedVerdict, setSelectedVerdict] = useState(VERDICT_OPTIONS[0].key);
+  const [reviewText, setReviewText] = useState("");
+  const [posting, setPosting] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUser(user);
+    });
+    loadReviews();
+  }, []);
+
+  function loadReviews() {
+    setLoading(true);
+    supabase
+      .from("reviews")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (!error) setReviews(data || []);
+        setLoading(false);
+      });
+  }
+
+  function toggleCommentBox(reviewId) {
+    const opening = commentingPost !== reviewId;
+    setCommentingPost(opening ? reviewId : null);
+
+    if (opening && !commentsByReview[reviewId]) {
+      supabase
+        .from("comments")
+        .select("*")
+        .eq("review_id", reviewId)
+        .order("created_at", { ascending: true })
+        .then(({ data, error }) => {
+          if (!error) {
+            setCommentsByReview((prev) => ({ ...prev, [reviewId]: data || [] }));
+          }
+        });
     }
-  ];
+  }
+
+  async function postComment(reviewId) {
+    if (!commentText.trim() || !currentUser) return;
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", currentUser.id)
+      .single();
+
+    const { data, error } = await supabase
+      .from("comments")
+      .insert({
+        user_id: currentUser.id,
+        username: profile?.username || "Anonymous",
+        review_id: reviewId,
+        comment_text: commentText.trim(),
+      })
+      .select();
+
+    if (!error && data) {
+      setCommentsByReview((prev) => ({
+        ...prev,
+        [reviewId]: [...(prev[reviewId] || []), data[0]],
+      }));
+      setCommentText("");
+    }
+  }
+
+  function searchSongs(query) {
+    setSearchQuery(query);
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    fetch(`/api/youtube-search?q=${encodeURIComponent(query)}`)
+      .then((res) => res.json())
+      .then((data) => setSearchResults(data.tracks || []));
+  }
+
+  async function submitReview() {
+    if (!selectedSong || !reviewText.trim() || !currentUser) return;
+
+    setPosting(true);
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", currentUser.id)
+      .single();
+
+    const { data, error } = await supabase
+      .from("reviews")
+      .insert({
+        user_id: currentUser.id,
+        username: profile?.username || "Anonymous",
+        song_title: selectedSong.title,
+        artist: selectedSong.artist,
+        genre: "Music",
+        thumbnail: selectedSong.thumbnail,
+        verdict: selectedVerdict,
+        review_text: reviewText.trim(),
+      })
+      .select();
+
+    setPosting(false);
+
+    if (!error && data) {
+      setReviews([data[0], ...reviews]);
+      setShowComposer(false);
+      setSelectedSong(null);
+      setSearchQuery("");
+      setSearchResults([]);
+      setReviewText("");
+      setSelectedVerdict(VERDICT_OPTIONS[0].key);
+    }
+  }
+
+  async function deleteReview(reviewId) {
+    const { error } = await supabase.from("reviews").delete().eq("id", reviewId);
+    if (!error) {
+      setReviews(reviews.filter((r) => r.id !== reviewId));
+    }
+  }
 
   return (
     <section className="feed-page">
-
       <div className="feed-header">
-
         <div>
           <h1>Your Feed</h1>
-
-          <p>
-            See what your music community is discovering.
-          </p>
+          <p>See what your music community is discovering.</p>
         </div>
 
+        <button
+          className="write-review-button"
+          onClick={() => setShowComposer(!showComposer)}
+        >
+          {showComposer ? "Cancel" : "✎ Write a Review"}
+        </button>
       </div>
 
+      {showComposer && (
+        <div className="review-composer">
+          {!selectedSong ? (
+            <>
+              <input
+                type="text"
+                placeholder="Search for a song to review..."
+                value={searchQuery}
+                onChange={(e) => searchSongs(e.target.value)}
+              />
+              {searchResults.length > 0 && (
+                <div className="composer-results">
+                  {searchResults.map((track) => (
+                    <div
+                      key={track.id}
+                      className="composer-result"
+                      onClick={() => {
+                        setSelectedSong(track);
+                        setSearchResults([]);
+                      }}
+                    >
+                      <img src={track.thumbnail} alt={track.title} />
+                      <div>
+                        <strong>{track.title}</strong>
+                        <p>{track.artist}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="composer-selected-song">
+                <img src={selectedSong.thumbnail} alt={selectedSong.title} />
+                <div>
+                  <strong>{selectedSong.title}</strong>
+                  <p>{selectedSong.artist}</p>
+                </div>
+                <button onClick={() => setSelectedSong(null)}>Change</button>
+              </div>
+
+              <div className="composer-verdicts">
+                {VERDICT_OPTIONS.map((v) => (
+                  <button
+                    key={v.key}
+                    className={selectedVerdict === v.key ? "verdict-pill active" : "verdict-pill"}
+                    onClick={() => setSelectedVerdict(v.key)}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+
+              <textarea
+                placeholder="What did you think of this track?"
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+              />
+
+              <button
+                className="submit-review"
+                onClick={submitReview}
+                disabled={posting || !reviewText.trim()}
+              >
+                {posting ? "Posting..." : "Post Review"}
+              </button>
+            </>
+          )}
+        </div>
+      )}
+
       <div className="feed-list">
+        {loading && <p className="feed-empty">Loading feed...</p>}
+        {!loading && reviews.length === 0 && (
+          <p className="feed-empty">No reviews yet. Be the first to write one!</p>
+        )}
 
-        {posts.map((post) => (
-
-          <div
-            className="feed-card"
-            key={post.title}
-          >
-
-            {/* USER */}
-
+        {reviews.map((post) => (
+          <div className="feed-card" key={post.id}>
             <div className="feed-user">
-
               <div className="user-avatar">
-                {post.avatar}
+                {post.username ? post.username.slice(0, 1).toUpperCase() : "?"}
               </div>
 
               <div className="user-info">
-
                 <div>
-                  <h3>{post.user}</h3>
-                  <p>{post.action}</p>
+                  <h3>{post.username || "Anonymous"}</h3>
+                  <p>reviewed</p>
                 </div>
 
-                <button
-                  className={
-                    followedUsers.includes(post.user)
-                      ? "following"
-                      : "follow-button"
-                  }
-                  onClick={() => {
-
-                    if (followedUsers.includes(post.user)) {
-
+                {currentUser?.id === post.user_id ? (
+                  <button className="follow-button" onClick={() => deleteReview(post.id)}>
+                    Delete
+                  </button>
+                ) : (
+                  <button
+                    className={followedUsers.includes(post.username) ? "following" : "follow-button"}
+                    onClick={() => {
                       setFollowedUsers(
-                        followedUsers.filter(
-                          user => user !== post.user
-                        )
+                        followedUsers.includes(post.username)
+                          ? followedUsers.filter((u) => u !== post.username)
+                          : [...followedUsers, post.username]
                       );
-
-                    } else {
-
-                      setFollowedUsers([
-                        ...followedUsers,
-                        post.user
-                      ]);
-
-                    }
-
-                  }}
-                >
-
-                  {followedUsers.includes(post.user)
-                    ? "Following"
-                    : "Follow"}
-
-                </button>
-
+                    }}
+                  >
+                    {followedUsers.includes(post.username) ? "Following" : "Follow"}
+                  </button>
+                )}
               </div>
-
             </div>
 
-
-            {/* SONG */}
-
             <div className="feed-song">
-
               <div className="feed-cover">
-                {post.emoji}
+                {post.thumbnail ? (
+                  <img src={post.thumbnail} alt={post.song_title} />
+                ) : (
+                  "🎵"
+                )}
               </div>
 
               <div>
-
-                <h2>{post.title}</h2>
-
-                <p>
-                  {post.artist} · {post.genre}
-                </p>
-
-                <span className="feed-verdict">
-                  {post.verdict}
-                </span>
-
+                <h2>{post.song_title}</h2>
+                <p>{post.artist} · {post.genre}</p>
+                <span className="feed-verdict">{post.verdict}</span>
               </div>
-
             </div>
 
-
-            {/* ACTIONS */}
+            <p className="feed-review-text">{post.review_text}</p>
 
             <div className="feed-actions">
-
-              {/* LIKE */}
-
               <button
                 onClick={() => {
-
-                  if (likedPosts.includes(post.title)) {
-
-                    setLikedPosts(
-                      likedPosts.filter(
-                        title => title !== post.title
-                      )
-                    );
-
-                  } else {
-
-                    setLikedPosts([
-                      ...likedPosts,
-                      post.title
-                    ]);
-
-                  }
-
-                }}
-                className={
-                  likedPosts.includes(post.title)
-                    ? "liked"
-                    : ""
-                }
-              >
-
-                {likedPosts.includes(post.title)
-                  ? "❤️ Liked"
-                  : "♡ Like"}
-
-              </button>
-
-
-              {/* COMMENT BUTTON */}
-
-              <button
-                onClick={() => {
-
-                  setCommentingPost(
-                    commentingPost === post.title
-                      ? null
-                      : post.title
+                  setLikedPosts(
+                    likedPosts.includes(post.id)
+                      ? likedPosts.filter((id) => id !== post.id)
+                      : [...likedPosts, post.id]
                   );
-
                 }}
+                className={likedPosts.includes(post.id) ? "liked" : ""}
               >
-                💬 Comment
+                {likedPosts.includes(post.id) ? "❤️ Liked" : "♡ Like"}
               </button>
 
+              <button onClick={() => toggleCommentBox(post.id)}>💬 Comment</button>
             </div>
 
-
-            {/* COMMENT INPUT */}
-
-            {commentingPost === post.title && (
-
+            {commentingPost === post.id && (
               <div className="comment-box">
-
                 <input
                   type="text"
                   placeholder="Write a comment..."
                   value={commentText}
-                  onChange={(e) =>
-                    setCommentText(e.target.value)
-                  }
+                  onChange={(e) => setCommentText(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && postComment(post.id)}
                 />
-
-                <button
-                  onClick={() => {
-
-                    if (!commentText.trim()) {
-                      return;
-                    }
-
-                    setComments({
-                      ...comments,
-
-                      [post.title]: [
-                        ...(comments[post.title] || []),
-                        commentText
-                      ]
-                    });
-
-                    setCommentText("");
-
-                  }}
-                >
-                  Post
-                </button>
-
+                <button onClick={() => postComment(post.id)}>Post</button>
               </div>
-
             )}
 
-
-            {/* DISPLAY COMMENTS */}
-
-            {comments[post.title]?.length > 0 && (
-
+            {commentsByReview[post.id]?.length > 0 && (
               <div className="comments-list">
-
-                {comments[post.title].map(
-                  (comment, index) => (
-
-                    <div
-                      className="comment"
-                      key={index}
-                    >
-
-                      <strong>You</strong>
-
-                      <p>
-                        {comment}
-                      </p>
-
-                    </div>
-
-                  )
-                )}
-
+                {commentsByReview[post.id].map((c) => (
+                  <div className="comment" key={c.id}>
+                    <strong>{c.username || "Anonymous"}</strong>
+                    <p>{c.comment_text}</p>
+                  </div>
+                ))}
               </div>
-
             )}
-
           </div>
-
         ))}
-
       </div>
-
     </section>
   );
 }

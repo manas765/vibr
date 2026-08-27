@@ -262,3 +262,194 @@
   color: #d5d5dc;
   margin: 0;
 }
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.write-review-button {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 255, 61, 0.4);
+  background: rgba(198, 255, 61, 0.08);
+  color: #c6ff3d;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.review-composer {
+  max-width: 620px;
+  background: #16161f;
+  border: 1px solid rgba(242, 242, 245, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.review-composer > input,
+.review-composer textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(242, 242, 245, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: #f2f2f5;
+  resize: vertical;
+}
+
+.review-composer textarea {
+  min-height: 80px;
+}
+
+.composer-results {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.composer-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.composer-result:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.composer-result img {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.composer-result strong {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #f2f2f5;
+}
+
+.composer-result p {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8f8fa3;
+  margin: 2px 0 0 0;
+}
+
+.composer-selected-song {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.composer-selected-song img {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.composer-selected-song strong {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #f2f2f5;
+}
+
+.composer-selected-song p {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8f8fa3;
+  margin: 2px 0 0 0;
+}
+
+.composer-selected-song button {
+  margin-left: auto;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  background: none;
+  border: 1px solid rgba(242, 242, 245, 0.2);
+  color: #8f8fa3;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.composer-verdicts {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.verdict-pill {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 245, 0.15);
+  background: transparent;
+  color: #8f8fa3;
+  cursor: pointer;
+}
+
+.verdict-pill.active {
+  border-color: #c6ff3d;
+  color: #c6ff3d;
+  background: rgba(198, 255, 61, 0.08);
+}
+
+.submit-review {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #c6ff3d;
+  color: #0a0a0f;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.submit-review:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feed-review-text {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  color: #d5d5dc;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  position: relative;
+}
+
+.feed-empty {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #6b6b78;
+}
+
+.feed-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
