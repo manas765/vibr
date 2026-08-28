@@ -1580,10 +1580,19 @@ main {
     padding: 25px;
   }
  .topbar-greeting-row {
-  padding: 12px 25px 0;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  color: #f2f2f5;
+  padding: 20px 45px 0;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.topbar-greeting-row span {
+  background: linear-gradient(90deg, #ffffff 0%, var(--lime) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
   .vibr-hero {

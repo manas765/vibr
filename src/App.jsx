@@ -120,8 +120,14 @@ function App() {
   const mainContent = (
     <>
             <div className="topbar-greeting-row">
-        {username ? `Hi, ${username}` : ""}
-      </div>
+  {username ? (
+    <>
+      Hi, <span>{username}</span>
+    </>
+  ) : (
+    ""
+  )}
+</div>
 
       <header className="topbar">
         <input
