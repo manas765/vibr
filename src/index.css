@@ -333,7 +333,7 @@ main {
 .topbar-greeting-row {
   padding: 20px 45px 0;
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: 55px;
   font-weight: 400;
   color: var(--text);
   letter-spacing: -0.01em;
