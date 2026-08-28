@@ -1579,12 +1579,11 @@ main {
   .topbar {
     padding: 25px;
   }
-  .topbar-greeting {
+ .topbar-greeting-row {
+  padding: 12px 25px 0;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   color: #f2f2f5;
-  white-space: nowrap;
-  margin-right: 12px;
 }
 
   .vibr-hero {

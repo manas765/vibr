@@ -119,11 +119,11 @@ function App() {
 
   const mainContent = (
     <>
-      <header className="topbar">
-        <span className="topbar-greeting">
-          {username ? `Hi, ${username}` : ""}
-        </span>
+            <div className="topbar-greeting-row">
+        {username ? `Hi, ${username}` : ""}
+      </div>
 
+      <header className="topbar">
         <input
           type="text"
           placeholder="🔍 Search music, artists, genres..."
