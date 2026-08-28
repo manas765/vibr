@@ -1758,3 +1758,45 @@ main {
     display: none;
   }
 }
+/* =========================================================
+   FOLLOWING STRIP
+   ========================================================= */
+
+.following-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 20px 0;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(242, 242, 245, 0.08);
+}
+
+.following-strip__label {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.following-chip {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(168, 255, 0, 0.08);
+  border: 1px solid rgba(168, 255, 0, 0.25);
+  color: var(--lime);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 150ms ease;
+}
+
+.following-chip:hover {
+  background: rgba(168, 255, 0, 0.15);
+  border-color: var(--lime);
+}
