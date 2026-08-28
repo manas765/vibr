@@ -26,6 +26,7 @@ function App() {
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
   const [followedArtists, setFollowedArtists] = useState([]);
+  const [username, setUsername] = useState("");
   const location = useLocation();
   const { user, loading } = useAuth();
 
@@ -56,6 +57,21 @@ function App() {
       }
     });
      }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", user.id)
+      .single()
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setUsername(data.username || "");
+        }
+      });
+  }, [user]);
 
   const toggleFollowArtist = async (artistName, channelId) => {
   if (!user) return;
@@ -99,9 +115,15 @@ function App() {
     return <AuthPage />;
   }
 
+  const initials = username ? username.slice(0, 2).toUpperCase() : "??";
+
   const mainContent = (
     <>
       <header className="topbar">
+        <span className="topbar-greeting">
+          {username ? `Hi, ${username}` : ""}
+        </span>
+
         <input
           type="text"
           placeholder="🔍 Search music, artists, genres..."
@@ -130,7 +152,7 @@ function App() {
      </button>
      <NotificationBell />
      <button className="profile" onClick={() => setActivePage("profile")}>
-       MS ✦
+       {initials} ✦
      </button>
    </header>
        
@@ -196,14 +218,6 @@ function App() {
         }
       />
       <Route
-        path="/explore"
-        element={
-          <PageTransition>
-            <ExplorePage />
-          </PageTransition>
-        }
-      />
-        <Route
         path="/explore"
         element={
           <PageTransition>
