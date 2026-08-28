@@ -330,6 +330,21 @@ main {
   box-shadow:
     0 0 25px rgba(168,255,0,0.12);
 }
+.topbar-greeting-row {
+  padding: 20px 45px 0;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.topbar-greeting-row span {
+  background: linear-gradient(90deg, #ffffff 0%, var(--lime) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* =========================================================
    HERO — MAIN LAYOUT
@@ -1564,12 +1579,6 @@ main {
 }
 
 @media (max-width: 1000px) {
-.topbar-greeting-row {
-font-family: var(--font-serif);
-font-size: 20px;
-padding: 16px 25px 0;
-  }
-
   nav,
   .navbar {
     width: 220px;
@@ -1584,21 +1593,11 @@ padding: 16px 25px 0;
   .topbar {
     padding: 25px;
   }
- .topbar-greeting-row {
-  padding: 20px 45px 0;
-  font-family: var(--font-serif);
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.01em;
-}
 
-.topbar-greeting-row span {
-  background: linear-gradient(90deg, #ffffff 0%, var(--lime) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+  .topbar-greeting-row {
+    font-size: 20px;
+    padding: 16px 25px 0;
+  }
 
   .vibr-hero {
     width: calc(100% - 30px);
