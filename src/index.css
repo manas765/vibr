@@ -1564,6 +1564,11 @@ main {
 }
 
 @media (max-width: 1000px) {
+.topbar-greeting-row {
+font-family: var(--font-serif);
+font-size: 20px;
+padding: 16px 25px 0;
+  }
 
   nav,
   .navbar {
