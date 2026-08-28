@@ -140,6 +140,12 @@
   font-size: 22px;
   margin-bottom: 12px;
 }
+.collection-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
 
 .collection-card h3 {
   position: relative;

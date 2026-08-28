@@ -56,7 +56,11 @@ function Collections({ savedSongs, savedReleases }) {
               >
 
                 <div className="collection-icon">
-                  {song.emoji}
+                  {song.thumbnail ? (
+                    <img src={song.thumbnail} alt={song.title} />
+                  ) : (
+                    song.emoji
+                  )}
                 </div>
 
                 <h3>{song.title}</h3>
@@ -114,7 +118,11 @@ function Collections({ savedSongs, savedReleases }) {
               >
 
                 <div className="collection-icon">
-                  {release.emoji}
+                  {release.thumbnail ? (
+                    <img src={release.thumbnail} alt={release.title} />
+                  ) : (
+                    release.emoji
+                  )}
                 </div>
 
                 <h3>{release.title}</h3>
