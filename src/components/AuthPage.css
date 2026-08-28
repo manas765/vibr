@@ -117,3 +117,36 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+.auth-forgot-link,
+.auth-back-link {
+  background: none;
+  border: none;
+  color: #8f8fa3;
+  font-size: 12.5px;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.auth-forgot-link:hover,
+.auth-back-link:hover {
+  color: #c6ff3d;
+}
+
+.auth-heading {
+  font-family: "Instrument Serif", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #f2f2f5;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+.auth-success {
+  color: #c6ff3d;
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}
