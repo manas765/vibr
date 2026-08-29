@@ -83,8 +83,12 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
 
   <div className="artist-page-header__content">
     <div className="artist-page-avatar">
-      {!channelThumbnail && heroEmoji}
-    </div>
+  {channelThumbnail ? (
+    <img src={channelThumbnail} alt={decodedName} />
+  ) : (
+    heroEmoji
+  )}
+</div>
 
     <div>
       <h1>{decodedName}</h1>
