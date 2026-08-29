@@ -71,31 +71,39 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
     <section className="artist-page">
       <Link to="/" className="back-link">← Back to Discover</Link>
 
-      <div className="artist-page-header">
-        <div className="artist-page-avatar">
-  {channelThumbnail ? (
-    <img src={channelThumbnail} alt={decodedName} />
-  ) : (
-    heroEmoji
-  )}
+      <div
+  className="artist-page-header"
+  style={
+    channelThumbnail
+      ? { backgroundImage: `url(${channelThumbnail})` }
+      : undefined
+  }
+>
+  <div className="artist-page-header__overlay" />
+
+  <div className="artist-page-header__content">
+    <div className="artist-page-avatar">
+      {!channelThumbnail && heroEmoji}
+    </div>
+
+    <div>
+      <h1>{decodedName}</h1>
+      <p>
+        {artistSongs.length} track{artistSongs.length !== 1 ? "s" : ""}
+        {artistMovies.length > 0 &&
+          ` · ${artistMovies.length} movie album${artistMovies.length !== 1 ? "s" : ""}`}
+      </p>
+    </div>
+
+    <button
+      className={isFollowing ? "following" : "follow-button"}
+      onClick={() => toggleFollowArtist(decodedName, channelId)}
+    >
+      {isFollowing ? "Following" : "Follow"}
+    </button>
+  </div>
 </div>
 
-        <div>
-          <h1>{decodedName}</h1>
-          <p>
-            {artistSongs.length} track{artistSongs.length !== 1 ? "s" : ""}
-            {artistMovies.length > 0 &&
-              ` · ${artistMovies.length} movie album${artistMovies.length !== 1 ? "s" : ""}`}
-          </p>
-        </div>
-
-        <button
-          className={isFollowing ? "following" : "follow-button"}
-          onClick={() => toggleFollowArtist(decodedName, channelId)}
-        >
-          {isFollowing ? "Following" : "Follow"}
-        </button>
-      </div>
 
       <div className="artist-page-tabs">
         <button
