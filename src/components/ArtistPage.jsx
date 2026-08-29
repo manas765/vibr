@@ -11,6 +11,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
   const location = useLocation();
   const channelId = location.state?.channelId;
   const decodedName = decodeURIComponent(artistName);
+  const [channelThumbnail, setChannelThumbnail] = useState(null);
 
   const [activeTab, setActiveTab] = useState("tracks");
   const [playingMovie, setPlayingMovie] = useState(null);
@@ -28,6 +29,8 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
       .then((res) => res.json())
       .then((data) => {
         setArtistSongs(data.tracks || []);
+        setChannelThumbnail(data.channelThumbnail || null);
+
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -69,7 +72,13 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
       <Link to="/" className="back-link">← Back to Discover</Link>
 
       <div className="artist-page-header">
-        <div className="artist-page-avatar">{heroEmoji}</div>
+        <div className="artist-page-avatar">
+  {channelThumbnail ? (
+    <img src={channelThumbnail} alt={decodedName} />
+  ) : (
+    heroEmoji
+  )}
+</div>
 
         <div>
           <h1>{decodedName}</h1>
