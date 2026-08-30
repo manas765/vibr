@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MusicCard3D from "./MusicCard3D";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { useEffect } from "react";
 import MovieModal from "./MovieModal";
+
+const GENRES = [
+  { label: "Everything", query: null },
+  { label: "Indie", query: "indie music" },
+  { label: "Hip-Hop", query: "hip hop music" },
+  { label: "Pop", query: "pop music" },
+  { label: "Electronic", query: "electronic music" },
+  { label: "R&B", query: "r&b music" },
+  { label: "Rock", query: "rock music" },
+  { label: "Country", query: "country music" },
+  { label: "Jazz", query: "jazz music" },
+  { label: "Classical", query: "classical music" },
+];
 
 function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }) {
 
@@ -11,26 +23,34 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
 
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedTrack, setSelectedTrack] = useState(null);    
+  const [selectedTrack, setSelectedTrack] = useState(null);
 
-useEffect(() => {
-  if (!searchTerm) {
-    setTracks([]);
-    return;
-  }
+  const activeQuery = () => {
+    const genre = GENRES.find((g) => g.label === selectedGenre);
+    if (genre && genre.query) return genre.query;
+    return searchTerm;
+  };
 
-  const timeoutId = setTimeout(() => {
-    setLoading(true);
-    fetch(`/api/youtube-search?q=${encodeURIComponent(searchTerm)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTracks(data.tracks || []);
-        setLoading(false);
-      });
-  }, 500);
+  useEffect(() => {
+    const query = activeQuery();
 
-  return () => clearTimeout(timeoutId);
-}, [searchTerm]);
+    if (!query) {
+      setTracks([]);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setLoading(true);
+      fetch(`/api/youtube-search?q=${encodeURIComponent(query)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setTracks(data.tracks || []);
+          setLoading(false);
+        });
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, selectedGenre]);
 
   return (
     <section className="music-section">
@@ -53,26 +73,18 @@ useEffect(() => {
       </div>
       <div className="genre-list">
 
-  {[
-    "Everything",
-    "Indie",
-    "Hip-Hop",
-    "Pop",
-    "Electronic",
-    "R&B",
-    "Rock"
-  ].map(genre => (
+  {GENRES.map(({ label }) => (
 
     <button
-      key={genre}
+      key={label}
       className={
-        selectedGenre === genre
+        selectedGenre === label
           ? "genre active"
           : "genre"
       }
-      onClick={() => setSelectedGenre(genre)}
+      onClick={() => setSelectedGenre(label)}
     >
-      {genre}
+      {label}
     </button>
 
   ))}
