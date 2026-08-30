@@ -27,36 +27,42 @@ function App() {
   const [savedReleases, setSavedReleases] = useState([]);
   const [followedArtists, setFollowedArtists] = useState([]);
   const [username, setUsername] = useState("");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   const location = useLocation();
   const { user, loading } = useAuth();
 
   useEffect(() => {
-  if (!user) return;
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  supabase
-    .from("saved_songs")
-    .select("*")
-    .eq("user_id", user.id)
-    .then(({ data, error }) => {
-      if (!error && data) {
-        setSavedSongs(data);
-      }
-    });
-    }, [user]);
+  useEffect(() => {
+    if (!user) return;
 
-    useEffect(() => {
-  if (!user) return;
+    supabase
+      .from("saved_songs")
+      .select("*")
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setSavedSongs(data);
+        }
+      });
+  }, [user]);
 
-  supabase
-    .from("followed_artists")
-    .select("*")
-    .eq("user_id", user.id)
-    .then(({ data, error }) => {
-      if (!error && data) {
-        setFollowedArtists(data.map((row) => row.artist_name));
-      }
-    });
-     }, [user]);
+  useEffect(() => {
+    if (!user) return;
+
+    supabase
+      .from("followed_artists")
+      .select("*")
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setFollowedArtists(data.map((row) => row.artist_name));
+        }
+      });
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -74,27 +80,28 @@ function App() {
   }, [user]);
 
   const toggleFollowArtist = async (artistName, channelId) => {
-  if (!user) return;
+    if (!user) return;
 
-  const isFollowing = followedArtists.includes(artistName);
+    const isFollowing = followedArtists.includes(artistName);
 
-  if (isFollowing) {
-    await supabase
-      .from("followed_artists")
-      .delete()
-      .eq("user_id", user.id)
-      .eq("artist_name", artistName);
+    if (isFollowing) {
+      await supabase
+        .from("followed_artists")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("artist_name", artistName);
 
-    setFollowedArtists((current) => current.filter((name) => name !== artistName));
-  } else {
-    await supabase
-      .from("followed_artists")
-      .insert({ user_id: user.id, artist_name: artistName, channel_id: channelId });
+      setFollowedArtists((current) => current.filter((name) => name !== artistName));
+    } else {
+      await supabase
+        .from("followed_artists")
+        .insert({ user_id: user.id, artist_name: artistName, channel_id: channelId });
 
-    setFollowedArtists((current) => [...current, artistName]);
-  }
-};
-    if (loading) {
+      setFollowedArtists((current) => [...current, artistName]);
+    }
+  };
+
+  if (loading) {
     return (
       <div
         style={{
@@ -119,15 +126,15 @@ function App() {
 
   const mainContent = (
     <>
-            <div className="topbar-greeting-row">
-  {username ? (
-    <>
-      Hi, <span>{username}</span>
-    </>
-  ) : (
-    ""
-  )}
-</div>
+      <div className="topbar-greeting-row">
+        {username ? (
+          <>
+            Hi, <span>{username}</span>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
 
       <header className="topbar">
         <input
@@ -137,32 +144,41 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <Link to="/browse" className="notification-bell__button" style={{ textDecoration: "none" }} title="Browse">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <rect x="3" y="3" width="7" height="7" rx="1.5" />
-    <rect x="14" y="3" width="7" height="7" rx="1.5" />
-    <rect x="3" y="14" width="7" height="7" rx="1.5" />
-    <rect x="14" y="14" width="7" height="7" rx="1.5" />
-  </svg>
-</Link>
-<Link to="/spaces" className="notification-bell__button" style={{ textDecoration: "none" }} title="Spaces">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-  </svg>
-</Link>
-     <button
-      onClick={() => supabase.auth.signOut()}
-      className="profile"
-      style={{ fontSize: "12px" }}
-      >
-      Log Out
-     </button>
-     <NotificationBell />
-     <button className="profile" onClick={() => setActivePage("profile")}>
-       {initials} ✦
-     </button>
-   </header>
-       
-      
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+        </Link>
+        <Link to="/spaces" className="notification-bell__button" style={{ textDecoration: "none" }} title="Spaces">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+          </svg>
+        </Link>
+
+        <button
+          className="theme-toggle"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          title="Toggle theme"
+        >
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
+
+        <button
+          onClick={() => supabase.auth.signOut()}
+          className="profile"
+          style={{ fontSize: "12px" }}
+        >
+          Log Out
+        </button>
+        <NotificationBell />
+        <button className="profile" onClick={() => setActivePage("profile")}>
+          {initials} ✦
+        </button>
+      </header>
+
+
 
       {activePage === "discover" && (
         <>
@@ -203,53 +219,53 @@ function App() {
     <div className="app">
       <Navbar activePage={activePage} setActivePage={setActivePage} />
 
-     <main>
-  <AnimatePresence mode="wait">
-    <Routes location={location} key={location.pathname}>
-      <Route
-        path="/"
-        element={<PageTransition>{mainContent}</PageTransition>}
-      />
-      <Route
-        path="/artist/:artistName"
-        element={
-          <PageTransition>
-            <ArtistPage
-              savedSongs={savedSongs}
-              setSavedSongs={setSavedSongs}
-              followedArtists={followedArtists}
-              toggleFollowArtist={toggleFollowArtist}
+      <main>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/"
+              element={<PageTransition>{mainContent}</PageTransition>}
             />
-          </PageTransition>
-        }
-      />
-      <Route
-        path="/explore"
-        element={
-          <PageTransition>
-            <ExplorePage />
-          </PageTransition>
-        }
-      />
-      <Route
-  path="/browse"
-  element={
-    <PageTransition>
-      <BrowsePage setActivePage={setActivePage} />
-    </PageTransition>
-     }
-      />
-      <Route
-        path="/spaces"
-        element={
-          <PageTransition>
-            <SpacesPage />
-          </PageTransition>
-        }
-      />
-    </Routes>
-  </AnimatePresence>
-</main>
+            <Route
+              path="/artist/:artistName"
+              element={
+                <PageTransition>
+                  <ArtistPage
+                    savedSongs={savedSongs}
+                    setSavedSongs={setSavedSongs}
+                    followedArtists={followedArtists}
+                    toggleFollowArtist={toggleFollowArtist}
+                  />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/explore"
+              element={
+                <PageTransition>
+                  <ExplorePage />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/browse"
+              element={
+                <PageTransition>
+                  <BrowsePage setActivePage={setActivePage} />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/spaces"
+              element={
+                <PageTransition>
+                  <SpacesPage />
+                </PageTransition>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
+      </main>
     </div>
   );
 }

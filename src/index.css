@@ -1,4 +1,3 @@
-
 /* =========================================================
    VIBR — GLOBAL STYLES
    ========================================================= */
@@ -20,12 +19,32 @@
   --text-soft: #a9a9b5;
   --text-muted: #70707d;
 
-  --lime: #a8ff00;
-  --purple: #9b5cff;
-  --blue: #46a8ff;
+  --lime: #f2f2f2;
+  --purple: #b3b3b3;
+  --blue: #8c8c8c;
 
   --font-sans: "Inter", sans-serif;
   --font-serif: "Instrument Serif", serif;
+}
+
+[data-theme="light"] {
+  --bg: #f7f7f8;
+  --bg-soft: #eeeef0;
+
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --surface-3: #e8e8eb;
+
+  --border: #dcdce0;
+  --border-light: #c4c4cb;
+
+  --text: #0e0e12;
+  --text-soft: #46464f;
+  --text-muted: #6f6f78;
+
+  --lime: #0e0e12;
+  --purple: #3a3a42;
+  --blue: #5a5a62;
 }
 
 /* =========================================================
@@ -43,6 +62,10 @@ html {
   color-scheme: dark;
 }
 
+[data-theme="light"] html {
+  color-scheme: light;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -53,7 +76,7 @@ body {
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(155, 92, 255, 0.08),
+      rgba(255, 255, 255, 0.05),
       transparent 35%
     ),
     var(--bg);
@@ -123,6 +146,18 @@ nav,
   border-right: 1px solid #25252e;
 }
 
+[data-theme="light"] nav,
+[data-theme="light"] .navbar {
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f2f2f4 100%
+    );
+
+  border-right: 1px solid #dcdce0;
+}
+
 /* LOGO */
 
 .logo,
@@ -146,8 +181,16 @@ nav,
   margin-left: 5px;
 
   text-shadow:
-    0 0 10px rgba(168, 255, 0, 0.8),
-    0 0 20px rgba(168, 255, 0, 0.4);
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="light"] .logo::after,
+[data-theme="light"] .brand::after,
+[data-theme="light"] .navbar-logo::after {
+  text-shadow:
+    0 0 10px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 /* NAV ITEMS */
@@ -189,11 +232,6 @@ nav button:hover,
   border-color: var(--border);
 }
 
-/* IMPORTANT:
-   Removed your old translateX(50px)
-   so sidebar items never move over the hero.
-*/
-
 /* ACTIVE */
 
 nav button.active,
@@ -231,7 +269,7 @@ nav button.active::before,
 
   box-shadow:
     0 0 8px var(--lime),
-    0 0 16px rgba(168,255,0,0.5);
+    0 0 16px rgba(255,255,255,0.5);
 }
 
 /* =========================================================
@@ -278,8 +316,8 @@ main {
   background:
     linear-gradient(
       145deg,
-      #121219,
-      #0e0e14
+      var(--surface-2),
+      var(--surface)
     );
 
   color: var(--text);
@@ -294,14 +332,14 @@ main {
 }
 
 .topbar input::placeholder {
-  color: #676774;
+  color: var(--text-muted);
 }
 
 .topbar input:focus {
-  border-color: rgba(168,255,0,0.5);
+  border-color: rgba(255,255,255,0.5);
 
   box-shadow:
-    0 0 0 3px rgba(168,255,0,0.07),
+    0 0 0 3px rgba(255,255,255,0.07),
     0 15px 40px rgba(0,0,0,0.3);
 }
 
@@ -315,8 +353,8 @@ main {
   background:
     linear-gradient(
       145deg,
-      #15151c,
-      #0d0d12
+      var(--surface-2),
+      var(--surface)
     );
 
   color: var(--text);
@@ -325,11 +363,30 @@ main {
 .profile:hover {
   color: var(--lime);
 
-  border-color: rgba(168,255,0,0.5);
+  border-color: rgba(255,255,255,0.5);
 
   box-shadow:
-    0 0 25px rgba(168,255,0,0.12);
+    0 0 25px rgba(255,255,255,0.12);
 }
+
+.theme-toggle {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: linear-gradient(145deg, var(--surface-2), var(--surface));
+  color: var(--text);
+  font-size: 20px;
+}
+
+.theme-toggle:hover {
+  border-color: rgba(255,255,255,0.5);
+}
+
 .topbar-greeting-row {
   padding: 20px 45px 0;
   font-family: var(--font-serif);
@@ -340,10 +397,16 @@ main {
 }
 
 .topbar-greeting-row span {
-  background: linear-gradient(90deg, #ffffff 0%, var(--lime) 100%);
+  background: linear-gradient(90deg, var(--text) 0%, var(--lime) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+[data-theme="light"] .topbar-greeting-row span {
+  background: linear-gradient(90deg, var(--text-soft) 0%, var(--text) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* =========================================================
@@ -369,17 +432,17 @@ main {
   background:
     radial-gradient(
       circle at 25% 35%,
-      rgba(155,92,255,0.27),
+      rgba(255,255,255,0.10),
       transparent 37%
     ),
     radial-gradient(
       circle at 78% 35%,
-      rgba(70,168,255,0.20),
+      rgba(255,255,255,0.07),
       transparent 38%
     ),
     radial-gradient(
       circle at 70% 85%,
-      rgba(168,255,0,0.08),
+      rgba(255,255,255,0.05),
       transparent 30%
     ),
     linear-gradient(
@@ -391,6 +454,25 @@ main {
   box-shadow:
     inset 0 1px rgba(255,255,255,0.04),
     0 35px 100px rgba(0,0,0,0.55);
+}
+
+[data-theme="light"] .vibr-hero {
+  background:
+    radial-gradient(
+      circle at 25% 35%,
+      rgba(0,0,0,0.05),
+      transparent 37%
+    ),
+    radial-gradient(
+      circle at 78% 35%,
+      rgba(0,0,0,0.04),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f0f0f2 100%
+    );
 }
 
 /* =========================================================
@@ -475,15 +557,6 @@ main {
    HERO CONTENT
    ========================================================= */
 
-/*
-   THIS IS THE IMPORTANT PART.
-
-   Instead of centering the title over the entire hero,
-   we give the text its own left half.
-
-   Headphones occupy the right half.
-*/
-
 .hero-content {
   position: absolute;
 
@@ -513,7 +586,7 @@ main {
 
   background: rgba(255,255,255,0.035);
 
-  color: #c9c9d0;
+  color: var(--text-soft);
 
   font-size: 11px;
   font-weight: 700;
@@ -556,14 +629,26 @@ main {
     linear-gradient(
       90deg,
       #ffffff 0%,
-      #a8ff00 45%,
-      #9b5cff 100%
+      #cfcfcf 50%,
+      #8c8c8c 100%
     );
 
   -webkit-background-clip: text;
   background-clip: text;
 
   color: transparent;
+}
+
+[data-theme="light"] .hero-content h1 span {
+  background:
+    linear-gradient(
+      90deg,
+      #0e0e12 0%,
+      #3a3a42 50%,
+      #6f6f78 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* DESCRIPTION */
@@ -597,14 +682,14 @@ main {
 
   background: var(--lime);
 
-  color: #070707;
+  color: var(--bg);
 
   font-weight: 800;
 
   font-size: 14px;
 
   box-shadow:
-    0 0 35px rgba(168,255,0,0.2),
+    0 0 35px rgba(255,255,255,0.2),
     0 10px 30px rgba(0,0,0,0.3);
 
   transition: 0.25s ease;
@@ -614,7 +699,7 @@ main {
   transform: translateY(-3px);
 
   box-shadow:
-    0 0 50px rgba(168,255,0,0.4),
+    0 0 50px rgba(255,255,255,0.4),
     0 15px 40px rgba(0,0,0,0.4);
 }
 
@@ -659,7 +744,7 @@ main {
   width: 570px;
   height: 300px;
 
-  border: 1px solid rgba(155,92,255,0.48);
+  border: 1px solid rgba(255,255,255,0.3);
 
   border-radius: 50%;
 
@@ -673,14 +758,14 @@ main {
 }
 
 .orbit-purple {
-  border-color: rgba(155,92,255,0.5);
+  border-color: rgba(255,255,255,0.3);
 }
 
 .orbit-lime {
   width: 600px;
   height: 320px;
 
-  border-color: rgba(168,255,0,0.3);
+  border-color: rgba(255,255,255,0.18);
 
   transform:
     translate(-50%, -50%)
@@ -716,7 +801,7 @@ main {
     )
     drop-shadow(
       0 20px 30px
-      rgba(168,255,0,0.08)
+      rgba(255,255,255,0.06)
     );
 }
 
@@ -1021,8 +1106,8 @@ main {
   font-size: 38px;
 
   text-shadow:
-    0 0 8px rgba(168,255,0,0.9),
-    0 0 20px rgba(168,255,0,0.4);
+    0 0 8px rgba(255,255,255,0.9),
+    0 0 20px rgba(255,255,255,0.4);
 
   box-shadow:
 
@@ -1084,8 +1169,8 @@ main {
 
   box-shadow:
     0 0 7px var(--lime),
-    0 0 18px rgba(168,255,0,0.8),
-    0 0 30px rgba(168,255,0,0.35);
+    0 0 18px rgba(255,255,255,0.8),
+    0 0 30px rgba(255,255,255,0.35);
 }
 
 /* =========================================================
@@ -1126,8 +1211,6 @@ main {
   transform-style: preserve-3d;
 }
 
-/* LEFT CARD */
-
 .album-left {
   left: 4%;
   top: 125px;
@@ -1136,8 +1219,6 @@ main {
     rotate(-9deg);
 }
 
-/* RIGHT CARD */
-
 .album-right {
   right: 2%;
   top: 205px;
@@ -1145,8 +1226,6 @@ main {
   transform:
     rotate(8deg);
 }
-
-/* CARD SHINE */
 
 .floating-album::before {
   content: "";
@@ -1166,8 +1245,6 @@ main {
 
   pointer-events: none;
 }
-
-/* ALBUM ART */
 
 .album-art {
   width: 100%;
@@ -1194,9 +1271,9 @@ main {
   background:
     radial-gradient(
       circle at 30% 25%,
-      #c49cff,
-      #5423a0 50%,
-      #17072f 100%
+      #e5e5e5,
+      #6b6b6b 50%,
+      #1a1a1a 100%
     );
 }
 
@@ -1204,9 +1281,9 @@ main {
   background:
     radial-gradient(
       circle at 30% 25%,
-      #9be1ff,
-      #1660a0 50%,
-      #06182c 100%
+      #dcdcdc,
+      #5a5a5a 50%,
+      #141414 100%
     );
 }
 
@@ -1231,7 +1308,7 @@ main {
 
   border-radius: 999px;
 
-  background: rgba(168,255,0,0.12);
+  background: rgba(255,255,255,0.1);
 
   color: var(--lime);
 
@@ -1241,9 +1318,9 @@ main {
 }
 
 .album-verdict.purple {
-  background: rgba(155,92,255,0.14);
+  background: rgba(255,255,255,0.08);
 
-  color: #c5a0ff;
+  color: var(--text-soft);
 }
 
 /* =========================================================
@@ -1266,7 +1343,7 @@ main {
   background:
     radial-gradient(
       ellipse,
-      rgba(168,255,0,0.16),
+      rgba(255,255,255,0.12),
       transparent 70%
     );
 
@@ -1332,7 +1409,7 @@ main {
 .refresh:hover {
   color: var(--lime);
 
-  border-color: rgba(168,255,0,0.35);
+  border-color: rgba(255,255,255,0.35);
 }
 
 /* =========================================================
@@ -1375,12 +1452,12 @@ main {
 
   border-color: var(--lime);
 
-  color: #070707;
+  color: var(--bg);
 
   font-weight: 700;
 
   box-shadow:
-    0 0 20px rgba(168,255,0,0.14);
+    0 0 20px rgba(255,255,255,0.14);
 }
 
 /* =========================================================
@@ -1443,7 +1520,7 @@ main {
   background:
     radial-gradient(
       circle at 30% 25%,
-      rgba(168,255,0,0.5),
+      rgba(255,255,255,0.3),
       transparent 30%
     ),
     linear-gradient(
@@ -1551,9 +1628,9 @@ main {
 .card-actions button.selected {
   color: var(--lime);
 
-  border-color: rgba(168,255,0,0.35);
+  border-color: rgba(255,255,255,0.35);
 
-  background: rgba(168,255,0,0.07);
+  background: rgba(255,255,255,0.07);
 }
 
 /* =========================================================
@@ -1621,16 +1698,6 @@ main {
     transform: scale(0.85);
   }
 }
-
-/* =========================================================
-   TABLET / MOBILE
-   ========================================================= */
-
-/* =========================================================
-   MOBILE — PAGES ADDED AFTER THE ORIGINAL RESPONSIVE PASS
-   (People, Collections, Releases, Profile, Feed, ArtistPage,
-   ExplorePage) — sits alongside the existing breakpoints above.
-   ========================================================= */
 
 @media (max-width: 800px) {
 
@@ -1747,9 +1814,7 @@ main {
     gap: 8px;
   }
 }
-/* Fix: .hero-tagline had no position rule, so it rendered at default
-   top-left and overlapped the badge/headline. Anchors it bottom-left
-   of the hero instead. */
+
 .hero-tagline {
   position: absolute;
   left: 5%;
@@ -1771,6 +1836,7 @@ main {
     display: none;
   }
 }
+
 /* =========================================================
    FOLLOWING STRIP
    ========================================================= */
@@ -1784,7 +1850,7 @@ main {
   padding: 10px 16px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(242, 242, 245, 0.08);
+  border: 1px solid var(--border);
 }
 
 .following-strip__label {
@@ -1801,8 +1867,8 @@ main {
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(168, 255, 0, 0.08);
-  border: 1px solid rgba(168, 255, 0, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-light);
   color: var(--lime);
   text-decoration: none;
   white-space: nowrap;
@@ -1810,6 +1876,6 @@ main {
 }
 
 .following-chip:hover {
-  background: rgba(168, 255, 0, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-color: var(--lime);
 }
