@@ -10,7 +10,7 @@
   border: 1px solid var(--border);
   border-radius: 17px;
 
-  background: linear-gradient(145deg, #15151c, #0d0d12);
+  background: linear-gradient(145deg, var(--surface-2), var(--surface));
   color: var(--text);
 
   font-size: 20px;
@@ -24,8 +24,8 @@
 
 .notification-bell__button:hover {
   color: var(--lime);
-  border-color: rgba(168, 255, 0, 0.5);
-  box-shadow: 0 0 25px rgba(168, 255, 0, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
 }
 
 .notification-panel {
@@ -37,8 +37,8 @@
   width: 300px;
 
   border-radius: 18px;
-  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
-  border: 1px solid rgba(198, 255, 61, 0.12);
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
 
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
 
@@ -48,14 +48,14 @@
 
 .notification-panel__header {
   padding: 16px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
 }
 
 .notification-panel__header h3 {
   font-family: "Instrument Serif", serif;
   font-size: 18px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: var(--text);
   margin: 0;
 }
 
@@ -77,14 +77,14 @@
   font-family: "Inter", sans-serif;
   font-size: 13.5px;
   font-weight: 600;
-  color: #f2f2f5;
+  color: var(--text);
   margin: 0 0 4px 0;
 }
 
 .notification-panel__empty span {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  color: #6b6b78;
+  color: var(--text-muted);
   line-height: 1.5;
 }
 
