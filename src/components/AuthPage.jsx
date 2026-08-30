@@ -1,6 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import "./AuthPage.css";
+
+function AuthBackdrop() {
+  return (
+    <div className="auth-backdrop" aria-hidden="true">
+      <div className="auth-ring auth-ring-1" />
+      <div className="auth-ring auth-ring-2" />
+      <div className="auth-ring auth-ring-3" />
+      <div className="auth-eq">
+        {Array.from({ length: 28 }).map((_, i) => (
+          <span key={i} style={{ "--i": i }} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function AuthPage() {
   const [mode, setMode] = useState("login"); // "login" | "signup" | "forgot"
@@ -14,11 +29,44 @@ function AuthPage() {
   const [isRecovery, setIsRecovery] = useState(false);
   const [newPassword, setNewPassword] = useState("");
 
+  const cardRef = useRef(null);
+  const reduceMotionRef = useRef(false);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
+
   useEffect(() => {
     if (window.location.hash.includes("type=recovery")) {
       setIsRecovery(true);
     }
+    reduceMotionRef.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
   }, []);
+
+  function handleCardMove(e) {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+
+    card.style.setProperty("--mx", `${px * 100}%`);
+    card.style.setProperty("--my", `${py * 100}%`);
+
+    if (reduceMotionRef.current) return;
+    setTilt({
+      rx: (0.5 - py) * 8,
+      ry: (px - 0.5) * 8,
+    });
+  }
+
+  function handleCardLeave() {
+    setTilt({ rx: 0, ry: 0 });
+  }
+
+  const cardStyle = {
+    transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -107,7 +155,14 @@ function AuthPage() {
   if (isRecovery) {
     return (
       <div className="auth-page">
-        <div className="auth-card">
+        <AuthBackdrop />
+        <div
+          className="auth-card"
+          ref={cardRef}
+          style={cardStyle}
+          onMouseMove={handleCardMove}
+          onMouseLeave={handleCardLeave}
+        >
           <div className="auth-logo">
             VIBR<span>•</span>
           </div>
@@ -118,6 +173,7 @@ function AuthPage() {
             <input
               type="password"
               placeholder="New password"
+              aria-label="New password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
@@ -139,7 +195,14 @@ function AuthPage() {
   if (mode === "forgot") {
     return (
       <div className="auth-page">
-        <div className="auth-card">
+        <AuthBackdrop />
+        <div
+          className="auth-card"
+          ref={cardRef}
+          style={cardStyle}
+          onMouseMove={handleCardMove}
+          onMouseLeave={handleCardLeave}
+        >
           <div className="auth-logo">
             VIBR<span>•</span>
           </div>
@@ -150,6 +213,7 @@ function AuthPage() {
             <input
               type="email"
               placeholder="Email"
+              aria-label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -181,7 +245,14 @@ function AuthPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
+      <AuthBackdrop />
+      <div
+        className="auth-card"
+        ref={cardRef}
+        style={cardStyle}
+        onMouseMove={handleCardMove}
+        onMouseLeave={handleCardLeave}
+      >
         <div className="auth-logo">
           VIBR<span>•</span>
         </div>
@@ -206,6 +277,7 @@ function AuthPage() {
             <input
               type="text"
               placeholder="Username"
+              aria-label="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -215,6 +287,7 @@ function AuthPage() {
           <input
             type="email"
             placeholder="Email"
+            aria-label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -223,6 +296,7 @@ function AuthPage() {
           <input
             type="password"
             placeholder="Password"
+            aria-label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
