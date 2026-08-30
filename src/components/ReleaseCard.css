@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
   border-radius: 18px;
-  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
   border: 1px solid rgba(61, 156, 255, 0.15);
   overflow: hidden;
   transform-style: preserve-3d;

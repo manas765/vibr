@@ -35,7 +35,7 @@
   gap: 10px;
   padding: 28px 16px;
   border-radius: 18px;
-  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
   border: 1px solid rgba(139, 92, 246, 0.15);
   text-decoration: none;
   transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;

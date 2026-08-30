@@ -106,7 +106,7 @@
   position: relative;
   padding: 18px;
   border-radius: 16px;
-  background: linear-gradient(160deg, #16161f 0%, #0c0c12 100%);
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
   border: 1px solid rgba(198, 255, 61, 0.1);
   overflow: hidden;
   transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
