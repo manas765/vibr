@@ -217,19 +217,6 @@
   padding: 20px;
 }
 
-.album-cover {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  background: radial-gradient(circle at 35% 30%, rgba(198, 255, 61, 0.15), rgba(20, 20, 28, 0.9) 70%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 56px;
-  margin-bottom: 14px;
-  transform: translateZ(10px);
-}
 
 .music-card__body h3 {
   font-family: "Instrument Serif", serif;
@@ -358,9 +345,52 @@
   font-size: 10px;
   color: #6b6b78;
 }
-.album-cover__img {
+.music-card {
+  position: relative;
+  min-height: 420px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-2);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.music-card__art-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 15, 0.05) 0%,
+    rgba(10, 10, 15, 0.45) 45%,
+    rgba(10, 10, 15, 0.94) 85%
+  );
+  pointer-events: none;
+}
+
+.music-card__emoji {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 42px;
+  z-index: 2;
+}
+
+.music-card__body {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
+}
+
+.music-card__body h3,
+.music-card__body .artist,
+.music-card__body .verdict,
+.music-card__body .verdict-meter__label {
+  color: #f2f2f5;
+}
+
+.music-card__body .artist a {
+  color: #f2f2f5;
 }

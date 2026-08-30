@@ -114,19 +114,17 @@ function MusicCard3D({
       <div
         ref={cardRef}
         className="music-card"
-        style={{ transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
+        style={{
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          backgroundImage: thumbnail ? `url(${thumbnail})` : undefined,
+        }}
       >
+        <div className="music-card__art-overlay" />
         <div className="music-card__glow" />
         <div className="music-card__sheen" />
 
         <div className="music-card__body">
-          <div className="album-cover">
-        {thumbnail ? (
-        <img src={thumbnail} alt={title} className="album-cover__img" />
-        ) : (
-       emoji
-       )}
-        </div>
+          {!thumbnail && <div className="music-card__emoji">{emoji}</div>}
 
           <h3>{title}</h3>
 

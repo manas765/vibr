@@ -21,11 +21,6 @@ function ReleaseCard({ release, isHeard, onToggleHeard, isSaved, onToggleSave })
     setTilt({ x: 0, y: 0 });
   }
 
-  const CardTag = release.videoUrl ? "a" : "div";
-  const linkProps = release.videoUrl
-    ? { href: release.videoUrl, target: "_blank", rel: "noopener noreferrer" }
-    : {};
-
   return (
     <div
       className="release-card-scene"
@@ -35,19 +30,19 @@ function ReleaseCard({ release, isHeard, onToggleHeard, isSaved, onToggleSave })
       <div
         ref={cardRef}
         className="release-card"
-        style={{ transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
+        style={{
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          backgroundImage: release.thumbnail ? `url(${release.thumbnail})` : undefined,
+        }}
       >
+        <div className="release-card__art-overlay" />
         <div className="release-card__glow" />
         <div className="release-card__sheen" />
 
         <div className="release-card__body">
-          <CardTag className="release-cover" {...linkProps}>
-            {release.thumbnail ? (
-              <img src={release.thumbnail} alt={release.title} />
-            ) : (
-              release.emoji
-            )}
-          </CardTag>
+          {!release.thumbnail && (
+            <div className="release-card__emoji">{release.emoji}</div>
+          )}
 
           <h2>{release.title}</h2>
 
@@ -71,6 +66,18 @@ function ReleaseCard({ release, isHeard, onToggleHeard, isSaved, onToggleSave })
             >
               {isSaved ? "✓ Saved" : "＋ Save"}
             </button>
+
+            {release.videoUrl && (
+              <a
+                className="release-open-link"
+                href={release.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${release.title} on YouTube`}
+              >
+                ↗
+              </a>
+            )}
           </div>
         </div>
       </div>
