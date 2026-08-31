@@ -10,7 +10,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -55,7 +55,7 @@
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: color: var(--text);
+  color:  var(--text);
   text-align: center;
 }
 

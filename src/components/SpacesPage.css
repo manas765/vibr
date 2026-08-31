@@ -10,7 +10,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -70,7 +70,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 18px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
   line-height: 1.35;
 }
@@ -139,7 +139,7 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: rgba(255, 255, 255, 0.03);
-  color: color: var(--text);
+  color:  var(--text);
 }
 
 .topic-comment-box input::placeholder {

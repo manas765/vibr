@@ -10,7 +10,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color: var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -38,7 +38,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .schedule-tab:hover {
-  color: color: var(--text);
+  color:  var(--text);
   border-color: rgba(242, 242, 245, 0.35);
 }
 

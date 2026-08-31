@@ -15,7 +15,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -62,7 +62,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 22px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 4px 0;
 }
 
@@ -152,7 +152,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 16.5px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 3px 0;
 }
 

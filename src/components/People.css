@@ -10,7 +10,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 6px 0;
 }
 
@@ -64,7 +64,7 @@
   justify-content: center;
   font-family: "Instrument Serif", serif;
   font-size: 22px;
-  color: color: var(--text);
+  color:  var(--text);
   margin-bottom: 14px;
 }
 
@@ -73,7 +73,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 20px;
   font-weight: 400;
-  color: color: var(--text);
+  color:  var(--text);
   margin: 0 0 2px 0;
 }
 
@@ -126,7 +126,7 @@
 .person-card .follow-button {
   background: transparent;
   border: 1px solid rgba(242, 242, 245, 0.25);
-  color: color: var(--text);
+  color: var(--text);
 }
 
 .person-card .follow-button:hover {
