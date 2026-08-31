@@ -7,13 +7,23 @@
 .movie-card {
   position: relative;
   width: 100%;
+  min-height: 260px;
   border-radius: 18px;
-  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-2);
+  background-image: radial-gradient(
+    circle at 35% 30%,
+    rgba(139, 92, 246, 0.2),
+    rgba(20, 20, 28, 0.9) 70%
+  );
   border: 1px solid rgba(139, 92, 246, 0.15);
   overflow: hidden;
   transform-style: preserve-3d;
   transition: transform 120ms ease-out, box-shadow 200ms ease-out;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
 }
 
 .movie-card-scene:hover .movie-card {
@@ -21,6 +31,18 @@
     0 20px 40px rgba(0, 0, 0, 0.55),
     0 0 32px rgba(198, 255, 61, 0.12),
     0 0 0 1px rgba(139, 92, 246, 0.3);
+}
+
+.movie-card__art-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 15, 0.05) 0%,
+    rgba(10, 10, 15, 0.4) 50%,
+    rgba(10, 10, 15, 0.92) 88%
+  );
+  pointer-events: none;
 }
 
 .movie-card__glow {
@@ -43,16 +65,13 @@
 }
 
 .movie-card__thumb {
-  position: relative;
-  transform: translateZ(20px);
-  margin: 16px 16px 0;
-  aspect-ratio: 16 / 10;
-  border-radius: 12px;
-  background: radial-gradient(circle at 35% 30%, rgba(139, 92, 246, 0.2), rgba(20, 20, 28, 0.9) 70%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .movie-card__emoji {
@@ -86,8 +105,8 @@
 
 .movie-card__duration {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
+  top: 14px;
+  right: 14px;
   font-family: "Inter", sans-serif;
   font-size: 10.5px;
   font-weight: 600;
@@ -99,8 +118,10 @@
 
 .movie-card__body {
   position: relative;
+  z-index: 2;
   transform: translateZ(35px);
-  padding: 14px 20px 20px;
+  padding: 16px 20px 20px;
+  width: 100%;
 }
 
 .movie-card__type {
@@ -109,7 +130,7 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #8b5cf6;
+  color: #b79dfa;
   margin-bottom: 4px;
 }
 
@@ -125,7 +146,7 @@
 .movie-card__body p {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  color: #8f8fa3;
+  color: #c8c8d2;
   margin: 0;
 }
 
