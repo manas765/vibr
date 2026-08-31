@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .people-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -64,7 +64,7 @@
   justify-content: center;
   font-family: "Instrument Serif", serif;
   font-size: 22px;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin-bottom: 14px;
 }
 
@@ -73,7 +73,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 20px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 2px 0;
 }
 
@@ -90,7 +90,7 @@
   position: relative;
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #b8b8c2;
+  color: var(--text-soft);
   line-height: 1.5;
   margin: 0 0 14px 0;
 }
@@ -126,7 +126,7 @@
 .person-card .follow-button {
   background: transparent;
   border: 1px solid rgba(242, 242, 245, 0.25);
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .person-card .follow-button:hover {

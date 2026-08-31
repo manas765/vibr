@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .releases-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -38,14 +38,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .releases-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -69,13 +69,13 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: transparent;
-  color: #8f8fa3;
+  color: var(--text-soft);
   cursor: pointer;
   transition: all 150ms ease;
 }
 
 .schedule-tab:hover {
-  color: #f2f2f5;
+  color: color: var(--text);
   border-color: rgba(242, 242, 245, 0.35);
 }
 
@@ -100,7 +100,7 @@
   border-radius: 999px;
   border: 1px solid rgba(139, 92, 246, 0.2);
   background: transparent;
-  color: #8f8fa3;
+  color: var(--text-soft);
   cursor: pointer;
   transition: all 150ms ease;
 }

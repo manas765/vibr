@@ -10,7 +10,7 @@
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #8f8fa3;
+  color: var(--text-soft);
   text-decoration: none;
   margin-bottom: 28px;
   transition: color 150ms ease;
@@ -66,14 +66,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .artist-page-header p {
   font-family: "Inter", sans-serif;
   font-size: 13.5px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -93,7 +93,7 @@
 .artist-page-header .follow-button {
   background: transparent;
   border: 1px solid rgba(242, 242, 245, 0.3);
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .artist-page-header .follow-button:hover {
@@ -114,13 +114,13 @@
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0 0 18px 0;
 }
 
 .artist-page h1 {
   font-family: "Instrument Serif", serif;
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .artist-page-tabs {
@@ -137,13 +137,13 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: transparent;
-  color: #8f8fa3;
+  color: var(--text-soft);
   cursor: pointer;
   transition: all 150ms ease;
 }
 
 .artist-tab:hover:not(:disabled) {
-  color: #f2f2f5;
+  color: color: var(--text);
   border-color: rgba(242, 242, 245, 0.35);
 }
 
@@ -161,7 +161,7 @@
 .artist-empty {
   font-family: "Inter", sans-serif;
   font-size: 13.5px;
-  color: #8f8fa3;
+  color: var(--text-soft);
 }
 .artist-page-header {
   position: relative;

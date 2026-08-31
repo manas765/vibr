@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .feed-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -64,7 +64,7 @@
   justify-content: center;
   font-family: "Instrument Serif", serif;
   font-size: 17px;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -85,14 +85,14 @@
   font-family: "Inter", sans-serif;
   font-size: 14.5px;
   font-weight: 600;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 2px 0;
 }
 
 .user-info p {
   font-family: "Inter", sans-serif;
   font-size: 12.5px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -111,7 +111,7 @@
 .feed-user .follow-button {
   background: transparent;
   border: 1px solid rgba(242, 242, 245, 0.25);
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .feed-user .follow-button:hover {
@@ -149,14 +149,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 19px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 2px 0;
 }
 
 .feed-song p {
   font-family: "Inter", sans-serif;
   font-size: 12.5px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0 0 6px 0;
 }
 
@@ -213,11 +213,11 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: rgba(255, 255, 255, 0.03);
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .comment-box input::placeholder {
-  color: #6b6b78;
+  color: var(--text-muted);
 }
 
 .comment-box input:focus {
@@ -301,7 +301,7 @@
   border-radius: 10px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: rgba(255, 255, 255, 0.03);
-  color: #f2f2f5;
+  color: color: var(--text);
   resize: vertical;
 }
 
@@ -341,13 +341,13 @@
   display: block;
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .composer-result p {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 2px 0 0 0;
 }
 
@@ -368,13 +368,13 @@
   display: block;
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .composer-selected-song p {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 2px 0 0 0;
 }
 
@@ -384,7 +384,7 @@
   font-size: 12px;
   background: none;
   border: 1px solid rgba(242, 242, 245, 0.2);
-  color: #8f8fa3;
+  color: var(--text-soft);
   border-radius: 999px;
   padding: 6px 12px;
   cursor: pointer;
@@ -404,7 +404,7 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: transparent;
-  color: #8f8fa3;
+  color: var(--text-soft);
   cursor: pointer;
 }
 
@@ -444,7 +444,7 @@
 .feed-empty {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #6b6b78;
+  color: var(--text-muted);
 }
 
 .feed-cover img {

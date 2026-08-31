@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .explore-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -46,7 +46,7 @@
   font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0;
 }
 
@@ -101,7 +101,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 15.5px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 2px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -111,7 +111,7 @@
 .pick-card p {
   font-family: "Inter", sans-serif;
   font-size: 11.5px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0 0 10px 0;
   white-space: nowrap;
   overflow: hidden;

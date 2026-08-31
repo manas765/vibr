@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .browse-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -55,7 +55,7 @@
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #f2f2f5;
+  color: color: var(--text);
   text-align: center;
 }
 

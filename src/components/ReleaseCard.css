@@ -78,7 +78,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 20px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: var(--text);
   margin: 0 0 4px 0;
 }
 
@@ -113,7 +113,7 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.3);
   background: rgba(10, 10, 15, 0.35);
-  color: #f2f2f5;
+  color: var(--text);
   cursor: pointer;
   transition: all 150ms ease;
   text-align: center;
@@ -139,7 +139,7 @@
   border-radius: 50%;
   border: 1px solid rgba(242, 242, 245, 0.3);
   background: rgba(10, 10, 15, 0.35);
-  color: #f2f2f5;
+  color:  var(--text);
   display: flex;
   align-items: center;
   justify-content: center;

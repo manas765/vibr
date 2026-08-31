@@ -10,14 +10,14 @@
   font-family: "Instrument Serif", serif;
   font-size: 34px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .spaces-header p {
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0;
 }
 
@@ -70,7 +70,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 18px;
   font-weight: 400;
-  color: #f2f2f5;
+  color: color: var(--text);
   margin: 0 0 6px 0;
   line-height: 1.35;
 }
@@ -78,7 +78,7 @@
 .topic-card__body p {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #8f8fa3;
+  color: var(--text-soft);
   margin: 0 0 12px 0;
 }
 
@@ -139,11 +139,11 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: rgba(255, 255, 255, 0.03);
-  color: #f2f2f5;
+  color: color: var(--text);
 }
 
 .topic-comment-box input::placeholder {
-  color: #6b6b78;
+  color: var(--text-muted);
 }
 
 .topic-comment-box input:focus {
