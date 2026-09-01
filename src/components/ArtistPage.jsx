@@ -12,7 +12,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
   const channelId = location.state?.channelId;
   const decodedName = decodeURIComponent(artistName);
   const [channelThumbnail, setChannelThumbnail] = useState(null);
-
+  const [selectedTrack, setSelectedTrack] = useState(null);
   const [activeTab, setActiveTab] = useState("tracks");
   const [playingMovie, setPlayingMovie] = useState(null);
   const [artistSongs, setArtistSongs] = useState([]);
@@ -125,24 +125,25 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
         </button>
       </div>
 
-      {activeTab === "tracks" && (
+           {activeTab === "tracks" && (
         <div className="music-grid">
           {artistSongs.length === 0 && <p className="artist-empty">No tracks yet.</p>}
           {artistSongs.map((song) => (
-            <MusicCard3D
-              key={song.id}
-              title={song.title}
-              artist={song.artist}
-              channelId={song.channelId}
-              genre="Music"
-              verdict="NEW"
-              emoji="🎵"
-              videoId={song.id}
-              thumbnail={song.thumbnail}
-              embedUrl={song.embedUrl}
-              savedSongs={savedSongs}
-              setSavedSongs={setSavedSongs}
-            />
+            <div key={song.id} onClick={() => setSelectedTrack(song)}>
+              <MusicCard3D
+                title={song.title}
+                artist={song.artist}
+                channelId={song.channelId}
+                genre="Music"
+                verdict="NEW"
+                emoji="🎵"
+                videoId={song.id}
+                thumbnail={song.thumbnail}
+                embedUrl={song.embedUrl}
+                savedSongs={savedSongs}
+                setSavedSongs={setSavedSongs}
+              />
+            </div>
           ))}
         </div>
       )}
@@ -156,7 +157,26 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
         </div>
       )}
 
-      <MovieModal movie={playingMovie} onClose={() => setPlayingMovie(null)} />
+            <MovieModal
+        movie={
+          playingMovie ||
+          (selectedTrack
+            ? {
+                title: selectedTrack.title,
+                artist: selectedTrack.artist,
+                duration: "",
+                type: "Music",
+                videoUrl: selectedTrack.embedUrl,
+                videoId: selectedTrack.id,
+                emoji: "🎵",
+              }
+            : null)
+        }
+        onClose={() => {
+          setPlayingMovie(null);
+          setSelectedTrack(null);
+        }}
+      />
     </section>
   );
 }

@@ -25,10 +25,11 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
   const [loading, setLoading] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState(null);
 
-  const activeQuery = () => {
+    const activeQuery = () => {
+    if (searchTerm) return searchTerm;
     const genre = GENRES.find((g) => g.label === selectedGenre);
     if (genre && genre.query) return genre.query;
-    return searchTerm;
+    return "trending music";
   };
 
   useEffect(() => {
