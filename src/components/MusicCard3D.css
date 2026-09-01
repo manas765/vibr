@@ -65,7 +65,7 @@
   font-family: "Instrument Serif", serif;
   font-size: 21px;
   font-weight: 400;
-  color:  var(--text);
+  color:  #f2f2f5;;
   margin: 0 0 4px 0;
   line-height: 1.15;
 }
@@ -287,7 +287,7 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.25);
   background: transparent;
-  color: var(--text);
+  color: #f2f2f5;;
   cursor: pointer;
   transition: all 150ms ease;
 }
