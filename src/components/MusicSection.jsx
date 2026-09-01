@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import MusicCard3D from "./MusicCard3D";
+import MusicCard3D from "./MusicCard3D"; 
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import MovieModal from "./MovieModal";
