@@ -53,13 +53,15 @@ function App() {
   useEffect(() => {
     if (!user) return;
 
-    supabase
+        supabase
       .from("followed_artists")
       .select("*")
       .eq("user_id", user.id)
       .then(({ data, error }) => {
         if (!error && data) {
-          setFollowedArtists(data.map((row) => row.artist_name));
+          setFollowedArtists(
+            data.map((row) => ({ name: row.artist_name, channelId: row.channel_id }))
+          );
         }
       });
   }, [user]);
@@ -79,10 +81,10 @@ function App() {
       });
   }, [user]);
 
-  const toggleFollowArtist = async (artistName, channelId) => {
+   const toggleFollowArtist = async (artistName, channelId) => {
     if (!user) return;
 
-    const isFollowing = followedArtists.includes(artistName);
+    const isFollowing = followedArtists.some((a) => a.name === artistName);
 
     if (isFollowing) {
       await supabase
@@ -91,16 +93,15 @@ function App() {
         .eq("user_id", user.id)
         .eq("artist_name", artistName);
 
-      setFollowedArtists((current) => current.filter((name) => name !== artistName));
+      setFollowedArtists((current) => current.filter((a) => a.name !== artistName));
     } else {
       await supabase
         .from("followed_artists")
         .insert({ user_id: user.id, artist_name: artistName, channel_id: channelId });
 
-      setFollowedArtists((current) => [...current, artistName]);
+      setFollowedArtists((current) => [...current, { name: artistName, channelId }]);
     }
   };
-
   if (loading) {
     return (
       <div

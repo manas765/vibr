@@ -93,13 +93,14 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
 {followedArtists.length > 0 && (
   <div className="following-strip">
     <span className="following-strip__label">Following:</span>
-    {followedArtists.map((name) => (
+    {followedArtists.map((artist) => (
       <Link
-        key={name}
-        to={`/artist/${encodeURIComponent(name)}`}
+        key={artist.name}
+        to={`/artist/${encodeURIComponent(artist.name)}`}
+        state={{ channelId: artist.channelId }}
         className="following-chip"
       >
-        {name}
+        {artist.name}
       </Link>
     ))}
   </div>

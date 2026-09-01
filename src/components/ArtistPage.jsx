@@ -37,7 +37,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
   }, [channelId]);
 
   const artistMovies = movies.filter((movie) => movie.artist === decodedName);
-  const isFollowing = followedArtists.includes(decodedName);
+  const isFollowing = followedArtists.some((a) => a.name === decodedName);
 
   const heroEmoji = artistMovies[0]?.emoji || "🎵";
 
