@@ -20,6 +20,10 @@ function Feed() {
   const [commentsByReview, setCommentsByReview] = useState({});
   const [commentText, setCommentText] = useState("");
 
+  // { reviewId, commentId } of the comment currently being replied to, or null
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
+
   const [showComposer, setShowComposer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -50,6 +54,7 @@ function Feed() {
   function toggleCommentBox(reviewId) {
     const opening = commentingPost !== reviewId;
     setCommentingPost(opening ? reviewId : null);
+    setReplyingTo(null);
 
     if (opening && !commentsByReview[reviewId]) {
       supabase
@@ -65,8 +70,9 @@ function Feed() {
     }
   }
 
-  async function postComment(reviewId) {
-    if (!commentText.trim() || !currentUser) return;
+  async function postComment(reviewId, parentCommentId = null) {
+    const text = parentCommentId ? replyText : commentText;
+    if (!text.trim() || !currentUser) return;
 
     const { data: profile } = await supabase
       .from("profiles")
@@ -80,7 +86,8 @@ function Feed() {
         user_id: currentUser.id,
         username: profile?.username || "Anonymous",
         review_id: reviewId,
-        comment_text: commentText.trim(),
+        comment_text: text.trim(),
+        parent_comment_id: parentCommentId,
       })
       .select();
 
@@ -89,7 +96,13 @@ function Feed() {
         ...prev,
         [reviewId]: [...(prev[reviewId] || []), data[0]],
       }));
-      setCommentText("");
+
+      if (parentCommentId) {
+        setReplyText("");
+        setReplyingTo(null);
+      } else {
+        setCommentText("");
+      }
     }
   }
 
@@ -243,100 +256,149 @@ function Feed() {
           <p className="feed-empty">No reviews yet. Be the first to write one!</p>
         )}
 
-        {reviews.map((post) => (
-          <div className="feed-card" key={post.id}>
-            <div className="feed-user">
-              <div className="user-avatar">
-                {post.username ? post.username.slice(0, 1).toUpperCase() : "?"}
-              </div>
+        {reviews.map((post) => {
+          const allComments = commentsByReview[post.id] || [];
+          const topLevel = allComments.filter((c) => !c.parent_comment_id);
+          const repliesOf = (commentId) =>
+            allComments.filter((c) => c.parent_comment_id === commentId);
 
-              <div className="user-info">
-                <div>
-                  <h3>{post.username || "Anonymous"}</h3>
-                  <p>reviewed</p>
+          return (
+            <div className="feed-card" key={post.id}>
+              <div className="feed-user">
+                <div className="user-avatar">
+                  {post.username ? post.username.slice(0, 1).toUpperCase() : "?"}
                 </div>
 
-                {currentUser?.id === post.user_id ? (
-                  <button className="follow-button" onClick={() => deleteReview(post.id)}>
-                    Delete
-                  </button>
-                ) : (
-                  <button
-                    className={followedUsers.includes(post.username) ? "following" : "follow-button"}
-                    onClick={() => {
-                      setFollowedUsers(
-                        followedUsers.includes(post.username)
-                          ? followedUsers.filter((u) => u !== post.username)
-                          : [...followedUsers, post.username]
-                      );
-                    }}
-                  >
-                    {followedUsers.includes(post.username) ? "Following" : "Follow"}
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <div className="feed-song">
-              <div className="feed-cover">
-                {post.thumbnail ? (
-                  <img src={post.thumbnail} alt={post.song_title} />
-                ) : (
-                  "🎵"
-                )}
-              </div>
-
-              <div>
-                <h2>{post.song_title}</h2>
-                <p>{post.artist} · {post.genre}</p>
-                <span className="feed-verdict">{post.verdict}</span>
-              </div>
-            </div>
-
-            <p className="feed-review-text">{post.review_text}</p>
-
-            <div className="feed-actions">
-              <button
-                onClick={() => {
-                  setLikedPosts(
-                    likedPosts.includes(post.id)
-                      ? likedPosts.filter((id) => id !== post.id)
-                      : [...likedPosts, post.id]
-                  );
-                }}
-                className={likedPosts.includes(post.id) ? "liked" : ""}
-              >
-                {likedPosts.includes(post.id) ? "❤️ Liked" : "♡ Like"}
-              </button>
-
-              <button onClick={() => toggleCommentBox(post.id)}>💬 Comment</button>
-            </div>
-
-            {commentingPost === post.id && (
-              <div className="comment-box">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && postComment(post.id)}
-                />
-                <button onClick={() => postComment(post.id)}>Post</button>
-              </div>
-            )}
-
-            {commentsByReview[post.id]?.length > 0 && (
-              <div className="comments-list">
-                {commentsByReview[post.id].map((c) => (
-                  <div className="comment" key={c.id}>
-                    <strong>{c.username || "Anonymous"}</strong>
-                    <p>{c.comment_text}</p>
+                <div className="user-info">
+                  <div>
+                    <h3>{post.username || "Anonymous"}</h3>
+                    <p>reviewed</p>
                   </div>
-                ))}
+
+                  {currentUser?.id === post.user_id ? (
+                    <button className="follow-button" onClick={() => deleteReview(post.id)}>
+                      Delete
+                    </button>
+                  ) : (
+                    <button
+                      className={followedUsers.includes(post.username) ? "following" : "follow-button"}
+                      onClick={() => {
+                        setFollowedUsers(
+                          followedUsers.includes(post.username)
+                            ? followedUsers.filter((u) => u !== post.username)
+                            : [...followedUsers, post.username]
+                        );
+                      }}
+                    >
+                      {followedUsers.includes(post.username) ? "Following" : "Follow"}
+                    </button>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        ))}
+
+              <div className="feed-song">
+                <div className="feed-cover">
+                  {post.thumbnail ? (
+                    <img src={post.thumbnail} alt={post.song_title} />
+                  ) : (
+                    "🎵"
+                  )}
+                </div>
+
+                <div>
+                  <h2>{post.song_title}</h2>
+                  <p>{post.artist} · {post.genre}</p>
+                  <span className="feed-verdict">{post.verdict}</span>
+                </div>
+              </div>
+
+              <p className="feed-review-text">{post.review_text}</p>
+
+              <div className="feed-actions">
+                <button
+                  onClick={() => {
+                    setLikedPosts(
+                      likedPosts.includes(post.id)
+                        ? likedPosts.filter((id) => id !== post.id)
+                        : [...likedPosts, post.id]
+                    );
+                  }}
+                  className={likedPosts.includes(post.id) ? "liked" : ""}
+                >
+                  {likedPosts.includes(post.id) ? "❤️ Liked" : "♡ Like"}
+                </button>
+
+                <button onClick={() => toggleCommentBox(post.id)}>💬 Comment</button>
+              </div>
+
+              {commentingPost === post.id && (
+                <div className="comment-box">
+                  <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && postComment(post.id)}
+                  />
+                  <button onClick={() => postComment(post.id)}>Post</button>
+                </div>
+              )}
+
+              {topLevel.length > 0 && (
+                <div className="comments-list">
+                  {topLevel.map((c) => (
+                    <div className="comment" key={c.id}>
+                      <strong>{c.username || "Anonymous"}</strong>
+                      <p>{c.comment_text}</p>
+
+                      {currentUser && (
+                        <button
+                          className="comment-reply-toggle"
+                          onClick={() =>
+                            setReplyingTo(
+                              replyingTo?.commentId === c.id
+                                ? null
+                                : { reviewId: post.id, commentId: c.id }
+                            )
+                          }
+                        >
+                          Reply
+                        </button>
+                      )}
+
+                      {replyingTo?.commentId === c.id && (
+                        <div className="comment-box comment-box--reply">
+                          <input
+                            type="text"
+                            placeholder={`Reply to ${c.username || "Anonymous"}...`}
+                            value={replyText}
+                            onChange={(e) => setReplyText(e.target.value)}
+                            onKeyDown={(e) =>
+                              e.key === "Enter" && postComment(post.id, c.id)
+                            }
+                            autoFocus
+                          />
+                          <button onClick={() => postComment(post.id, c.id)}>Post</button>
+                        </div>
+                      )}
+
+                      {repliesOf(c.id).length > 0 && (
+                        <div className="comment-replies">
+                          {repliesOf(c.id).map((r) => (
+                            <div className="comment comment--reply" key={r.id}>
+                              <strong>{r.username || "Anonymous"}</strong>
+                              <p>{r.comment_text}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

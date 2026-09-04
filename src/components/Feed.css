@@ -453,3 +453,37 @@
   object-fit: cover;
   border-radius: inherit;
 }
+.comment-reply-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: "Inter", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 2px;
+}
+
+.comment-reply-toggle:hover {
+  color: #c6ff3d;
+}
+
+.comment-box--reply {
+  margin-top: 8px;
+  margin-left: 0;
+}
+
+.comment-replies {
+  margin-top: 10px;
+  margin-left: 22px;
+  padding-left: 14px;
+  border-left: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment--reply {
+  padding: 0;
+}
