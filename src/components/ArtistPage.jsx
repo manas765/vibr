@@ -5,6 +5,7 @@ import MusicCard3D from "./MusicCard3D";
 import MovieCard from "./MovieCard";
 import MovieModal from "./MovieModal";
 import "./ArtistPage.css";
+import ArtistCommunity from "./ArtistCommunity";
 
 function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowArtist }) {
   const { artistName } = useParams();
@@ -109,7 +110,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
 </div>
 
 
-      <div className="artist-page-tabs">
+            <div className="artist-page-tabs">
         <button
           className={activeTab === "tracks" ? "artist-tab active" : "artist-tab"}
           onClick={() => setActiveTab("tracks")}
@@ -122,6 +123,12 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
           disabled={artistMovies.length === 0}
         >
           Movie Albums {artistMovies.length > 0 && `(${artistMovies.length})`}
+        </button>
+        <button
+          className={activeTab === "community" ? "artist-tab active" : "artist-tab"}
+          onClick={() => setActiveTab("community")}
+        >
+          Community
         </button>
       </div>
 
@@ -156,6 +163,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
           ))}
         </div>
       )}
+      {activeTab === "community" && <ArtistCommunity artistName={decodedName} />}
 
             <MovieModal
         movie={

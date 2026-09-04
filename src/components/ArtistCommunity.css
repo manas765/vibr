@@ -1,0 +1,149 @@
+.artist-community {
+  margin-top: 8px;
+}
+
+.artist-community__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.artist-community__header h3 {
+  font-family: "Instrument Serif", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 4px 0;
+}
+
+.artist-community__header p {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.artist-community__new-post {
+  flex-shrink: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #c6ff3d;
+  color: #0a0a0f;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.artist-community__new-post:hover {
+  box-shadow: 0 0 20px rgba(198, 255, 61, 0.35);
+}
+
+.artist-community__composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border-light);
+  margin-bottom: 20px;
+}
+
+.artist-community__composer input,
+.artist-community__composer textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text);
+  resize: vertical;
+}
+
+.artist-community__composer input:focus,
+.artist-community__composer textarea:focus {
+  outline: none;
+  border-color: #c6ff3d;
+}
+
+.artist-community__composer button {
+  align-self: flex-end;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #c6ff3d;
+  color: #0a0a0f;
+  cursor: pointer;
+}
+
+.artist-community__composer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.artist-community__empty {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.artist-community__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.artist-community__post {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.artist-community__post:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+}
+
+.artist-community__post-main h4 {
+  font-family: "Instrument Serif", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 4px 0;
+}
+
+.artist-community__post-main p {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.artist-community__post-meta {
+  display: flex;
+  gap: 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
