@@ -5,17 +5,11 @@
 ### A social platform for discovering, exploring, and experiencing music.
 
 <p>
-  <a href="https://vibr-tau.vercel.app/">
-    <strong>Live Demo</strong>
-  </a>
+  <a href="https://vibr-tau.vercel.app/"><strong>Live Demo</strong></a>
   ·
-  <a href="https://github.com/manas765/vibr/issues">
-    Report a Bug
-  </a>
+  <a href="https://github.com/manas765/vibr/issues">Report a Bug</a>
   ·
-  <a href="https://github.com/manas765/vibr/issues">
-    Request a Feature
-  </a>
+  <a href="https://github.com/manas765/vibr/issues">Request a Feature</a>
 </p>
 
 ![React](https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
@@ -25,9 +19,9 @@
 
 </div>
 
-<br />
+---
 
-![VIBR Discover Page](./public/screenshots/discover.png)
+![VIBR Discover Page](./screenshots/discover.png)
 
 ---
 
@@ -73,9 +67,11 @@ Explore artists through dedicated profile pages.
 
 <div align="center">
 
-<img src="./public/screenshots/artist-page.png" alt="VIBR Artist Page" width="100%" />
+<img src="./screenshots/artist-page.png" alt="VIBR Artist Page" width="100%" />
 
 </div>
+
+---
 
 ### Spaces
 
@@ -89,9 +85,11 @@ Stay connected with what is happening in music through VIBR Spaces.
 
 <div align="center">
 
-<img src="./public/screenshots/spaces.png" alt="VIBR Spaces" width="75%" />
+<img src="./screenshots/spaces.png" alt="VIBR Spaces" width="75%" />
 
 </div>
+
+---
 
 ### Personal Music Experience
 
