@@ -148,7 +148,7 @@ function App() {
       <header className="topbar">
         <input
           type="text"
-          placeholder="Search your Music, Albums, Artists, Genres............."
+          placeholder="Search your Music, Albums, Artists, Genres..........5:30"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
