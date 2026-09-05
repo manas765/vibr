@@ -1,13 +1,16 @@
 .messages-page {
+  height: 100vh;
+}
+
+.messages-layout {
   display: flex;
-  height: calc(100vh - 40px);
-  margin: 20px 30px;
+  height: calc(100vh - 90px);
+  margin: 12px 30px 20px;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface);
 }
-
 .messages-sidebar {
   width: 280px;
   flex-shrink: 0;

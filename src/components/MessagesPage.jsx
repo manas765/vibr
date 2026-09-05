@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./MessagesPage.css";
 
@@ -34,8 +35,8 @@ function MessagesPage() {
   function loadFollowing(userId) {
     setLoadingFollowing(true);
     supabase
-      .from("user_follows")
-      .select("following_id")
+      .from("followed_users")
+      .select("followed_id")
       .eq("follower_id", userId)
       .then(async ({ data, error }) => {
         if (error || !data || data.length === 0) {
@@ -44,7 +45,7 @@ function MessagesPage() {
           return;
         }
 
-        const ids = data.map((row) => row.following_id);
+        const ids = data.map((row) => row.followed_id);
         const { data: profiles } = await supabase
           .from("profiles")
           .select("id, username")
@@ -127,87 +128,93 @@ function MessagesPage() {
 
   return (
     <section className="messages-page">
-      <div className="messages-sidebar">
-        <h1>Messages</h1>
-        <p className="messages-sidebar__hint">People you follow</p>
+      <Link to="/" className="back-link" style={{ margin: "20px 0 0 24px" }}>
+        ← Back to Discover
+      </Link>
 
-        {loadingFollowing && <p className="messages-empty">Loading...</p>}
+      <div className="messages-layout">
+        <div className="messages-sidebar">
+          <h1>Messages</h1>
+          <p className="messages-sidebar__hint">People you follow</p>
 
-        {!loadingFollowing && following.length === 0 && (
-          <p className="messages-empty">
-            You're not following anyone yet. Follow someone from your Feed to message them.
-          </p>
-        )}
+          {loadingFollowing && <p className="messages-empty">Loading...</p>}
 
-        <div className="messages-contact-list">
-          {following.map((contact) => (
-            <button
-              key={contact.id}
-              className={
-                activeContact?.id === contact.id
-                  ? "messages-contact active"
-                  : "messages-contact"
-              }
-              onClick={() => setActiveContact(contact)}
-            >
-              <div className="messages-contact__avatar">
-                {contact.username ? contact.username.slice(0, 1).toUpperCase() : "?"}
-              </div>
-              <span>{contact.username || "Anonymous"}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+          {!loadingFollowing && following.length === 0 && (
+            <p className="messages-empty">
+              You're not following anyone yet. Follow someone from People or your Feed to message them.
+            </p>
+          )}
 
-      <div className="messages-thread">
-        {!activeContact && (
-          <div className="messages-thread__placeholder">
-            <p>Select someone you follow to start chatting.</p>
-          </div>
-        )}
-
-        {activeContact && (
-          <>
-            <div className="messages-thread__header">
-              <div className="messages-contact__avatar">
-                {activeContact.username ? activeContact.username.slice(0, 1).toUpperCase() : "?"}
-              </div>
-              <h2>{activeContact.username || "Anonymous"}</h2>
-            </div>
-
-            <div className="messages-thread__body" ref={scrollRef}>
-              {messages.length === 0 && (
-                <p className="messages-empty">No messages yet. Say hi!</p>
-              )}
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={
-                    m.sender_id === currentUser?.id
-                      ? "message-bubble message-bubble--mine"
-                      : "message-bubble"
-                  }
-                >
-                  <p>{m.message_text}</p>
-                  <span>{timeLabel(m.created_at)}</span>
+          <div className="messages-contact-list">
+            {following.map((contact) => (
+              <button
+                key={contact.id}
+                className={
+                  activeContact?.id === contact.id
+                    ? "messages-contact active"
+                    : "messages-contact"
+                }
+                onClick={() => setActiveContact(contact)}
+              >
+                <div className="messages-contact__avatar">
+                  {contact.username ? contact.username.slice(0, 1).toUpperCase() : "?"}
                 </div>
-              ))}
-            </div>
-
-            <div className="messages-thread__composer">
-              <input
-                type="text"
-                placeholder="Type a message..."
-                value={messageText}
-                onChange={(e) => setMessageText(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              />
-              <button onClick={sendMessage} disabled={sending || !messageText.trim()}>
-                Send
+                <span>{contact.username || "Anonymous"}</span>
               </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="messages-thread">
+          {!activeContact && (
+            <div className="messages-thread__placeholder">
+              <p>Select someone you follow to start chatting.</p>
             </div>
-          </>
-        )}
+          )}
+
+          {activeContact && (
+            <>
+              <div className="messages-thread__header">
+                <div className="messages-contact__avatar">
+                  {activeContact.username ? activeContact.username.slice(0, 1).toUpperCase() : "?"}
+                </div>
+                <h2>{activeContact.username || "Anonymous"}</h2>
+              </div>
+
+              <div className="messages-thread__body" ref={scrollRef}>
+                {messages.length === 0 && (
+                  <p className="messages-empty">No messages yet. Say hi!</p>
+                )}
+                {messages.map((m) => (
+                  <div
+                    key={m.id}
+                    className={
+                      m.sender_id === currentUser?.id
+                        ? "message-bubble message-bubble--mine"
+                        : "message-bubble"
+                    }
+                  >
+                    <p>{m.message_text}</p>
+                    <span>{timeLabel(m.created_at)}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="messages-thread__composer">
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                />
+                <button onClick={sendMessage} disabled={sending || !messageText.trim()}>
+                  Send
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </section>
   );

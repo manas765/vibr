@@ -15,7 +15,7 @@ function Feed() {
   const [currentUser, setCurrentUser] = useState(null);
 
   const [likedPosts, setLikedPosts] = useState([]);
-  const [followingIds, setFollowingIds] = useState([]);
+  const [followedIds, setFollowedIds] = useState([]);
   const [commentingPost, setCommentingPost] = useState(null);
   const [commentsByReview, setCommentsByReview] = useState({});
   const [commentText, setCommentText] = useState("");
@@ -35,40 +35,40 @@ function Feed() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUser(user);
-      if (user) loadFollowing(user.id);
+      if (user) loadFollows(user);
     });
     loadReviews();
   }, []);
 
-  function loadFollowing(userId) {
+  function loadFollows(user) {
     supabase
-      .from("user_follows")
-      .select("following_id")
-      .eq("follower_id", userId)
+      .from("followed_users")
+      .select("followed_id")
+      .eq("follower_id", user.id)
       .then(({ data, error }) => {
-        if (!error) setFollowingIds((data || []).map((row) => row.following_id));
+        if (!error) setFollowedIds((data || []).map((row) => row.followed_id));
       });
   }
 
-  async function toggleFollowUser(userId) {
-    if (!currentUser || userId === currentUser.id) return;
+  async function toggleFollowUser(personId) {
+    if (!currentUser || personId === currentUser.id) return;
 
-    const isFollowing = followingIds.includes(userId);
+    const isFollowing = followedIds.includes(personId);
 
     if (isFollowing) {
       await supabase
-        .from("user_follows")
+        .from("followed_users")
         .delete()
         .eq("follower_id", currentUser.id)
-        .eq("following_id", userId);
+        .eq("followed_id", personId);
 
-      setFollowingIds((current) => current.filter((id) => id !== userId));
+      setFollowedIds((current) => current.filter((id) => id !== personId));
     } else {
       await supabase
-        .from("user_follows")
-        .insert({ follower_id: currentUser.id, following_id: userId });
+        .from("followed_users")
+        .insert({ follower_id: currentUser.id, followed_id: personId });
 
-      setFollowingIds((current) => [...current, userId]);
+      setFollowedIds((current) => [...current, personId]);
     }
   }
 
@@ -314,10 +314,10 @@ function Feed() {
                     </button>
                   ) : (
                     <button
-                      className={followingIds.includes(post.user_id) ? "following" : "follow-button"}
+                      className={followedIds.includes(post.user_id) ? "following" : "follow-button"}
                       onClick={() => toggleFollowUser(post.user_id)}
                     >
-                      {followingIds.includes(post.user_id) ? "Following" : "Follow"}
+                      {followedIds.includes(post.user_id) ? "Following" : "Follow"}
                     </button>
                   )}
                 </div>
