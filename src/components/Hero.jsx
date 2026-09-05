@@ -1,10 +1,45 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
+
+const FALLBACK_ALBUMS = [
+  { title: "After Hours", artist: "The Weeknd", emoji: "🌃", verdict: "🔥 GOD LEVEL", accent: "purple" },
+  { title: "Snooze", artist: "SZA", emoji: "🌊", verdict: "💜 PERFECT", accent: "blue" },
+];
 
 function Hero() {
   const stageRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [albums, setAlbums] = useState(FALLBACK_ALBUMS);
+
+  useEffect(() => {
+    fetch("/api/youtube-search?q=trending music")
+      .then((r) => r.json())
+      .then((data) => {
+        const tracks = data.tracks || [];
+        if (tracks.length >= 2) {
+          setAlbums([
+            {
+              title: tracks[0].title,
+              artist: tracks[0].artist,
+              thumbnail: tracks[0].thumbnail,
+              verdict: "🔥 GOD LEVEL",
+              accent: "purple",
+            },
+            {
+              title: tracks[1].title,
+              artist: tracks[1].artist,
+              thumbnail: tracks[1].thumbnail,
+              verdict: "💜 PERFECT",
+              accent: "blue",
+            },
+          ]);
+        }
+      })
+      .catch(() => {
+        // keep the fallback data — this is decorative, not worth surfacing an error for
+      });
+  }, []);
 
   function handleMouseMove(e) {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -148,7 +183,7 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* Floating album card */}
+        {/* Floating album card — left */}
         <motion.div
           className="floating-album album-left liquid-glass"
           animate={{
@@ -161,12 +196,19 @@ function Hero() {
             ease: "easeInOut",
           }}
         >
-          <div className="album-art album-purple">🌃</div>
-          <strong>After Hours</strong>
-          <small>The Weeknd</small>
-          <span className="album-verdict">🔥 GOD LEVEL</span>
+          <div className={`album-art album-${albums[0].accent}`}>
+            {albums[0].thumbnail ? (
+              <img src={albums[0].thumbnail} alt={albums[0].title} />
+            ) : (
+              albums[0].emoji
+            )}
+          </div>
+          <strong>{albums[0].title}</strong>
+          <small>{albums[0].artist}</small>
+          <span className="album-verdict">{albums[0].verdict}</span>
         </motion.div>
 
+        {/* Floating album card — right */}
         <motion.div
           className="floating-album album-right liquid-glass"
           animate={{
@@ -179,10 +221,16 @@ function Hero() {
             ease: "easeInOut",
           }}
         >
-          <div className="album-art album-blue">🌊</div>
-          <strong>Snooze</strong>
-          <small>SZA</small>
-          <span className="album-verdict purple">💜 PERFECT</span>
+          <div className={`album-art album-${albums[1].accent}`}>
+            {albums[1].thumbnail ? (
+              <img src={albums[1].thumbnail} alt={albums[1].title} />
+            ) : (
+              albums[1].emoji
+            )}
+          </div>
+          <strong>{albums[1].title}</strong>
+          <small>{albums[1].artist}</small>
+          <span className="album-verdict purple">{albums[1].verdict}</span>
         </motion.div>
       </div>
 
