@@ -18,6 +18,7 @@ import SpacesPage from "./components/SpacesPage";
 import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./components/AuthPage";
 import { supabase } from "./supabaseClient";
+import MessagesPage from "./components/MessagesPage";
 
 
 function App() {
@@ -157,6 +158,11 @@ function App() {
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
           </svg>
         </Link>
+                <Link to="/messages" className="notification-bell__button" style={{ textDecoration: "none" }} title="Messages">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-4 4V6c0-1.1.9-2 2-2z" />
+          </svg>
+        </Link>
 
         <button
           className="theme-toggle"
@@ -261,6 +267,14 @@ function App() {
               element={
                 <PageTransition>
                   <SpacesPage />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/messages"
+              element={
+                <PageTransition>
+                  <MessagesPage />
                 </PageTransition>
               }
             />

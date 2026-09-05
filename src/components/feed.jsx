@@ -15,7 +15,7 @@ function Feed() {
   const [currentUser, setCurrentUser] = useState(null);
 
   const [likedPosts, setLikedPosts] = useState([]);
-  const [followedUsers, setFollowedUsers] = useState([]);
+  const [followingIds, setFollowingIds] = useState([]);
   const [commentingPost, setCommentingPost] = useState(null);
   const [commentsByReview, setCommentsByReview] = useState({});
   const [commentText, setCommentText] = useState("");
@@ -35,9 +35,42 @@ function Feed() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUser(user);
+      if (user) loadFollowing(user.id);
     });
     loadReviews();
   }, []);
+
+  function loadFollowing(userId) {
+    supabase
+      .from("user_follows")
+      .select("following_id")
+      .eq("follower_id", userId)
+      .then(({ data, error }) => {
+        if (!error) setFollowingIds((data || []).map((row) => row.following_id));
+      });
+  }
+
+  async function toggleFollowUser(userId) {
+    if (!currentUser || userId === currentUser.id) return;
+
+    const isFollowing = followingIds.includes(userId);
+
+    if (isFollowing) {
+      await supabase
+        .from("user_follows")
+        .delete()
+        .eq("follower_id", currentUser.id)
+        .eq("following_id", userId);
+
+      setFollowingIds((current) => current.filter((id) => id !== userId));
+    } else {
+      await supabase
+        .from("user_follows")
+        .insert({ follower_id: currentUser.id, following_id: userId });
+
+      setFollowingIds((current) => [...current, userId]);
+    }
+  }
 
   function loadReviews() {
     setLoading(true);
@@ -281,16 +314,10 @@ function Feed() {
                     </button>
                   ) : (
                     <button
-                      className={followedUsers.includes(post.username) ? "following" : "follow-button"}
-                      onClick={() => {
-                        setFollowedUsers(
-                          followedUsers.includes(post.username)
-                            ? followedUsers.filter((u) => u !== post.username)
-                            : [...followedUsers, post.username]
-                        );
-                      }}
+                      className={followingIds.includes(post.user_id) ? "following" : "follow-button"}
+                      onClick={() => toggleFollowUser(post.user_id)}
                     >
-                      {followedUsers.includes(post.username) ? "Following" : "Follow"}
+                      {followingIds.includes(post.user_id) ? "Following" : "Follow"}
                     </button>
                   )}
                 </div>
