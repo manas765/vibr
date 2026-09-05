@@ -24,6 +24,10 @@ function Feed() {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState("");
 
+  // comment_id -> like count, and the set of comment ids the current user has liked
+  const [commentLikeCounts, setCommentLikeCounts] = useState({});
+  const [likedCommentIds, setLikedCommentIds] = useState([]);
+
   const [showComposer, setShowComposer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -97,9 +101,63 @@ function Feed() {
         .order("created_at", { ascending: true })
         .then(({ data, error }) => {
           if (!error) {
-            setCommentsByReview((prev) => ({ ...prev, [reviewId]: data || [] }));
+            const comments = data || [];
+            setCommentsByReview((prev) => ({ ...prev, [reviewId]: comments }));
+            loadCommentLikes(comments.map((c) => c.id));
           }
         });
+    }
+  }
+
+  function loadCommentLikes(commentIds) {
+    if (!commentIds || commentIds.length === 0) return;
+
+    supabase
+      .from("comment_likes")
+      .select("comment_id, user_id")
+      .in("comment_id", commentIds)
+      .then(({ data, error }) => {
+        if (error || !data) return;
+
+        const counts = {};
+        const mine = [];
+        data.forEach((row) => {
+          counts[row.comment_id] = (counts[row.comment_id] || 0) + 1;
+          if (currentUser && row.user_id === currentUser.id) mine.push(row.comment_id);
+        });
+
+        setCommentLikeCounts((prev) => ({ ...prev, ...counts }));
+        setLikedCommentIds((prev) => [...new Set([...prev, ...mine])]);
+      });
+  }
+
+  async function toggleCommentLike(commentId) {
+    if (!currentUser) return;
+
+    const isLiked = likedCommentIds.includes(commentId);
+
+    if (isLiked) {
+      await supabase
+        .from("comment_likes")
+        .delete()
+        .eq("comment_id", commentId)
+        .eq("user_id", currentUser.id);
+
+      setLikedCommentIds((prev) => prev.filter((id) => id !== commentId));
+      setCommentLikeCounts((prev) => ({
+        ...prev,
+        [commentId]: Math.max(0, (prev[commentId] || 1) - 1),
+      }));
+    } else {
+      await supabase
+        .from("comment_likes")
+        .insert({ comment_id: commentId, user_id: currentUser.id });
+
+      setLikedCommentIds((prev) => [...prev, commentId]);
+      setCommentLikeCounts((prev) => ({
+        ...prev,
+        [commentId]: (prev[commentId] || 0) + 1,
+      }));
     }
   }
 
@@ -295,6 +353,65 @@ function Feed() {
           const repliesOf = (commentId) =>
             allComments.filter((c) => c.parent_comment_id === commentId);
 
+          const renderComment = (c, isReply) => (
+            <div className={isReply ? "comment comment--reply" : "comment"} key={c.id}>
+              <strong>{c.username || "Anonymous"}</strong>
+              <p>{c.comment_text}</p>
+
+              <div className="comment-actions">
+                <button
+                  className={
+                    likedCommentIds.includes(c.id)
+                      ? "comment-like-button liked"
+                      : "comment-like-button"
+                  }
+                  onClick={() => toggleCommentLike(c.id)}
+                  disabled={!currentUser}
+                >
+                  {likedCommentIds.includes(c.id) ? "❤️" : "♡"}
+                  {commentLikeCounts[c.id] > 0 && (
+                    <span>{commentLikeCounts[c.id]}</span>
+                  )}
+                </button>
+
+                {!isReply && currentUser && (
+                  <button
+                    className="comment-reply-toggle"
+                    onClick={() =>
+                      setReplyingTo(
+                        replyingTo?.commentId === c.id
+                          ? null
+                          : { reviewId: post.id, commentId: c.id }
+                      )
+                    }
+                  >
+                    ↩ Reply
+                  </button>
+                )}
+              </div>
+
+              {!isReply && replyingTo?.commentId === c.id && (
+                <div className="comment-box comment-box--reply">
+                  <input
+                    type="text"
+                    placeholder={`Reply to ${c.username || "Anonymous"}...`}
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && postComment(post.id, c.id)}
+                    autoFocus
+                  />
+                  <button onClick={() => postComment(post.id, c.id)}>Post</button>
+                </div>
+              )}
+
+              {!isReply && repliesOf(c.id).length > 0 && (
+                <div className="comment-replies">
+                  {repliesOf(c.id).map((r) => renderComment(r, true))}
+                </div>
+              )}
+            </div>
+          );
+
           return (
             <div className="feed-card" key={post.id}>
               <div className="feed-user">
@@ -373,54 +490,7 @@ function Feed() {
 
               {topLevel.length > 0 && (
                 <div className="comments-list">
-                  {topLevel.map((c) => (
-                    <div className="comment" key={c.id}>
-                      <strong>{c.username || "Anonymous"}</strong>
-                      <p>{c.comment_text}</p>
-
-                      {currentUser && (
-                        <button
-                          className="comment-reply-toggle"
-                          onClick={() =>
-                            setReplyingTo(
-                              replyingTo?.commentId === c.id
-                                ? null
-                                : { reviewId: post.id, commentId: c.id }
-                            )
-                          }
-                        >
-                          Reply
-                        </button>
-                      )}
-
-                      {replyingTo?.commentId === c.id && (
-                        <div className="comment-box comment-box--reply">
-                          <input
-                            type="text"
-                            placeholder={`Reply to ${c.username || "Anonymous"}...`}
-                            value={replyText}
-                            onChange={(e) => setReplyText(e.target.value)}
-                            onKeyDown={(e) =>
-                              e.key === "Enter" && postComment(post.id, c.id)
-                            }
-                            autoFocus
-                          />
-                          <button onClick={() => postComment(post.id, c.id)}>Post</button>
-                        </div>
-                      )}
-
-                      {repliesOf(c.id).length > 0 && (
-                        <div className="comment-replies">
-                          {repliesOf(c.id).map((r) => (
-                            <div className="comment comment--reply" key={r.id}>
-                              <strong>{r.username || "Anonymous"}</strong>
-                              <p>{r.comment_text}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                  {topLevel.map((c) => renderComment(c, false))}
                 </div>
               )}
             </div>
