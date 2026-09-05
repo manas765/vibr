@@ -14,6 +14,7 @@ function timeLabel(dateString) {
 
 function MessagesPage() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [myUsername, setMyUsername] = useState("Anonymous");
   const [following, setFollowing] = useState([]); // [{id, username}]
   const [loadingFollowing, setLoadingFollowing] = useState(true);
 
@@ -28,7 +29,15 @@ function MessagesPage() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUser(user);
-      if (user) loadFollowing(user.id);
+      if (user) {
+        loadFollowing(user.id);
+        supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", user.id)
+          .single()
+          .then(({ data }) => setMyUsername(data?.username || "Anonymous"));
+      }
     });
   }, []);
 
@@ -123,6 +132,17 @@ function MessagesPage() {
     if (!error && data) {
       setMessages((prev) => [...prev, data[0]]);
       setMessageText("");
+
+      supabase
+        .from("notifications")
+        .insert({
+          user_id: activeContact.id,
+          actor_username: myUsername,
+          type: "message",
+          message: "sent you a message",
+          link: "/messages",
+        })
+        .then(() => {});
     }
   }
 

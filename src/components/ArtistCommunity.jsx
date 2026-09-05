@@ -14,7 +14,7 @@ function timeAgo(dateString) {
   return `${days}d ago`;
 }
 
-function ArtistCommunity({ artistName }) {
+function ArtistCommunity({ artistName, channelId }) {
   const [posts, setPosts] = useState([]);
   const [replyCounts, setReplyCounts] = useState({});
   const [loading, setLoading] = useState(true);
@@ -180,6 +180,7 @@ function ArtistCommunity({ artistName }) {
         post={openPost}
         currentUser={currentUser}
         username={username}
+        channelId={channelId}
         onClose={() => {
           setOpenPost(null);
           loadPosts();

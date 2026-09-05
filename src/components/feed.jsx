@@ -188,6 +188,29 @@ function Feed() {
         [reviewId]: [...(prev[reviewId] || []), data[0]],
       }));
 
+      // Notify whoever this comment/reply is directed at
+      let recipientId = null;
+      if (parentCommentId) {
+        const parent = (commentsByReview[reviewId] || []).find((c) => c.id === parentCommentId);
+        recipientId = parent?.user_id;
+      } else {
+        const review = reviews.find((r) => r.id === reviewId);
+        recipientId = review?.user_id;
+      }
+
+      if (recipientId && recipientId !== currentUser.id) {
+        supabase
+          .from("notifications")
+          .insert({
+            user_id: recipientId,
+            actor_username: profile?.username || "Anonymous",
+            type: "comment_reply",
+            message: parentCommentId ? "replied to your comment" : "commented on your review",
+            link: "/?page=feed",
+          })
+          .then(() => {});
+      }
+
       if (parentCommentId) {
         setReplyText("");
         setReplyingTo(null);

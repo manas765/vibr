@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, useSearchParams, Link } from "react-router-dom";
 import { movies } from "../data/movies";
 import MusicCard3D from "./MusicCard3D";
 import MovieCard from "./MovieCard";
@@ -10,7 +10,8 @@ import ArtistCommunity from "./ArtistCommunity";
 function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowArtist }) {
   const { artistName } = useParams();
   const location = useLocation();
-  const channelId = location.state?.channelId;
+  const [searchParams] = useSearchParams();
+  const channelId = location.state?.channelId || searchParams.get("channelId");
   const decodedName = decodeURIComponent(artistName);
   const [channelThumbnail, setChannelThumbnail] = useState(null);
   const [selectedTrack, setSelectedTrack] = useState(null);
@@ -163,7 +164,9 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
           ))}
         </div>
       )}
-      {activeTab === "community" && <ArtistCommunity artistName={decodedName} />}
+      {activeTab === "community" && (
+        <ArtistCommunity artistName={decodedName} channelId={channelId} />
+      )}
 
             <MovieModal
         movie={

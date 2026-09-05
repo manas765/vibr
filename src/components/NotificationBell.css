@@ -94,3 +94,75 @@
     right: -20px;
   }
 }
+.notification-bell {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ff6b6b;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.notification-list {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.notification-item:hover {
+  background: var(--surface-2);
+}
+
+.notification-item.unread {
+  background: rgba(198, 255, 61, 0.05);
+}
+
+.notification-item.unread::before {
+  content: "";
+}
+
+.notification-item__text {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.notification-item__text strong {
+  font-weight: 700;
+}
+
+.notification-item__time {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--text-muted);
+}

@@ -13,7 +13,7 @@ function timeAgo(dateString) {
   return `${days}d ago`;
 }
 
-function PostThreadModal({ post, currentUser, username, onClose, onPostDeleted }) {
+function PostThreadModal({ post, currentUser, username, channelId, onClose, onPostDeleted }) {
   const [replies, setReplies] = useState([]);
   const [replyText, setReplyText] = useState("");
   const [posting, setPosting] = useState(false);
@@ -54,6 +54,23 @@ function PostThreadModal({ post, currentUser, username, onClose, onPostDeleted }
     if (!error && data) {
       setReplies([...replies, data[0]]);
       setReplyText("");
+
+      if (post.user_id !== currentUser.id) {
+        const link = `/artist/${encodeURIComponent(post.artist_name)}${
+          channelId ? `?channelId=${channelId}` : ""
+        }`;
+
+        supabase
+          .from("notifications")
+          .insert({
+            user_id: post.user_id,
+            actor_username: username || "Anonymous",
+            type: "community_reply",
+            message: `replied to your post "${post.title}"`,
+            link,
+          })
+          .then(() => {});
+      }
     }
   }
 
