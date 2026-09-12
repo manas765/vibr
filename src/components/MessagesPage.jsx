@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./MessagesPage.css";
 
@@ -13,6 +13,7 @@ function timeLabel(dateString) {
 }
 
 function MessagesPage() {
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState(null);
   const [myUsername, setMyUsername] = useState("Anonymous");
   const [following, setFollowing] = useState([]); // [{id, username}]
@@ -39,6 +40,14 @@ function MessagesPage() {
           .then(({ data }) => setMyUsername(data?.username || "Anonymous"));
       }
     });
+
+    // Arrived here from a profile's "Message" button — jump straight into that chat
+    if (location.state?.userId) {
+      setActiveContact({
+        id: location.state.userId,
+        username: location.state.username,
+      });
+    }
   }, []);
 
   function loadFollowing(userId) {

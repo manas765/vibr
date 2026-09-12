@@ -130,20 +130,24 @@ function PublicProfile({ setActivePage }) {
               ✎ Edit Your Profile
             </button>
           ) : (
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="public-profile-actions">
               <button
-                className={isFollowing ? "following" : "follow-button"}
+                className={isFollowing ? "public-profile-follow following" : "public-profile-follow"}
                 onClick={toggleFollow}
               >
-                {isFollowing ? "Following" : "Follow"}
+                {isFollowing ? "✓ Following" : "+ Follow"}
               </button>
 
               {isFollowing && (
                 <button
-                  className="follow-button"
-                  onClick={() => navigate("/messages")}
+                  className="public-profile-message"
+                  onClick={() =>
+                    navigate("/messages", {
+                      state: { userId, username: profile.username },
+                    })
+                  }
                 >
-                  Message
+                  💬 Message
                 </button>
               )}
             </div>
