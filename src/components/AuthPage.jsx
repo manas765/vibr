@@ -4,11 +4,8 @@ import "./AuthPage.css";
 
 const CHIP_LAYOUT = [
   { top: "9%", left: "5%", rotate: -9, depth: 12 },
-  { top: "15%", right: "7%", rotate: 7, depth: 18 },
   { top: "58%", left: "4%", rotate: 6, depth: 22 },
-  { top: "63%", right: "5%", rotate: -7, depth: 16 },
   { top: "82%", left: "22%", rotate: 4, depth: 26, hideOnMobile: true },
-  { top: "80%", right: "20%", rotate: -5, depth: 20, hideOnMobile: true },
 ];
 
 function AuthScene({ tracks }) {
@@ -224,7 +221,7 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            VIBR<span>•</span>
+            <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
           </div>
 
           <h2 className="auth-heading">Set a new password</h2>
@@ -264,7 +261,7 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            VIBR<span>•</span>
+            <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
           </div>
 
           <h2 className="auth-heading">Reset your password</h2>
@@ -314,7 +311,7 @@ function AuthPage() {
         onMouseLeave={handleCardLeave}
       >
         <div className="auth-logo">
-          VIBR<span>•</span>
+          <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
         </div>
 
         <p className="auth-tagline">
