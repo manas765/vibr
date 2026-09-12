@@ -114,9 +114,6 @@ function Profile({ savedSongs }) {
             ) : (
               "??"
             )}
-            <span className="profile-avatar__edit-badge">
-              {uploadingAvatar ? "…" : "✎"}
-            </span>
           </button>
         ) : (
           <div className="profile-avatar">
