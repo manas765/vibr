@@ -317,3 +317,26 @@
   color: #3d9cff;
   transform: translateY(-1px);
 }
+.profile-change-picture-button {
+  align-self: flex-start;
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.profile-change-picture-button:hover:not(:disabled) {
+  border-color: #c6ff3d;
+  color: #c6ff3d;
+}
+
+.profile-change-picture-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

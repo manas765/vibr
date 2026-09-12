@@ -100,23 +100,35 @@ function Profile({ savedSongs }) {
   return (
     <section className="profile-page">
       <div className="profile-header">
-        <button
-          className="profile-avatar profile-avatar--editable"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={uploadingAvatar}
-          title="Change profile picture"
-        >
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={username} />
-          ) : username ? (
-            username.slice(0, 2).toUpperCase()
-          ) : (
-            "??"
-          )}
-          <span className="profile-avatar__edit-badge">
-            {uploadingAvatar ? "…" : "✎"}
-          </span>
-        </button>
+        {editing ? (
+          <button
+            className="profile-avatar profile-avatar--editable"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploadingAvatar}
+            title="Change profile picture"
+          >
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={username} />
+            ) : username ? (
+              username.slice(0, 2).toUpperCase()
+            ) : (
+              "??"
+            )}
+            <span className="profile-avatar__edit-badge">
+              {uploadingAvatar ? "…" : "✎"}
+            </span>
+          </button>
+        ) : (
+          <div className="profile-avatar">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={username} />
+            ) : username ? (
+              username.slice(0, 2).toUpperCase()
+            ) : (
+              "??"
+            )}
+          </div>
+        )}
         <input
           ref={fileInputRef}
           type="file"
@@ -141,6 +153,15 @@ function Profile({ savedSongs }) {
                 className="profile-edit-input"
                 placeholder="Bio"
               />
+
+              <button
+                type="button"
+                className="profile-change-picture-button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingAvatar}
+              >
+                {uploadingAvatar ? "Uploading..." : "🖼 Change profile picture"}
+              </button>
 
               <button
                 className="profile-edit-button"
