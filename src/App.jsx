@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
 import MusicSection from "./components/MusicSection";
+import ChartsWidget from "./components/ChartsWidget";
 import Collections from "./components/collections";
 import Feed from "./components/feed";
 import Releases from "./components/Releases";
@@ -19,7 +20,6 @@ import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./components/AuthPage";
 import { supabase } from "./supabaseClient";
 import MessagesPage from "./components/MessagesPage";
-import PublicProfile from "./components/PublicProfile";
 
 
 function App() {
@@ -149,7 +149,7 @@ function App() {
       <header className="topbar">
         <input
           type="text"
-          placeholder="Search your Music, Albums, Artists, Genres..........5:30"
+          placeholder="Search your music, Albums,artists, genres..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -214,6 +214,7 @@ function App() {
       {activePage === "discover" && (
         <>
           <Hero />
+          <ChartsWidget />
           <MusicSection
             searchTerm={searchTerm}
             savedSongs={savedSongs}
@@ -299,15 +300,6 @@ function App() {
               element={
                 <PageTransition>
                   <MessagesPage />
-                </PageTransition>
-
-              }
-            />
-              <Route
-              path="/profile/:userId"
-              element={
-                <PageTransition>
-                  <PublicProfile setActivePage={setActivePage} />
                 </PageTransition>
               }
             />
