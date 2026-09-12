@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./People.css";
 
@@ -83,12 +84,14 @@ function People() {
 
       <div className="people-grid">
         {people.map((person) => (
-          <div className="person-card" key={person.id}>
-            <div className="person-avatar">
-              {person.username ? person.username.slice(0, 1).toUpperCase() : "?"}
-            </div>
+                    <div className="person-card" key={person.id}>
+            <Link to={`/profile/${person.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <div className="person-avatar">
+                {person.username ? person.username.slice(0, 1).toUpperCase() : "?"}
+              </div>
 
-            <h2>{person.username || "Unnamed"}</h2>
+              <h2>{person.username || "Unnamed"}</h2>
+            </Link>
 
             <span className="username">@{person.username}</span>
 

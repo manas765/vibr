@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./Feed.css";
 
@@ -443,10 +444,12 @@ function Feed() {
                 </div>
 
                 <div className="user-info">
-                  <div>
+                <div>
+                  <Link to={`/profile/${post.user_id}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <h3>{post.username || "Anonymous"}</h3>
-                    <p>reviewed</p>
-                  </div>
+                  </Link>
+                  <p>reviewed</p>
+                </div>
 
                   {currentUser?.id === post.user_id ? (
                     <button className="follow-button" onClick={() => deleteReview(post.id)}>

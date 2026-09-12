@@ -19,6 +19,7 @@ import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./components/AuthPage";
 import { supabase } from "./supabaseClient";
 import MessagesPage from "./components/MessagesPage";
+import PublicProfile from "./components/PublicProfile";
 
 
 function App() {
@@ -298,6 +299,15 @@ function App() {
               element={
                 <PageTransition>
                   <MessagesPage />
+                </PageTransition>
+
+              }
+            />
+              <Route
+              path="/profile/:userId"
+              element={
+                <PageTransition>
+                  <PublicProfile setActivePage={setActivePage} />
                 </PageTransition>
               }
             />
