@@ -5,11 +5,17 @@
 ### A social platform for discovering, exploring, and experiencing music.
 
 <p>
-  <a href="https://vibr-tau.vercel.app/"><strong>Live Demo</strong></a>
+  <a href="https://vibr-tau.vercel.app/">
+    <strong>Live Demo</strong>
+  </a>
   ·
-  <a href="https://github.com/manas765/vibr/issues">Report a Bug</a>
+  <a href="https://github.com/manas765/vibr/issues">
+    Report a Bug
+  </a>
   ·
-  <a href="https://github.com/manas765/vibr/issues">Request a Feature</a>
+  <a href="https://github.com/manas765/vibr/issues">
+    Request a Feature
+  </a>
 </p>
 
 ![React](https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
@@ -21,127 +27,236 @@
 
 ---
 
-![VIBR Discover Page](./screenshots/discover.png)
+# 🎵 Overview
+
+**VIBR** is a modern social music discovery platform designed around one simple idea:
+
+> **Discovering music should be as engaging as listening to it.**
+
+Instead of being another traditional streaming application, VIBR focuses on the **music discovery experience**.
+
+Users can:
+
+- Discover new music
+- Explore artists
+- Search songs and albums
+- Save music
+- Rate songs using VIBR verdicts
+- Follow other music lovers
+- Share recommendations
+- Track new releases
+- Explore music communities
+- Build their own music identity
+
+VIBR combines a modern **React frontend**, **Supabase**, serverless APIs, and external music services to create a social-first music discovery experience.
 
 ---
 
-## Overview
+# ✨ Features
 
-**VIBR** is a modern social music discovery platform designed around one simple idea: **discovering music should be as engaging as listening to it**.
+## 🎧 Music Discovery
 
-Instead of functioning as another traditional streaming application, VIBR focuses on the discovery experience. Users can explore music, discover artists, follow their interests, save tracks, track releases, build a personal music identity, and explore music through community-driven spaces.
+Explore music through an interactive discovery interface.
 
-The platform combines a modern React frontend with authentication, persistent user data, external music APIs, and serverless backend functionality.
+- Browse trending music
+- Explore different genres
+- Search songs, albums and artists
+- Discover new tracks
+- Save songs to your collection
+- Open music directly through YouTube
+- Explore personalized music interests
+
+### Discover
+
+![VIBR Discover](./screenshots/discover.png)
 
 ---
 
-## Key Features
+# 🔥 Verdict-Based Ratings
 
-### Music Discovery
+VIBR does not use boring traditional star ratings.
 
-Explore music through an interactive discovery interface with genre-based filtering and personalized recommendations.
+Instead, users express how they actually feel about a song using:
 
-- Browse music across multiple genres
-- Discover tracks visually
-- Search for music and artists
-- Save tracks to your collection
-- Rate discoveries using VIBR's verdict system
+| Verdict | Meaning |
+|---|---|
+| 🔥 **GOD LEVEL** | Absolutely incredible |
+| 💜 **PERFECT** | Loved it |
+| 👍 **GOOD** | Worth listening |
+| 😐 **MEHHHHH** | Not really my vibe |
 
-### Verdict-Based Music Ratings
+This makes music ratings more expressive and community-oriented.
 
-Instead of traditional star ratings, VIBR uses expressive verdicts:
+---
 
-> **GOD LEVEL · PERFECT · GOOD · MEHHHH**
+# 🎤 Artist Profiles
 
-This makes music discovery feel more personal and opinion-driven.
-
-### Artist Profiles
-
-Explore artists through dedicated profile pages.
+Explore dedicated artist pages containing:
 
 - Artist information
-- Track exploration
-- Follow and unfollow functionality
+- Popular tracks
 - Music videos
-- Community content related to artists
+- Artist discovery
+- Follow / unfollow
+- Related music
+- Community interaction
 
-<div align="center">
+### Artist Page
 
-<img src="./screenshots/artist-page.png" alt="VIBR Artist Page" width="100%" />
-
-</div>
+![VIBR Artist Page](./screenshots/artist-page.png)
 
 ---
+
+# 🌎 VIBR Spaces
+
+**Spaces** are community-driven areas where users can stay connected with what's happening in music.
+
+Users can explore:
+
+- Music discussions
+- Artist updates
+- Music news
+- Community posts
+- Comments
+- Recommendations
+- Music-related conversations
 
 ### Spaces
 
-Stay connected with what is happening in music through VIBR Spaces.
-
-- Music news
-- Artist updates
-- Community discussions
-- Music-focused content
-- Comment and interaction system
-
-<div align="center">
-
-<img src="./screenshots/spaces.png" alt="VIBR Spaces" width="75%" />
-
-</div>
+![VIBR Spaces](./screenshots/spaces.png)
 
 ---
 
-### Personal Music Experience
+# 📊 Charts
 
-Each user can build their own music identity through:
+Discover what's trending right now.
 
-- Saved music
+VIBR provides a dedicated charts experience with:
+
+- Trending songs
+- Trending albums
+- YouTube-based music data
+- View counts
+- Weekly chart rankings
+
+### Charts This Week
+
+![VIBR Charts](./screenshots/charts.png)
+
+---
+
+# 🔎 Explore
+
+The Explore page allows users to discover music across multiple categories.
+
+### Trending Now
+
+Explore trending playlists and music currently gaining attention.
+
+### Genre Discovery
+
+Discover music through categories such as:
+
+- Hip-Hop
+- Pop
+- R&B
+- Electronic
+- Rock
+- Bollywood
+- Indie
+- And more
+
+### Explore Page
+
+![VIBR Explore](./screenshots/explore.png)
+
+---
+
+# 💬 Social Messaging
+
+Music discovery becomes more interesting when you can share it with friends.
+
+VIBR includes a messaging experience where users can:
+
+- Chat with people they follow
+- Share songs
+- Recommend music
+- Send reactions
+- Discuss tracks
+- Discover music through conversations
+
+### Messages
+
+![VIBR Messages](./screenshots/messages.png)
+
+---
+
+# 👤 Personal Music Profile
+
+Every user gets their own music identity.
+
+Users can manage:
+
+- Profile information
+- Profile picture
+- Bio
+- Saved songs
 - Followed artists
-- Genre preferences
+- Music preferences
 - Music statistics
-- Editable profiles
+- Personal collection
 
-### Release Tracking
+### Profile
 
-Keep track of music that matters.
+![VIBR Profile](./screenshots/profile.png)
 
-- Recent releases
+---
+
+# 📚 Personal Collection
+
+Users can build their own collection of discovered music.
+
+The collection can include:
+
+- Saved songs
+- Favorite artists
+- Recently discovered music
+- Recommended tracks
+- Personal music history
+
+---
+
+# 🚀 Release Tracking
+
+Stay updated with new music releases.
+
+VIBR provides:
+
+- New releases
 - Upcoming releases
-- Announced projects
-- Release filtering
+- Trending releases
+- Release discovery
 - Saved releases
-
-### Community Discovery
-
-VIBR brings people into the music discovery process.
-
-- Discover other users
-- Follow music activity
-- Explore shared interests
-- Community-focused music spaces
+- Artist release tracking
 
 ---
 
-## Tech Stack
+# 👥 Community Discovery
 
-### Frontend
+VIBR is built around people discovering music together.
 
-- **React 19**
-- **Vite**
-- **React Router**
-- **Tailwind CSS**
-- **Motion**
+Users can:
 
-### Backend & Services
-
-- **Supabase** — Authentication and persistent user data
-- **Vercel Functions** — Serverless API routes
-- **YouTube APIs** — Music and artist discovery
-- **Spotify Integration** — Music-related data and search
+- Follow other users
+- Discover people with similar tastes
+- See what others are listening to
+- Explore recommendations
+- Share music
+- Interact with the community
 
 ---
 
-## Architecture
+# 🏗️ Architecture
 
 ```text
                          ┌──────────────────┐
@@ -155,11 +270,13 @@ VIBR brings people into the music discovery process.
                      └───────────┬─────────────┘
                                  │
               ┌──────────────────┼──────────────────┐
+              │                  │                  │
               ▼                  ▼                  ▼
        ┌──────────────┐   ┌──────────────┐  ┌──────────────┐
-       │   SUPABASE   │   │  API ROUTES  │  │ MUSIC APIs   │
+       │   SUPABASE   │   │  API ROUTES  │  │  MUSIC APIs  │
        │              │   │              │  │              │
-       │ Auth         │   │ Search       │  │ Music Data   │
-       │ Profiles     │   │ News         │  │ Artists      │
-       │ Saved Data   │   │ Track Data   │  │ Videos       │
+       │ Authentication│   │ Search       │  │ YouTube      │
+       │ Profiles      │   │ Music Data   │  │ Spotify      │
+       │ Saved Data    │   │ News         │  │ Music Data   │
+       │ Social Data   │   │ Releases     │  │ Artists      │
        └──────────────┘   └──────────────┘  └──────────────┘
