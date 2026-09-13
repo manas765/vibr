@@ -732,52 +732,39 @@ main {
    HERO TITLE
    ========================================================= */
 
-.hero-content h1 {
+.hero-logo {
   margin: 35px 0 20px;
-
-  color: var(--text);
-
-  font-family: var(--font-serif);
-
-  font-size: clamp(75px, 7vw, 112px);
-
-  font-weight: 400;
-
-  line-height: 0.82;
-
-  letter-spacing: -0.045em;
-
-  text-shadow:
-    0 15px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.hero-content h1 span {
+.hero-logo-mark {
+  height: clamp(56px, 6vw, 88px);
+  width: auto;
+  filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.3));
+}
+
+.hero-logo-mark-light {
+  display: none;
+}
+
+[data-theme="light"] .hero-logo-mark-dark {
+  display: none;
+}
+
+[data-theme="light"] .hero-logo-mark-light {
   display: block;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff 0%,
-      #cfcfcf 50%,
-      #8c8c8c 100%
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
 }
 
-[data-theme="light"] .hero-content h1 span {
-  background:
-    linear-gradient(
-      90deg,
-      #0e0e12 0%,
-      #3a3a42 50%,
-      #6f6f78 100%
-    );
-  -webkit-background-clip: text;
-  background-clip: text;
+.hero-logo-slogan {
+  margin: 14px 0 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-soft);
+  opacity: 0.8;
+  letter-spacing: 0.2px;
 }
 
 /* DESCRIPTION */
@@ -1816,8 +1803,8 @@ main {
     width: 49%;
   }
 
-  .hero-content h1 {
-    font-size: 75px;
+  .hero-logo-mark {
+    height: 56px;
   }
 
   .headphone-stage {

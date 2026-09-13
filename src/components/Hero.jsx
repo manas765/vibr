@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
+import vibrLogoDark from "../assets/vibr-logo-dark-theme.png";
+import vibrLogoLight from "../assets/vibr-logo-light-theme.png";
 
 const FALLBACK_ALBUMS = [
   { title: "After Hours", artist: "The Weeknd", emoji: "🌃", verdict: "🔥 GOD LEVEL", accent: "purple" },
@@ -92,7 +94,8 @@ function Hero() {
           ✦ YOUR SOUND. YOUR PEOPLE.
         </motion.div>
 
-        <motion.h1
+        <motion.div
+          className="hero-logo"
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -100,9 +103,10 @@ function Hero() {
             ease: [0.16, 1, 0.3, 1],
           }}
         >
-          Feel the
-          <span>Vibration.</span>
-        </motion.h1>
+          <img src={vibrLogoDark} alt="VIBR" className="hero-logo-mark hero-logo-mark-dark" />
+          <img src={vibrLogoLight} alt="VIBR" className="hero-logo-mark hero-logo-mark-light" />
+          <p className="hero-logo-slogan">for the vibr's, by the vibr's, to the vibr's</p>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 25 }}

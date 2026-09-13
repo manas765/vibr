@@ -11,6 +11,8 @@
   background-size: cover;
   background-position: center;
   background-color: #1a1a24;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
   margin-bottom: 28px;
 }
 
@@ -72,21 +74,21 @@
   font-family: "Instrument Serif", serif;
   font-size: 28px;
   font-weight: 400;
-  color: var(--text);
+  color: #f2f2f5;
   margin: 0 0 4px 0;
 }
 
 .profile-username {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #8b5cf6;
+  color: #b389ff;
   margin: 0 0 10px 0;
 }
 
 .profile-bio {
   font-family: "Inter", sans-serif;
   font-size: 13.5px;
-  color: var(--text-soft);
+  color: rgba(242, 242, 245, 0.75);
   line-height: 1.5;
   margin: 0 0 16px 0;
 }
@@ -99,7 +101,7 @@
   border-radius: 999px;
   border: 1px solid rgba(242, 242, 245, 0.25);
   background: transparent;
-  color:  var(--text);
+  color: #f2f2f5;
   cursor: pointer;
   transition: all 150ms ease;
 }
@@ -118,13 +120,13 @@
   margin-bottom: 10px;
   border-radius: 10px;
   border: 1px solid rgba(242, 242, 245, 0.15);
-  background: rgba(255, 255, 255, 0.03);
-  color:  var(--text);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f2f2f5;
   resize: vertical;
 }
 
 .profile-edit-input::placeholder {
-  color: var(--text-muted);
+  color: rgba(242, 242, 245, 0.5);
 }
 
 .profile-edit-input:focus {
@@ -318,8 +320,8 @@
 
 .public-profile-follow.following {
   background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text);
+  border: 1px solid rgba(242, 242, 245, 0.3);
+  color: #f2f2f5;
 }
 
 .public-profile-follow.following:hover {
@@ -330,8 +332,8 @@
 
 .public-profile-message {
   background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text);
+  border: 1px solid rgba(242, 242, 245, 0.3);
+  color: #f2f2f5;
 }
 
 .public-profile-message:hover {
@@ -346,9 +348,9 @@
   font-weight: 600;
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(242, 242, 245, 0.3);
   background: transparent;
-  color: var(--text);
+  color: #f2f2f5;
   cursor: pointer;
   transition: all 150ms ease;
 }
