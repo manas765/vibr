@@ -74,6 +74,28 @@
   color: var(--text);
 }
 
+.messages-contact__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.messages-contact__info span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.messages-contact__info small {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .messages-contact__avatar {
   width: 34px;
   height: 34px;

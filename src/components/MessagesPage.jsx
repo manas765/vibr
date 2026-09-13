@@ -332,10 +332,10 @@ function MessagesPage({ savedSongs = [] }) {
                 <div className="messages-contact__avatar">
                   {contact.username ? contact.username.slice(0, 1).toUpperCase() : "?"}
                 </div>
-                <div className="messages-contact__info">
-                  <span>{contact.username || "Anonymous"}</span>
+                <div className="messages-contact__info" style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+                  <span style={{ display: "block" }}>{contact.username || "Anonymous"}</span>
                   {contact.lastMessage && (
-                    <small>{contact.lastMessage}</small>
+                    <small style={{ display: "block", marginTop: 2 }}>{contact.lastMessage}</small>
                   )}
                 </div>
               </button>

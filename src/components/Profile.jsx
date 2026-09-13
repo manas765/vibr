@@ -15,6 +15,7 @@ function Profile({ savedSongs }) {
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -36,13 +37,20 @@ function Profile({ savedSongs }) {
 
   async function handleSave() {
     setSaving(true);
+    setErrorMsg("");
+
     const { error } = await supabase
       .from("profiles")
       .update({ username, bio })
       .eq("id", user.id);
 
     setSaving(false);
-    if (!error) setEditing(false);
+
+    if (!error) {
+      setEditing(false);
+    } else {
+      setErrorMsg("Couldn't save your profile. Please try again.");
+    }
   }
 
   async function handleAvatarChange(e) {
@@ -50,6 +58,7 @@ function Profile({ savedSongs }) {
     if (!file || !user) return;
 
     setUploadingAvatar(true);
+    setErrorMsg("");
 
     const filePath = `${user.id}/avatar.${file.name.split(".").pop()}`;
 
@@ -59,6 +68,7 @@ function Profile({ savedSongs }) {
 
     if (uploadError) {
       setUploadingAvatar(false);
+      setErrorMsg("Couldn't upload that image. Please try again.");
       return;
     }
 
@@ -175,6 +185,8 @@ function Profile({ savedSongs }) {
                     {saving ? "Saving..." : "✓ Save Profile"}
                   </button>
                 </div>
+
+                {errorMsg && <p className="profile-error">{errorMsg}</p>}
               </>
             ) : (
               <>
