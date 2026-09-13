@@ -27,7 +27,7 @@
 
 ---
 
-# 🎵 Overview
+#  Overview
 
 **VIBR** is a modern social music discovery platform designed around one simple idea:
 
@@ -52,9 +52,9 @@ VIBR combines a modern **React frontend**, **Supabase**, serverless APIs, and ex
 
 ---
 
-# ✨ Features
+#  Features
 
-## 🎧 Music Discovery
+##  Music Discovery
 
 Explore music through an interactive discovery interface.
 
@@ -72,7 +72,7 @@ Explore music through an interactive discovery interface.
 
 ---
 
-# 🔥 Verdict-Based Ratings
+#  Verdict-Based Ratings
 
 VIBR does not use boring traditional star ratings.
 
@@ -89,7 +89,7 @@ This makes music ratings more expressive and community-oriented.
 
 ---
 
-# 🎤 Artist Profiles
+#  Artist Profiles
 
 Explore dedicated artist pages containing:
 
@@ -107,7 +107,7 @@ Explore dedicated artist pages containing:
 
 ---
 
-# 🌎 VIBR Spaces
+#  VIBR Spaces
 
 **Spaces** are community-driven areas where users can stay connected with what's happening in music.
 
@@ -127,7 +127,7 @@ Users can explore:
 
 ---
 
-# 📊 Charts
+#  Charts
 
 Discover what's trending right now.
 
@@ -145,7 +145,7 @@ VIBR provides a dedicated charts experience with:
 
 ---
 
-# 🔎 Explore
+#  Explore
 
 The Explore page allows users to discover music across multiple categories.
 
@@ -172,7 +172,7 @@ Discover music through categories such as:
 
 ---
 
-# 💬 Social Messaging
+#  Social Messaging
 
 Music discovery becomes more interesting when you can share it with friends.
 
@@ -191,7 +191,7 @@ VIBR includes a messaging experience where users can:
 
 ---
 
-# 👤 Personal Music Profile
+#  Personal Music Profile
 
 Every user gets their own music identity.
 
@@ -212,7 +212,7 @@ Users can manage:
 
 ---
 
-# 📚 Personal Collection
+#  Personal Collection
 
 Users can build their own collection of discovered music.
 
@@ -226,7 +226,7 @@ The collection can include:
 
 ---
 
-# 🚀 Release Tracking
+#  Release Tracking
 
 Stay updated with new music releases.
 
@@ -241,7 +241,7 @@ VIBR provides:
 
 ---
 
-# 👥 Community Discovery
+#  Community Discovery
 
 VIBR is built around people discovering music together.
 
@@ -256,7 +256,7 @@ Users can:
 
 ---
 
-# 🏗️ Architecture
+#  Architecture
 
 ```text
                          ┌──────────────────┐
@@ -275,8 +275,8 @@ Users can:
        ┌──────────────┐   ┌──────────────┐  ┌──────────────┐
        │   SUPABASE   │   │  API ROUTES  │  │  MUSIC APIs  │
        │              │   │              │  │              │
-       │ Authentication│   │ Search       │  │ YouTube      │
-       │ Profiles      │   │ Music Data   │  │ Spotify      │
-       │ Saved Data    │   │ News         │  │ Music Data   │
-       │ Social Data   │   │ Releases     │  │ Artists      │
+       │Authentication│   │ Search       │  │ YouTube      │
+       │ Profiles     │   │ Music Data   │  │ Spotify      │
+       │ Saved Data   │   │ News         │  │ Music Data   │
+       │ Social Data  │   │ Releases     │  │ Artists      │
        └──────────────┘   └──────────────┘  └──────────────┘
