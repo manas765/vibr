@@ -6,7 +6,6 @@ const categories = [
   { label: "Top Picks", icon: "👑", type: "route", to: "/explore" },
   { label: "Released", icon: "🗓️", type: "page", page: "releases" },
   { label: "Upcoming", icon: "⏳", type: "page", page: "releases" },
-  { label: "People", icon: "👥", type: "page", page: "people" },
   { label: "Your Feed", icon: "📡", type: "page", page: "feed" },
   { label: "Collections", icon: "🔖", type: "page", page: "collections" },
   { label: "Profile", icon: "👤", type: "page", page: "profile" },

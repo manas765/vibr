@@ -206,3 +206,168 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.message-bubble {
+  position: relative;
+}
+
+.message-delete {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.message-bubble--mine:hover .message-delete {
+  display: flex;
+}
+
+.message-delete:hover {
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.message-image {
+  display: block;
+  max-width: 220px;
+  max-height: 220px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 4px;
+}
+
+.message-song-share {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+  padding: 2px;
+}
+
+.message-song-share img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.message-song-share div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.message-song-share strong {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-song-share small {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  opacity: 0.75;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emoji-picker,
+.song-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.emoji-picker button {
+  font-size: 18px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.emoji-picker button:hover {
+  background: var(--surface-3);
+}
+
+.song-picker {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.song-picker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.song-picker-item:hover {
+  background: var(--surface-3);
+}
+
+.song-picker-item img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.song-picker-item strong {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.song-picker-item small {
+  font-family: "Inter", sans-serif;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.messages-thread__composer .composer-icon-button {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messages-thread__composer .composer-icon-button:hover:not(:disabled) {
+  border-color: #c6ff3d;
+}

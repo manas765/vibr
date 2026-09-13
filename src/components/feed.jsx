@@ -439,9 +439,9 @@ function Feed() {
           return (
             <div className="feed-card" key={post.id}>
               <div className="feed-user">
-                <div className="user-avatar">
+                <Link to={`/profile/${post.user_id}`} className="user-avatar" style={{ textDecoration: "none" }}>
                   {post.username ? post.username.slice(0, 1).toUpperCase() : "?"}
-                </div>
+                </Link>
 
                 <div className="user-info">
                 <div>

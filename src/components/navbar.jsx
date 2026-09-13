@@ -36,13 +36,6 @@ function Navbar({ activePage, setActivePage }) {
           New Releases
         </button>
 
-        <button
-        onClick={() => setActivePage("people")}
-         className={activePage === "people" ? "active" : ""}
-        >
-        People
-        </button>
-
       </nav>
 
       

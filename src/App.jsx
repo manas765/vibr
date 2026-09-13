@@ -7,7 +7,6 @@ import ChartsWidget from "./components/ChartsWidget";
 import Collections from "./components/collections";
 import Feed from "./components/feed";
 import Releases from "./components/Releases";
-import People from "./components/People";
 import Profile from "./components/Profile";
 import ArtistPage from "./components/ArtistPage";
 import ExplorePage from "./components/ExplorePage";
@@ -24,6 +23,8 @@ import MessagesPage from "./components/MessagesPage";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [profileResults, setProfileResults] = useState([]);
+  const [showProfileResults, setShowProfileResults] = useState(false);
   const [savedSongs, setSavedSongs] = useState([]);
   const [activePage, setActivePage] = useState("discover");
   const [savedReleases, setSavedReleases] = useState([]);
@@ -44,6 +45,26 @@ function App() {
     const page = params.get("page");
     if (page) setActivePage(page);
   }, [location.search]);
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setProfileResults([]);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      supabase
+        .from("profiles")
+        .select("id, username, avatar_url")
+        .ilike("username", `%${searchTerm.trim()}%`)
+        .limit(5)
+        .then(({ data, error }) => {
+          if (!error) setProfileResults(data || []);
+        });
+    }, 250);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (!user) return;
@@ -147,12 +168,38 @@ function App() {
       </div>
 
       <header className="topbar">
-        <input
-          type="text"
-          placeholder="Search your music, Albums,artists, genres..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="topbar-search">
+          <input
+            type="text"
+            placeholder="Search your music, Albums, artists, genres, or people..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setShowProfileResults(true)}
+            onBlur={() => setTimeout(() => setShowProfileResults(false), 150)}
+          />
+
+          {showProfileResults && profileResults.length > 0 && (
+            <div className="topbar-search-results">
+              {profileResults.map((profile) => (
+                <Link
+                  key={profile.id}
+                  to={`/profile/${profile.id}`}
+                  className="topbar-search-result"
+                  onClick={() => setShowProfileResults(false)}
+                >
+                  <div className="topbar-search-result__avatar">
+                    {profile.avatar_url ? (
+                      <img src={profile.avatar_url} alt={profile.username} />
+                    ) : (
+                      (profile.username || "?").slice(0, 1).toUpperCase()
+                    )}
+                  </div>
+                  <span>{profile.username}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
         <Link to="/browse" className="notification-bell__button" style={{ textDecoration: "none" }} title="Browse">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -241,8 +288,6 @@ function App() {
         />
       )}
 
-      {activePage === "people" && <People />}
-
       {activePage === "profile" && <Profile savedSongs={savedSongs} />}
     </>
   );
@@ -299,7 +344,7 @@ function App() {
               path="/messages"
               element={
                 <PageTransition>
-                  <MessagesPage />
+                  <MessagesPage savedSongs={savedSongs} />
                 </PageTransition>
               }
             />
