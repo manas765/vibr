@@ -22,8 +22,8 @@ function MessagesPage({ savedSongs = [] }) {
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState(null);
   const [myUsername, setMyUsername] = useState("Anonymous");
-  const [following, setFollowing] = useState([]); // [{id, username}]
-  const [loadingFollowing, setLoadingFollowing] = useState(true);
+  const [conversations, setConversations] = useState([]); // [{id, username, lastMessage, lastAt}]
+  const [loadingConversations, setLoadingConversations] = useState(true);
 
   const [activeContact, setActiveContact] = useState(null); // {id, username}
   const [messages, setMessages] = useState([]);
@@ -42,7 +42,7 @@ function MessagesPage({ savedSongs = [] }) {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUser(user);
       if (user) {
-        loadFollowing(user.id);
+        loadConversations(user.id);
         supabase
           .from("profiles")
           .select("username")
@@ -52,7 +52,8 @@ function MessagesPage({ savedSongs = [] }) {
       }
     });
 
-    // Arrived here from a profile's "Message" button — jump straight into that chat
+    // Arrived here from a profile's "Message" button, or a "new message" notification —
+    // jump straight into that chat
     if (location.state?.userId) {
       setActiveContact({
         id: location.state.userId,
@@ -61,27 +62,47 @@ function MessagesPage({ savedSongs = [] }) {
     }
   }, []);
 
-  function loadFollowing(userId) {
-    setLoadingFollowing(true);
+  function summarize(m) {
+    if (m.message_type === "image") return "📷 Photo";
+    if (m.message_type === "song") return `🎵 ${m.song_data?.title || "Song"}`;
+    return m.message_text || "";
+  }
+
+  function loadConversations(userId) {
+    setLoadingConversations(true);
+
     supabase
-      .from("followed_users")
-      .select("followed_id")
-      .eq("follower_id", userId)
+      .from("messages")
+      .select("sender_id, recipient_id, message_text, message_type, song_data, created_at")
+      .or(`sender_id.eq.${userId},recipient_id.eq.${userId}`)
+      .order("created_at", { ascending: false })
       .then(async ({ data, error }) => {
         if (error || !data || data.length === 0) {
-          setFollowing([]);
-          setLoadingFollowing(false);
+          setConversations([]);
+          setLoadingConversations(false);
           return;
         }
 
-        const ids = data.map((row) => row.followed_id);
+        const lastByContact = new Map();
+        data.forEach((m) => {
+          const otherId = m.sender_id === userId ? m.recipient_id : m.sender_id;
+          if (!lastByContact.has(otherId)) {
+            lastByContact.set(otherId, { lastMessage: summarize(m), lastAt: m.created_at });
+          }
+        });
+
+        const ids = [...lastByContact.keys()];
         const { data: profiles } = await supabase
           .from("profiles")
           .select("id, username")
           .in("id", ids);
 
-        setFollowing(profiles || []);
-        setLoadingFollowing(false);
+        const merged = (profiles || [])
+          .map((p) => ({ ...p, ...lastByContact.get(p.id) }))
+          .sort((a, b) => new Date(b.lastAt) - new Date(a.lastAt));
+
+        setConversations(merged);
+        setLoadingConversations(false);
       });
   }
 
@@ -155,8 +176,19 @@ function MessagesPage({ savedSongs = [] }) {
         type: "message",
         message: "sent you a message",
         link: "/messages",
+        data: { userId: currentUser.id, username: myUsername },
       })
       .then(() => {});
+  }
+
+  function bumpConversation(summary) {
+    setConversations((prev) => {
+      const rest = prev.filter((c) => c.id !== activeContact.id);
+      return [
+        { id: activeContact.id, username: activeContact.username, lastMessage: summary, lastAt: new Date().toISOString() },
+        ...rest,
+      ];
+    });
   }
 
   async function sendMessage() {
@@ -178,6 +210,7 @@ function MessagesPage({ savedSongs = [] }) {
 
     if (!error && data) {
       setMessages((prev) => [...prev, data[0]]);
+      bumpConversation(messageText.trim());
       setMessageText("");
       setShowEmojiPicker(false);
       notifyContact();
@@ -224,6 +257,7 @@ function MessagesPage({ savedSongs = [] }) {
 
     if (!error && data) {
       setMessages((prev) => [...prev, data[0]]);
+      bumpConversation("📷 Photo");
       notifyContact();
     }
   }
@@ -250,6 +284,7 @@ function MessagesPage({ savedSongs = [] }) {
 
     if (!error && data) {
       setMessages((prev) => [...prev, data[0]]);
+      bumpConversation(`🎵 ${song.song_title || song.title}`);
       notifyContact();
     }
   }
@@ -273,18 +308,18 @@ function MessagesPage({ savedSongs = [] }) {
       <div className="messages-layout">
         <div className="messages-sidebar">
           <h1>Messages</h1>
-          <p className="messages-sidebar__hint">People you follow</p>
+          <p className="messages-sidebar__hint">Conversations</p>
 
-          {loadingFollowing && <p className="messages-empty">Loading...</p>}
+          {loadingConversations && <p className="messages-empty">Loading...</p>}
 
-          {!loadingFollowing && following.length === 0 && (
+          {!loadingConversations && conversations.length === 0 && !activeContact && (
             <p className="messages-empty">
-              You're not following anyone yet. Follow someone from your Feed to message them.
+              No conversations yet. Once you and someone follow each other, open their profile and hit Message to start.
             </p>
           )}
 
           <div className="messages-contact-list">
-            {following.map((contact) => (
+            {conversations.map((contact) => (
               <button
                 key={contact.id}
                 className={
@@ -297,7 +332,12 @@ function MessagesPage({ savedSongs = [] }) {
                 <div className="messages-contact__avatar">
                   {contact.username ? contact.username.slice(0, 1).toUpperCase() : "?"}
                 </div>
-                <span>{contact.username || "Anonymous"}</span>
+                <div className="messages-contact__info">
+                  <span>{contact.username || "Anonymous"}</span>
+                  {contact.lastMessage && (
+                    <small>{contact.lastMessage}</small>
+                  )}
+                </div>
               </button>
             ))}
           </div>

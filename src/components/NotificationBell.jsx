@@ -17,7 +17,10 @@ function timeAgo(dateString) {
 function NotificationBell() {
   const [open, setOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [myUsername, setMyUsername] = useState("Anonymous");
   const [notifications, setNotifications] = useState([]);
+  // notification id -> "accepted" | "mutual" | "declined" | "followed_back"
+  const [actionedRequests, setActionedRequests] = useState({});
   const ref = useRef(null);
   const navigate = useNavigate();
 
@@ -26,7 +29,15 @@ function NotificationBell() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUser(user);
-      if (user) loadNotifications(user.id);
+      if (user) {
+        loadNotifications(user.id);
+        supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", user.id)
+          .single()
+          .then(({ data }) => setMyUsername(data?.username || "Anonymous"));
+      }
     });
   }, []);
 
@@ -95,7 +106,86 @@ function NotificationBell() {
 
   function handleNotificationClick(n) {
     setOpen(false);
-    navigate(n.link);
+    navigate(n.link, { state: n.data || undefined });
+  }
+
+  async function handleAccept(e, n) {
+    e.stopPropagation();
+    const requesterId = n.data?.requesterId;
+    if (!requesterId || !currentUser) return;
+
+    await supabase
+      .from("followed_users")
+      .insert({ follower_id: requesterId, followed_id: currentUser.id });
+
+    await supabase
+      .from("follow_requests")
+      .delete()
+      .eq("requester_id", requesterId)
+      .eq("target_id", currentUser.id);
+
+    supabase
+      .from("notifications")
+      .insert({
+        user_id: requesterId,
+        actor_username: myUsername,
+        type: "follow_accept",
+        message: "accepted your follow request",
+        link: `/profile/${currentUser.id}`,
+        data: { accepterId: currentUser.id },
+      })
+      .then(() => {});
+
+    const { data: alreadyFollowing } = await supabase
+      .from("followed_users")
+      .select("followed_id")
+      .eq("follower_id", currentUser.id)
+      .eq("followed_id", requesterId);
+
+    setActionedRequests((prev) => ({
+      ...prev,
+      [n.id]: alreadyFollowing && alreadyFollowing.length > 0 ? "mutual" : "accepted",
+    }));
+  }
+
+  async function handleDecline(e, n) {
+    e.stopPropagation();
+    const requesterId = n.data?.requesterId;
+    if (!requesterId || !currentUser) return;
+
+    await supabase
+      .from("follow_requests")
+      .delete()
+      .eq("requester_id", requesterId)
+      .eq("target_id", currentUser.id);
+
+    setActionedRequests((prev) => ({ ...prev, [n.id]: "declined" }));
+  }
+
+  async function handleFollowBack(e, n) {
+    e.stopPropagation();
+    const requesterId = n.data?.requesterId;
+    if (!requesterId || !currentUser) return;
+
+    const { error } = await supabase
+      .from("follow_requests")
+      .insert({ requester_id: currentUser.id, target_id: requesterId, status: "pending" });
+
+    if (!error) {
+      supabase
+        .from("notifications")
+        .insert({
+          user_id: requesterId,
+          actor_username: myUsername,
+          type: "follow_request",
+          message: "wants to follow you",
+          link: "/",
+          data: { requesterId: currentUser.id, requesterUsername: myUsername },
+        })
+        .then(() => {});
+
+      setActionedRequests((prev) => ({ ...prev, [n.id]: "followed_back" }));
+    }
   }
 
   return (
@@ -133,18 +223,79 @@ function NotificationBell() {
 
           {notifications.length > 0 && (
             <div className="notification-list">
-              {notifications.map((n) => (
-                <button
-                  key={n.id}
-                  className={n.read ? "notification-item" : "notification-item unread"}
-                  onClick={() => handleNotificationClick(n)}
-                >
-                  <span className="notification-item__text">
-                    <strong>{n.actor_username}</strong> {n.message}
-                  </span>
-                  <span className="notification-item__time">{timeAgo(n.created_at)}</span>
-                </button>
-              ))}
+              {notifications.map((n) => {
+                const actioned = actionedRequests[n.id];
+
+                if (n.type === "follow_request") {
+                  return (
+                    <div
+                      key={n.id}
+                      className={n.read ? "notification-item" : "notification-item unread"}
+                    >
+                      <span className="notification-item__text">
+                        <strong>{n.actor_username}</strong> {n.message}
+                      </span>
+                      <span className="notification-item__time">{timeAgo(n.created_at)}</span>
+
+                      {!actioned && (
+                        <div className="notification-item__actions">
+                          <button
+                            className="notification-action notification-action--accept"
+                            onClick={(e) => handleAccept(e, n)}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className="notification-action notification-action--decline"
+                            onClick={(e) => handleDecline(e, n)}
+                          >
+                            Decline
+                          </button>
+                        </div>
+                      )}
+
+                      {actioned === "accepted" && (
+                        <div className="notification-item__actions">
+                          <span className="notification-item__status">✓ Accepted</span>
+                          <button
+                            className="notification-action notification-action--accept"
+                            onClick={(e) => handleFollowBack(e, n)}
+                          >
+                            Follow back
+                          </button>
+                        </div>
+                      )}
+
+                      {actioned === "mutual" && (
+                        <span className="notification-item__status">
+                          ✓ Accepted — you follow each other
+                        </span>
+                      )}
+
+                      {actioned === "followed_back" && (
+                        <span className="notification-item__status">✓ Follow request sent</span>
+                      )}
+
+                      {actioned === "declined" && (
+                        <span className="notification-item__status">Declined</span>
+                      )}
+                    </div>
+                  );
+                }
+
+                return (
+                  <button
+                    key={n.id}
+                    className={n.read ? "notification-item" : "notification-item unread"}
+                    onClick={() => handleNotificationClick(n)}
+                  >
+                    <span className="notification-item__text">
+                      <strong>{n.actor_username}</strong> {n.message}
+                    </span>
+                    <span className="notification-item__time">{timeAgo(n.created_at)}</span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>

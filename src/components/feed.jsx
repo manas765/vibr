@@ -17,6 +17,7 @@ function Feed() {
 
   const [likedPosts, setLikedPosts] = useState([]);
   const [followedIds, setFollowedIds] = useState([]);
+  const [pendingRequestIds, setPendingRequestIds] = useState([]);
   const [commentingPost, setCommentingPost] = useState(null);
   const [commentsByReview, setCommentsByReview] = useState({});
   const [commentText, setCommentText] = useState("");
@@ -53,12 +54,22 @@ function Feed() {
       .then(({ data, error }) => {
         if (!error) setFollowedIds((data || []).map((row) => row.followed_id));
       });
+
+    supabase
+      .from("follow_requests")
+      .select("target_id")
+      .eq("requester_id", user.id)
+      .eq("status", "pending")
+      .then(({ data, error }) => {
+        if (!error) setPendingRequestIds((data || []).map((row) => row.target_id));
+      });
   }
 
   async function toggleFollowUser(personId) {
     if (!currentUser || personId === currentUser.id) return;
 
     const isFollowing = followedIds.includes(personId);
+    const isPending = pendingRequestIds.includes(personId);
 
     if (isFollowing) {
       await supabase
@@ -68,12 +79,44 @@ function Feed() {
         .eq("followed_id", personId);
 
       setFollowedIds((current) => current.filter((id) => id !== personId));
-    } else {
-      await supabase
-        .from("followed_users")
-        .insert({ follower_id: currentUser.id, followed_id: personId });
+      return;
+    }
 
-      setFollowedIds((current) => [...current, personId]);
+    if (isPending) {
+      await supabase
+        .from("follow_requests")
+        .delete()
+        .eq("requester_id", currentUser.id)
+        .eq("target_id", personId);
+
+      setPendingRequestIds((current) => current.filter((id) => id !== personId));
+      return;
+    }
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", currentUser.id)
+      .single();
+
+    const { error } = await supabase
+      .from("follow_requests")
+      .insert({ requester_id: currentUser.id, target_id: personId, status: "pending" });
+
+    if (!error) {
+      setPendingRequestIds((current) => [...current, personId]);
+
+      supabase
+        .from("notifications")
+        .insert({
+          user_id: personId,
+          actor_username: profile?.username || "Anonymous",
+          type: "follow_request",
+          message: "wants to follow you",
+          link: "/",
+          data: { requesterId: currentUser.id, requesterUsername: profile?.username || "Anonymous" },
+        })
+        .then(() => {});
     }
   }
 
@@ -267,6 +310,24 @@ function Feed() {
       setSearchResults([]);
       setReviewText("");
       setSelectedVerdict(VERDICT_OPTIONS[0].key);
+
+      // Let followers know — this is the whole point of following someone
+      const { data: followers } = await supabase
+        .from("followed_users")
+        .select("follower_id")
+        .eq("followed_id", currentUser.id);
+
+      if (followers && followers.length > 0) {
+        const rows = followers.map((f) => ({
+          user_id: f.follower_id,
+          actor_username: profile?.username || "Anonymous",
+          type: "new_post",
+          message: `posted "${selectedSong.title}"`,
+          link: "/?page=feed",
+        }));
+
+        supabase.from("notifications").insert(rows).then(() => {});
+      }
     }
   }
 
@@ -457,10 +518,20 @@ function Feed() {
                     </button>
                   ) : (
                     <button
-                      className={followedIds.includes(post.user_id) ? "following" : "follow-button"}
+                      className={
+                        followedIds.includes(post.user_id)
+                          ? "following"
+                          : pendingRequestIds.includes(post.user_id)
+                          ? "pending"
+                          : "follow-button"
+                      }
                       onClick={() => toggleFollowUser(post.user_id)}
                     >
-                      {followedIds.includes(post.user_id) ? "Following" : "Follow"}
+                      {followedIds.includes(post.user_id)
+                        ? "Following"
+                        : pendingRequestIds.includes(post.user_id)
+                        ? "Requested"
+                        : "Follow"}
                     </button>
                   )}
                 </div>

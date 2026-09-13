@@ -161,6 +161,51 @@
   font-weight: 700;
 }
 
+.notification-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.notification-action {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.notification-action--accept {
+  background: #c6ff3d;
+  border: 1px solid #c6ff3d;
+  color: #0a0a0f;
+}
+
+.notification-action--accept:hover {
+  box-shadow: 0 0 14px rgba(198, 255, 61, 0.4);
+}
+
+.notification-action--decline {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+.notification-action--decline:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.notification-item__status {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
 .notification-item__time {
   font-family: "Inter", sans-serif;
   font-size: 11px;

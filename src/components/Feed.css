@@ -97,7 +97,8 @@
 }
 
 .feed-user .follow-button,
-.feed-user .following {
+.feed-user .following,
+.feed-user .pending {
   font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -123,6 +124,17 @@
   background: #c6ff3d;
   border: 1px solid #c6ff3d;
   color: #0a0a0f;
+}
+
+.feed-user .pending {
+  background: transparent;
+  border: 1px dashed rgba(242, 242, 245, 0.35);
+  color: var(--text-soft);
+}
+
+.feed-user .pending:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
 }
 
 .feed-song {

@@ -11,6 +11,8 @@ function PublicProfile({ setActivePage }) {
   const [profile, setProfile] = useState(null);
   const [savedSongs, setSavedSongs] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [theyFollowMe, setTheyFollowMe] = useState(false);
+  const [requestPending, setRequestPending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -51,6 +53,21 @@ function PublicProfile({ setActivePage }) {
             .eq("follower_id", user.id)
             .eq("followed_id", userId)
             .then(({ data: followRow }) => setIsFollowing((followRow || []).length > 0));
+
+          supabase
+            .from("followed_users")
+            .select("followed_id")
+            .eq("follower_id", userId)
+            .eq("followed_id", user.id)
+            .then(({ data: backRow }) => setTheyFollowMe((backRow || []).length > 0));
+
+          supabase
+            .from("follow_requests")
+            .select("id")
+            .eq("requester_id", user.id)
+            .eq("target_id", userId)
+            .eq("status", "pending")
+            .then(({ data: reqRow }) => setRequestPending((reqRow || []).length > 0));
         }
 
         setLoading(false);
@@ -67,11 +84,43 @@ function PublicProfile({ setActivePage }) {
         .eq("follower_id", currentUser.id)
         .eq("followed_id", userId);
       setIsFollowing(false);
-    } else {
+      return;
+    }
+
+    if (requestPending) {
       await supabase
-        .from("followed_users")
-        .insert({ follower_id: currentUser.id, followed_id: userId });
-      setIsFollowing(true);
+        .from("follow_requests")
+        .delete()
+        .eq("requester_id", currentUser.id)
+        .eq("target_id", userId);
+      setRequestPending(false);
+      return;
+    }
+
+    const { error } = await supabase
+      .from("follow_requests")
+      .insert({ requester_id: currentUser.id, target_id: userId, status: "pending" });
+
+    if (!error) {
+      setRequestPending(true);
+
+      const { data: myProfile } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", currentUser.id)
+        .single();
+
+      supabase
+        .from("notifications")
+        .insert({
+          user_id: userId,
+          actor_username: myProfile?.username || "Anonymous",
+          type: "follow_request",
+          message: "wants to follow you",
+          link: "/",
+          data: { requesterId: currentUser.id, requesterUsername: myProfile?.username || "Anonymous" },
+        })
+        .then(() => {});
     }
   }
 
@@ -139,13 +188,19 @@ function PublicProfile({ setActivePage }) {
           ) : (
             <div className="public-profile-actions">
               <button
-                className={isFollowing ? "public-profile-follow following" : "public-profile-follow"}
+                className={
+                  isFollowing
+                    ? "public-profile-follow following"
+                    : requestPending
+                    ? "public-profile-follow pending"
+                    : "public-profile-follow"
+                }
                 onClick={toggleFollow}
               >
-                {isFollowing ? "✓ Following" : "+ Follow"}
+                {isFollowing ? "✓ Following" : requestPending ? "Requested" : theyFollowMe ? "+ Follow back" : "+ Follow"}
               </button>
 
-              {isFollowing && (
+              {isFollowing && theyFollowMe && (
                 <button
                   className="public-profile-message"
                   onClick={() =>
@@ -161,6 +216,12 @@ function PublicProfile({ setActivePage }) {
           )}
         </div>
       </div>
+
+      {isFollowing && !theyFollowMe && (
+        <p className="public-profile-hint">
+          You follow {profile.username}. Once they follow you back, you'll be able to message each other.
+        </p>
+      )}
 
       <div className="profile-stats">
         <div className="profile-stat">
