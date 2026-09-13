@@ -99,92 +99,99 @@ function Profile({ savedSongs }) {
 
   return (
     <section className="profile-page">
-      <div className="profile-header">
-        {editing ? (
-          <button
-            className="profile-avatar profile-avatar--editable"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploadingAvatar}
-            title="Change profile picture"
-          >
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={username} />
-            ) : username ? (
-              username.slice(0, 2).toUpperCase()
+      <div
+        className="profile-header"
+        style={avatarUrl ? { backgroundImage: `url(${avatarUrl})` } : undefined}
+      >
+        <div className="profile-header__overlay" />
+
+        <div className="profile-header__content">
+          {editing ? (
+            <button
+              className="profile-avatar profile-avatar--editable"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingAvatar}
+              title="Change profile picture"
+            >
+              {avatarUrl ? (
+                <img src={avatarUrl} alt={username} />
+              ) : username ? (
+                username.slice(0, 2).toUpperCase()
+              ) : (
+                "??"
+              )}
+            </button>
+          ) : (
+            <div className="profile-avatar">
+              {avatarUrl ? (
+                <img src={avatarUrl} alt={username} />
+              ) : username ? (
+                username.slice(0, 2).toUpperCase()
+              ) : (
+                "??"
+              )}
+            </div>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            style={{ display: "none" }}
+          />
+
+          <div className="profile-info">
+            {editing ? (
+              <>
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="profile-edit-input"
+                  placeholder="Username"
+                />
+
+                <textarea
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="profile-edit-input"
+                  placeholder="Bio"
+                />
+
+                <div className="profile-header__actions">
+                  <button
+                    type="button"
+                    className="profile-change-picture-button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingAvatar}
+                  >
+                    {uploadingAvatar ? "Uploading..." : "🖼 Change profile picture"}
+                  </button>
+
+                  <button
+                    className="profile-edit-button"
+                    onClick={handleSave}
+                    disabled={saving}
+                  >
+                    {saving ? "Saving..." : "✓ Save Profile"}
+                  </button>
+                </div>
+              </>
             ) : (
-              "??"
-            )}
-          </button>
-        ) : (
-          <div className="profile-avatar">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={username} />
-            ) : username ? (
-              username.slice(0, 2).toUpperCase()
-            ) : (
-              "??"
+              <>
+                <h1>{username || "Unnamed"}</h1>
+                <p className="profile-username">@{username}</p>
+                <p className="profile-bio">{bio || "No bio yet."}</p>
+              </>
             )}
           </div>
-        )}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleAvatarChange}
-          style={{ display: "none" }}
-        />
 
-        <div className="profile-info">
-          {editing ? (
-            <>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="profile-edit-input"
-                placeholder="Username"
-              />
-
-              <textarea
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                className="profile-edit-input"
-                placeholder="Bio"
-              />
-
-              <button
-                type="button"
-                className="profile-change-picture-button"
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploadingAvatar}
-              >
-                {uploadingAvatar ? "Uploading..." : "🖼 Change profile picture"}
-              </button>
-
-              <button
-                className="profile-edit-button"
-                onClick={handleSave}
-                disabled={saving}
-              >
-                {saving ? "Saving..." : "✓ Save Profile"}
-              </button>
-            </>
-          ) : (
-            <>
-              <h1>{username || "Unnamed"}</h1>
-
-              <p className="profile-username">@{username}</p>
-
-              <p className="profile-bio">
-                {bio || "No bio yet."}
-              </p>
-
-              <button
-                className="profile-edit-button"
-                onClick={() => setEditing(true)}
-              >
-                ✎ Edit Profile
-              </button>
-            </>
+          {!editing && (
+            <button
+              className="profile-edit-button"
+              onClick={() => setEditing(true)}
+            >
+              ✎ Edit Profile
+            </button>
           )}
         </div>
       </div>

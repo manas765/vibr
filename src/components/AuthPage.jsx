@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
+import vibrLogoDark from "../assets/vibr-logo-dark-theme.png";
+import vibrLogoLight from "../assets/vibr-logo-light-theme.png";
 import "./AuthPage.css";
 
 function EyeIcon({ open }) {
@@ -192,7 +194,8 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
+            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
+            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
           </div>
 
           <h2 className="auth-heading">Set a new password</h2>
@@ -243,7 +246,8 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
+            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
+            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
           </div>
 
           <h2 className="auth-heading">Reset your password</h2>
@@ -293,13 +297,14 @@ function AuthPage() {
         onMouseLeave={handleCardLeave}
       >
         <div className="auth-logo">
-          <span className="auth-logo-bracket">[</span><span className="auth-logo-word">VIBR</span><span className="auth-logo-note">&#9834;</span><span className="auth-logo-bracket">]</span>
+          <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
+          <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
         </div>
 
         <p className="auth-tagline">
           {mode === "signup" ? "Join your sound, your people." : "Feel the vibration again."}
         </p>
-        <p className="auth-slogan">For the vibes, by the vibes, of the vibes.</p>
+        <p className="auth-slogan">for the vibr's, by the vibr's, to the vibr's</p>
 
         <div className="auth-tabs">
           <button

@@ -165,30 +165,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  font-family: var(--font-serif);
-  font-size: 30px;
-  color: var(--text);
-  text-align: center;
   margin-bottom: 6px;
 }
 
-.auth-logo-word {
-  letter-spacing: 2px;
+.auth-logo-mark {
+  height: 40px;
+  width: auto;
 }
 
-.auth-logo-bracket {
-  font-weight: 300;
-  color: var(--text-muted);
-  transform: scaleY(1.15);
-  opacity: 0.7;
+.auth-logo-mark-light {
+  display: none;
 }
 
-.auth-logo-note {
-  font-size: 16px;
-  color: var(--lime);
-  margin-left: 6px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+[data-theme="light"] .auth-logo-mark-dark {
+  display: none;
+}
+
+[data-theme="light"] .auth-logo-mark-light {
+  display: block;
 }
 
 .auth-tagline {
