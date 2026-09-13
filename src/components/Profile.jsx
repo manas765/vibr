@@ -48,8 +48,13 @@ function Profile({ savedSongs }) {
 
     if (!error) {
       setEditing(false);
+      return;
+    }
+
+    if (error.code === "23505") {
+      setErrorMsg("That username is already taken. Try another one.");
     } else {
-      setErrorMsg("Couldn't save your profile. Please try again.");
+      setErrorMsg(`Couldn't save your profile: ${error.message}`);
     }
   }
 
@@ -68,7 +73,7 @@ function Profile({ savedSongs }) {
 
     if (uploadError) {
       setUploadingAvatar(false);
-      setErrorMsg("Couldn't upload that image. Please try again.");
+      setErrorMsg(`Couldn't upload that image: ${uploadError.message}`);
       return;
     }
 
