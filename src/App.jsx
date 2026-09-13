@@ -8,6 +8,7 @@ import Collections from "./components/collections";
 import Feed from "./components/feed";
 import Releases from "./components/Releases";
 import Profile from "./components/Profile";
+import PublicProfile from "./components/PublicProfile";
 import ArtistPage from "./components/ArtistPage";
 import ExplorePage from "./components/ExplorePage";
 import { AnimatePresence } from "motion/react";
@@ -23,6 +24,13 @@ import MessagesPage from "./components/MessagesPage";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchHistory, setSearchHistory] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("vibr-search-history") || "[]");
+    } catch {
+      return [];
+    }
+  });
   const [profileResults, setProfileResults] = useState([]);
   const [showProfileResults, setShowProfileResults] = useState(false);
   const [savedSongs, setSavedSongs] = useState([]);
@@ -65,6 +73,28 @@ function App() {
 
     return () => clearTimeout(timeout);
   }, [searchTerm]);
+
+  function commitSearch(term) {
+    const trimmed = term.trim();
+    if (!trimmed) return;
+
+    setSearchHistory((prev) => {
+      const next = [
+        trimmed,
+        ...prev.filter((t) => t.toLowerCase() !== trimmed.toLowerCase()),
+      ].slice(0, 8);
+      localStorage.setItem("vibr-search-history", JSON.stringify(next));
+      return next;
+    });
+  }
+
+  function removeHistoryItem(term) {
+    setSearchHistory((prev) => {
+      const next = prev.filter((t) => t !== term);
+      localStorage.setItem("vibr-search-history", JSON.stringify(next));
+      return next;
+    });
+  }
 
   useEffect(() => {
     if (!user) return;
@@ -176,27 +206,79 @@ function App() {
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setShowProfileResults(true)}
             onBlur={() => setTimeout(() => setShowProfileResults(false), 150)}
+            onKeyDown={(e) => e.key === "Enter" && commitSearch(searchTerm)}
           />
 
-          {showProfileResults && profileResults.length > 0 && (
+          <button
+            type="button"
+            className="topbar-search-button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => commitSearch(searchTerm)}
+            aria-label="Search"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+
+          {showProfileResults && (
             <div className="topbar-search-results">
-              {profileResults.map((profile) => (
-                <Link
-                  key={profile.id}
-                  to={`/profile/${profile.id}`}
-                  className="topbar-search-result"
-                  onClick={() => setShowProfileResults(false)}
-                >
-                  <div className="topbar-search-result__avatar">
-                    {profile.avatar_url ? (
-                      <img src={profile.avatar_url} alt={profile.username} />
-                    ) : (
-                      (profile.username || "?").slice(0, 1).toUpperCase()
-                    )}
-                  </div>
-                  <span>{profile.username}</span>
-                </Link>
-              ))}
+              {!searchTerm.trim() && searchHistory.length > 0 && (
+                <>
+                  <div className="topbar-search-results__label">Recent searches</div>
+                  {searchHistory.map((term) => (
+                    <div
+                      key={term}
+                      className="topbar-search-history-item"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => {
+                        setSearchTerm(term);
+                        commitSearch(term);
+                      }}
+                    >
+                      <span>🕘 {term}</span>
+                      <button
+                        type="button"
+                        className="topbar-search-history-remove"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeHistoryItem(term);
+                        }}
+                        aria-label={`Remove "${term}" from history`}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {searchTerm.trim() && profileResults.length > 0 && (
+                <>
+                  <div className="topbar-search-results__label">People</div>
+                  {profileResults.map((profile) => (
+                    <Link
+                      key={profile.id}
+                      to={`/profile/${profile.id}`}
+                      className="topbar-search-result"
+                      onClick={() => {
+                        commitSearch(searchTerm);
+                        setShowProfileResults(false);
+                      }}
+                    >
+                      <div className="topbar-search-result__avatar">
+                        {profile.avatar_url ? (
+                          <img src={profile.avatar_url} alt={profile.username} />
+                        ) : (
+                          (profile.username || "?").slice(0, 1).toUpperCase()
+                        )}
+                      </div>
+                      <span>{profile.username}</span>
+                    </Link>
+                  ))}
+                </>
+              )}
             </div>
           )}
         </div>
@@ -337,6 +419,14 @@ function App() {
               element={
                 <PageTransition>
                   <SpacesPage />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/profile/:userId"
+              element={
+                <PageTransition>
+                  <PublicProfile setActivePage={setActivePage} />
                 </PageTransition>
               }
             />

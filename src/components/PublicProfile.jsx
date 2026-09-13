@@ -103,21 +103,28 @@ function PublicProfile({ setActivePage }) {
     <section className="profile-page">
       <Link to="/" className="back-link">← Back to Discover</Link>
 
-      <div className="profile-header">
-        <div className="profile-avatar">
-          {profile.avatar_url ? (
-            <img src={profile.avatar_url} alt={profile.username} />
-          ) : profile.username ? (
-            profile.username.slice(0, 2).toUpperCase()
-          ) : (
-            "??"
-          )}
-        </div>
+      <div
+        className="profile-header"
+        style={profile.avatar_url ? { backgroundImage: `url(${profile.avatar_url})` } : undefined}
+      >
+        <div className="profile-header__overlay" />
 
-        <div className="profile-info">
-          <h1>{profile.username || "Unnamed"}</h1>
-          <p className="profile-username">@{profile.username}</p>
-          <p className="profile-bio">{profile.bio || "No bio yet."}</p>
+        <div className="profile-header__content">
+          <div className="profile-avatar">
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt={profile.username} />
+            ) : profile.username ? (
+              profile.username.slice(0, 2).toUpperCase()
+            ) : (
+              "??"
+            )}
+          </div>
+
+          <div className="profile-info">
+            <h1>{profile.username || "Unnamed"}</h1>
+            <p className="profile-username">@{profile.username}</p>
+            <p className="profile-bio">{profile.bio || "No bio yet."}</p>
+          </div>
 
           {isOwnProfile ? (
             <button

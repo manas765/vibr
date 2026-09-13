@@ -301,9 +301,6 @@ function AuthPage() {
           <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
         </div>
 
-        <p className="auth-tagline">
-          {mode === "signup" ? "Join your sound, your people." : "Feel the vibration again."}
-        </p>
         <p className="auth-slogan">for the vibr's, by the vibr's, to the vibr's</p>
 
         <div className="auth-tabs">
