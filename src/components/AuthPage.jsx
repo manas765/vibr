@@ -2,13 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import "./AuthPage.css";
 
-const CHIP_LAYOUT = [
-  { top: "9%", left: "5%", rotate: -9, depth: 12 },
-  { top: "58%", left: "4%", rotate: 6, depth: 22 },
-  { top: "82%", left: "22%", rotate: 4, depth: 26, hideOnMobile: true },
-];
+function EyeIcon({ open }) {
+  return open ? (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3l18 18" />
+      <path d="M10.6 5.2A10.7 10.7 0 0 1 12 5c7 0 10.5 7 10.5 7a13.8 13.8 0 0 1-3.2 4.1M6.7 6.7C3.6 8.8 1.5 12 1.5 12s3.5 7 10.5 7a10.4 10.4 0 0 0 4.3-.9" />
+      <path d="M9.9 10a3 3 0 0 0 4.2 4.2" />
+    </svg>
+  );
+}
 
-function AuthScene({ tracks }) {
+function AuthScene() {
   return (
     <div className="auth-scene" aria-hidden="true">
       <div className="auth-glow auth-glow-purple" />
@@ -18,35 +27,6 @@ function AuthScene({ tracks }) {
       <span className="auth-note auth-note-1">♪</span>
       <span className="auth-note auth-note-2">♫</span>
       <span className="auth-note auth-note-3">♪</span>
-
-      {tracks.slice(0, CHIP_LAYOUT.length).map((track, i) => {
-        const layout = CHIP_LAYOUT[i];
-        return (
-          <div
-            key={track.id}
-            className={
-              "auth-chip" + (layout.hideOnMobile ? " auth-chip-hide-sm" : "")
-            }
-            style={{
-              top: layout.top,
-              left: layout.left,
-              right: layout.right,
-              transform: `rotate(${layout.rotate}deg) translate(calc(var(--px, 0) * ${layout.depth}px), calc(var(--py, 0) * ${layout.depth}px))`,
-            }}
-          >
-            <img
-              src={track.thumbnail}
-              alt=""
-              className="auth-chip-art"
-              loading="lazy"
-            />
-            <div className="auth-chip-text">
-              <strong>{track.title}</strong>
-              <small>{track.artist}</small>
-            </div>
-          </div>
-        );
-      })}
     </div>
   );
 }
@@ -62,8 +42,8 @@ function AuthPage() {
 
   const [isRecovery, setIsRecovery] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-
-  const [tracks, setTracks] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   const pageRef = useRef(null);
   const cardRef = useRef(null);
@@ -77,15 +57,6 @@ function AuthPage() {
     reduceMotionRef.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-
-    fetch("/api/youtube-search?q=trending music")
-      .then((r) => r.json())
-      .then((data) => {
-        if (Array.isArray(data.tracks)) setTracks(data.tracks);
-      })
-      .catch(() => {
-        // floating chips are decorative — fail silently, page still works
-      });
   }, []);
 
   function handlePageMove(e) {
@@ -212,7 +183,7 @@ function AuthPage() {
   if (isRecovery) {
     return (
       <div className="auth-page" ref={pageRef} onMouseMove={handlePageMove}>
-        <AuthScene tracks={tracks} />
+        <AuthScene />
         <div
           className="auth-card"
           ref={cardRef}
@@ -227,15 +198,26 @@ function AuthPage() {
           <h2 className="auth-heading">Set a new password</h2>
 
           <form onSubmit={handleUpdatePassword} className="auth-form">
-            <input
-              type="password"
-              placeholder="New password"
-              aria-label="New password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-              minLength={6}
-            />
+            <div className="auth-password-field">
+              <input
+                type={showNewPassword ? "text" : "password"}
+                placeholder="New password"
+                aria-label="New password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={6}
+              />
+              <button
+                type="button"
+                className="auth-password-toggle"
+                onClick={() => setShowNewPassword((v) => !v)}
+                aria-label={showNewPassword ? "Hide password" : "Show password"}
+                tabIndex={-1}
+              >
+                <EyeIcon open={showNewPassword} />
+              </button>
+            </div>
 
             {error && <p className="auth-error">{error}</p>}
             {message && <p className="auth-success">{message}</p>}
@@ -252,7 +234,7 @@ function AuthPage() {
   if (mode === "forgot") {
     return (
       <div className="auth-page" ref={pageRef} onMouseMove={handlePageMove}>
-        <AuthScene tracks={tracks} />
+        <AuthScene />
         <div
           className="auth-card"
           ref={cardRef}
@@ -302,7 +284,7 @@ function AuthPage() {
 
   return (
     <div className="auth-page" ref={pageRef} onMouseMove={handlePageMove}>
-      <AuthScene tracks={tracks} />
+      <AuthScene />
       <div
         className="auth-card"
         ref={cardRef}
@@ -317,6 +299,7 @@ function AuthPage() {
         <p className="auth-tagline">
           {mode === "signup" ? "Join your sound, your people." : "Feel the vibration again."}
         </p>
+        <p className="auth-slogan">For the vibes, by the vibes, of the vibes.</p>
 
         <div className="auth-tabs">
           <button
@@ -354,15 +337,26 @@ function AuthPage() {
             required
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            aria-label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-          />
+          <div className="auth-password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              aria-label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+            <button
+              type="button"
+              className="auth-password-toggle"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              tabIndex={-1}
+            >
+              <EyeIcon open={showPassword} />
+            </button>
+          </div>
 
           {error && <p className="auth-error">{error}</p>}
 
