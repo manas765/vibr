@@ -517,17 +517,24 @@ main {
   letter-spacing: -0.01em;
 }
 
-.topbar-greeting-row span {
+.topbar-greeting-row .greeting-name {
   background: linear-gradient(90deg, var(--text) 0%, var(--lime) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-[data-theme="light"] .topbar-greeting-row span {
+[data-theme="light"] .topbar-greeting-row .greeting-name {
   background: linear-gradient(90deg, var(--text-soft) 0%, var(--text) 100%);
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.topbar-greeting-row .greeting-brand {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-soft);
+  letter-spacing: 0.5px;
 }
 
 /* =========================================================

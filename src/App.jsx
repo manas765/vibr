@@ -190,10 +190,12 @@ function App() {
       <div className="topbar-greeting-row">
         {username ? (
           <>
-            Welcome back to VIBR, <span>{username}</span>
+            Welcome back to <span className="greeting-brand">♪ VIBR ♪</span>, <span className="greeting-name">{username}</span>
           </>
         ) : (
-          "Welcome to VIBR"
+          <>
+            Welcome to <span className="greeting-brand">♪ VIBR ♪</span>
+          </>
         )}
       </div>
 
