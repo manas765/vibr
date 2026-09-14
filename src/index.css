@@ -511,7 +511,7 @@ main {
 .topbar-greeting-row {
   padding: 20px 45px 0;
   font-family: var(--font-serif);
-  font-size: 34px;
+  font-size: 44px;
   font-weight: 400;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -1818,7 +1818,7 @@ main {
   }
 
   .topbar-greeting-row {
-    font-size: 20px;
+    font-size: 26px;
     padding: 16px 25px 0;
   }
 
@@ -2100,7 +2100,7 @@ main {
   }
 
   .topbar-greeting-row {
-    font-size: 20px;
+    font-size: 26px;
     padding: 16px 16px 0;
   }
 
