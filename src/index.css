@@ -530,34 +530,6 @@ main {
   background-clip: text;
 }
 
-.topbar-greeting-row .greeting-brand {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, var(--lime) 0%, var(--text) 50%, var(--lime) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);
-}
-
-[data-theme="light"] .topbar-greeting-row .greeting-brand {
-  text-shadow: 0 0 18px rgba(0, 0, 0, 0.08);
-}
-
-.topbar-greeting-row .greeting-note {
-  display: inline-block;
-  color: var(--lime);
-  font-size: 0.7em;
-  vertical-align: middle;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
-}
-
-[data-theme="light"] .topbar-greeting-row .greeting-note {
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
-}
-
 /* =========================================================
    HERO — MAIN LAYOUT
    ========================================================= */
