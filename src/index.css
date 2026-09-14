@@ -533,8 +533,29 @@ main {
 .topbar-greeting-row .greeting-brand {
   font-family: var(--font-serif);
   font-style: italic;
-  color: var(--text-soft);
-  letter-spacing: 0.5px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--lime) 0%, var(--text) 50%, var(--lime) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="light"] .topbar-greeting-row .greeting-brand {
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.08);
+}
+
+.topbar-greeting-row .greeting-note {
+  display: inline-block;
+  color: var(--lime);
+  font-size: 0.7em;
+  vertical-align: middle;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+[data-theme="light"] .topbar-greeting-row .greeting-note {
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
 }
 
 /* =========================================================
@@ -2105,4 +2126,36 @@ main {
   .hero-logo-mark {
     height: 46px;
   }
+}
+
+/* =========================================================
+   BACK LINK — used across Messages, Profile, Artist, Explore,
+   Spaces, Browse. Lives here (not a page-specific file) so it's
+   always loaded regardless of which page is the entry point.
+   ========================================================= */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  margin-bottom: 28px;
+  padding: 10px 20px 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: var(--surface-2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: all 180ms ease;
+}
+
+.back-link:hover {
+  color: #0a0a0f;
+  background: #c6ff3d;
+  border-color: #c6ff3d;
+  box-shadow: 0 6px 20px rgba(198, 255, 61, 0.35);
+  transform: translateX(-3px);
 }
