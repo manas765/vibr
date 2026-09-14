@@ -194,8 +194,8 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
-            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
+            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" style={{ height: 40, width: "auto" }} />
+            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" style={{ height: 40, width: "auto" }} />
           </div>
 
           <h2 className="auth-heading">Set a new password</h2>
@@ -246,8 +246,8 @@ function AuthPage() {
           onMouseLeave={handleCardLeave}
         >
           <div className="auth-logo">
-            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
-            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
+            <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" style={{ height: 40, width: "auto" }} />
+            <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" style={{ height: 40, width: "auto" }} />
           </div>
 
           <h2 className="auth-heading">Reset your password</h2>
@@ -289,6 +289,7 @@ function AuthPage() {
   return (
     <div className="auth-page" ref={pageRef} onMouseMove={handlePageMove}>
       <AuthScene />
+
       <div
         className="auth-card"
         ref={cardRef}
@@ -297,8 +298,8 @@ function AuthPage() {
         onMouseLeave={handleCardLeave}
       >
         <div className="auth-logo">
-          <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" />
-          <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" />
+          <img src={vibrLogoDark} alt="VIBR" className="auth-logo-mark auth-logo-mark-dark" style={{ height: 40, width: "auto" }} />
+          <img src={vibrLogoLight} alt="VIBR" className="auth-logo-mark auth-logo-mark-light" style={{ height: 40, width: "auto" }} />
         </div>
 
         <p className="auth-slogan">for the vibr's, by the vibr's, to the vibr's</p>
