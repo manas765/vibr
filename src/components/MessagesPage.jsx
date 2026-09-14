@@ -305,7 +305,7 @@ function MessagesPage({ savedSongs = [] }) {
         ← Back to Discover
       </Link>
 
-      <div className="messages-layout">
+      <div className={activeContact ? "messages-layout has-active" : "messages-layout"}>
         <div className="messages-sidebar">
           <h1>Messages</h1>
           <p className="messages-sidebar__hint">Conversations</p>
@@ -353,6 +353,14 @@ function MessagesPage({ savedSongs = [] }) {
           {activeContact && (
             <>
               <div className="messages-thread__header">
+                <button
+                  type="button"
+                  className="messages-thread__back"
+                  onClick={() => setActiveContact(null)}
+                  aria-label="Back to conversations"
+                >
+                  ←
+                </button>
                 <div className="messages-contact__avatar">
                   {activeContact.username ? activeContact.username.slice(0, 1).toUpperCase() : "?"}
                 </div>
