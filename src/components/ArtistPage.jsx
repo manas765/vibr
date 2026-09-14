@@ -3,7 +3,7 @@ import { useParams, useLocation, useSearchParams, Link } from "react-router-dom"
 import { movies } from "../data/movies";
 import MusicCard3D from "./MusicCard3D";
 import MovieCard from "./MovieCard";
-import MovieModal from "./MovieModal"; 
+import MovieModal from "./MovieModal";  
 import "./ArtistPage.css";
 import ArtistCommunity from "./ArtistCommunity";
 
