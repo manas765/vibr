@@ -21,6 +21,7 @@ function NotificationBell() {
   const [notifications, setNotifications] = useState([]);
   // notification id -> "accepted" | "mutual" | "declined" | "followed_back"
   const [actionedRequests, setActionedRequests] = useState({});
+  const [processingIds, setProcessingIds] = useState({});
   const ref = useRef(null);
   const navigate = useNavigate();
 
@@ -83,7 +84,15 @@ function NotificationBell() {
       .order("created_at", { ascending: false })
       .limit(30)
       .then(({ data, error }) => {
-        if (!error) setNotifications(data || []);
+        if (!error) {
+          setNotifications(data || []);
+
+          const hydrated = {};
+          (data || []).forEach((n) => {
+            if (n.data?.actioned) hydrated[n.id] = n.data.actioned;
+          });
+          setActionedRequests((prev) => ({ ...hydrated, ...prev }));
+        }
       });
   }
 
@@ -109,10 +118,19 @@ function NotificationBell() {
     navigate(n.link, { state: n.data || undefined });
   }
 
+  async function persistActioned(n, value) {
+    await supabase
+      .from("notifications")
+      .update({ data: { ...(n.data || {}), actioned: value } })
+      .eq("id", n.id);
+  }
+
   async function handleAccept(e, n) {
     e.stopPropagation();
     const requesterId = n.data?.requesterId;
-    if (!requesterId || !currentUser) return;
+    if (!requesterId || !currentUser || actionedRequests[n.id] || processingIds[n.id]) return;
+
+    setProcessingIds((prev) => ({ ...prev, [n.id]: true }));
 
     await supabase
       .from("followed_users")
@@ -142,16 +160,20 @@ function NotificationBell() {
       .eq("follower_id", currentUser.id)
       .eq("followed_id", requesterId);
 
-    setActionedRequests((prev) => ({
-      ...prev,
-      [n.id]: alreadyFollowing && alreadyFollowing.length > 0 ? "mutual" : "accepted",
-    }));
+    const finalState = alreadyFollowing && alreadyFollowing.length > 0 ? "mutual" : "accepted";
+
+    await persistActioned(n, finalState);
+
+    setActionedRequests((prev) => ({ ...prev, [n.id]: finalState }));
+    setProcessingIds((prev) => ({ ...prev, [n.id]: false }));
   }
 
   async function handleDecline(e, n) {
     e.stopPropagation();
     const requesterId = n.data?.requesterId;
-    if (!requesterId || !currentUser) return;
+    if (!requesterId || !currentUser || actionedRequests[n.id] || processingIds[n.id]) return;
+
+    setProcessingIds((prev) => ({ ...prev, [n.id]: true }));
 
     await supabase
       .from("follow_requests")
@@ -159,13 +181,18 @@ function NotificationBell() {
       .eq("requester_id", requesterId)
       .eq("target_id", currentUser.id);
 
+    await persistActioned(n, "declined");
+
     setActionedRequests((prev) => ({ ...prev, [n.id]: "declined" }));
+    setProcessingIds((prev) => ({ ...prev, [n.id]: false }));
   }
 
   async function handleFollowBack(e, n) {
     e.stopPropagation();
     const requesterId = n.data?.requesterId;
-    if (!requesterId || !currentUser) return;
+    if (!requesterId || !currentUser || processingIds[n.id] || actionedRequests[n.id] === "followed_back") return;
+
+    setProcessingIds((prev) => ({ ...prev, [n.id]: true }));
 
     const { error } = await supabase
       .from("follow_requests")
@@ -184,8 +211,11 @@ function NotificationBell() {
         })
         .then(() => {});
 
+      await persistActioned(n, "followed_back");
       setActionedRequests((prev) => ({ ...prev, [n.id]: "followed_back" }));
     }
+
+    setProcessingIds((prev) => ({ ...prev, [n.id]: false }));
   }
 
   return (
@@ -242,12 +272,14 @@ function NotificationBell() {
                           <button
                             className="notification-action notification-action--accept"
                             onClick={(e) => handleAccept(e, n)}
+                            disabled={processingIds[n.id]}
                           >
                             Accept
                           </button>
                           <button
                             className="notification-action notification-action--decline"
                             onClick={(e) => handleDecline(e, n)}
+                            disabled={processingIds[n.id]}
                           >
                             Decline
                           </button>
@@ -260,6 +292,7 @@ function NotificationBell() {
                           <button
                             className="notification-action notification-action--accept"
                             onClick={(e) => handleFollowBack(e, n)}
+                            disabled={processingIds[n.id]}
                           >
                             Follow back
                           </button>

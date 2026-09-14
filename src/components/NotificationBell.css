@@ -199,6 +199,11 @@
   color: #ff6b6b;
 }
 
+.notification-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .notification-item__status {
   font-family: "Inter", sans-serif;
   font-size: 12px;
