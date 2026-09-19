@@ -46,7 +46,7 @@ function NotificationBell({ variant = "topbar" }) {
     if (!currentUser) return;
 
     const channel = supabase
-      .channel(`notifications-${currentUser.id}`)
+      .channel(`notifications-${currentUser.id}-${variant}`)
       .on(
         "postgres_changes",
         {
