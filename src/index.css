@@ -195,6 +195,12 @@ nav,
 
 /* NAV ITEMS */
 
+.nav-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 4px 14px;
+}
+
 nav button,
 .navbar button,
 .nav-link {
@@ -216,6 +222,7 @@ nav button,
   font-weight: 500;
 
   text-align: left;
+  text-decoration: none;
 
   transition:
     background 0.2s ease,
@@ -2051,7 +2058,9 @@ main {
     height: auto;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 8px 4px;
     padding-bottom: calc(8px + env(safe-area-inset-bottom));
     border-right: none;
@@ -2064,12 +2073,17 @@ main {
     display: none;
   }
 
+  .nav-divider {
+    display: none;
+  }
+
   nav button,
   .navbar button,
   .nav-link {
+    flex: 0 0 auto;
     flex-direction: column;
     width: auto;
-    padding: 6px 4px;
+    padding: 6px 10px;
     margin-bottom: 0;
     font-size: 10px;
     line-height: 1.3;
