@@ -239,6 +239,23 @@ nav button:hover,
   border-color: var(--border);
 }
 
+.nav-link {
+  background: var(--surface-2);
+  border-color: var(--border);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.nav-link:hover {
+  background: var(--surface-3);
+  border-color: var(--border-light);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015));
+  border-color: var(--border-light);
+  color: var(--text);
+}
+
 /* ACTIVE */
 
 nav button.active,

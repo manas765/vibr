@@ -216,3 +216,27 @@
   font-size: 11px;
   color: var(--text-muted);
 }
+/* Sidebar variant — full-width row instead of a circular icon button */
+.notification-bell--sidebar {
+  width: 100%;
+}
+
+.notification-bell__sidebar-trigger {
+  position: relative;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.notification-bell__sidebar-trigger svg {
+  flex-shrink: 0;
+}
+
+.notification-bell__sidebar-trigger .notification-badge {
+  position: static;
+  margin-left: auto;
+}
+
+.notification-bell--sidebar .notification-panel {
+  left: 0;
+  right: auto;
+}

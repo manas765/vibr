@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import NotificationBell from "./NotificationBell";
 
 function Navbar({ activePage, setActivePage }) {
   const location = useLocation();
@@ -61,6 +62,8 @@ function Navbar({ activePage, setActivePage }) {
         <Link to="/spaces" className={isRoute("/spaces") ? "nav-link active" : "nav-link"}>
           Spaces
         </Link>
+
+        <NotificationBell variant="sidebar" />
 
       </nav>
 
