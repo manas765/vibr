@@ -34,6 +34,10 @@ function MessagesPage({ savedSongs = [] }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showSongPicker, setShowSongPicker] = useState(false);
 
+  const [showContactInfo, setShowContactInfo] = useState(false);
+  const [contactProfile, setContactProfile] = useState(null); // {avatar_url, bio}
+  const [contactStats, setContactStats] = useState({ songCount: 0, artistCount: 0, genreCount: 0 });
+
   const scrollRef = useRef(null);
   const channelRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -110,8 +114,10 @@ function MessagesPage({ savedSongs = [] }) {
     if (!currentUser || !activeContact) return;
 
     loadThread();
+    loadContactProfile();
     setShowEmojiPicker(false);
     setShowSongPicker(false);
+    setShowContactInfo(false);
 
     // Live updates: listen for new messages sent TO me, then check if they belong to this thread
     const channel = supabase
@@ -164,6 +170,28 @@ function MessagesPage({ savedSongs = [] }) {
       .order("created_at", { ascending: true })
       .then(({ data, error }) => {
         if (!error) setMessages(data || []);
+      });
+  }
+
+  function loadContactProfile() {
+    supabase
+      .from("profiles")
+      .select("avatar_url, bio")
+      .eq("id", activeContact.id)
+      .single()
+      .then(({ data }) => setContactProfile(data || null));
+
+    supabase
+      .from("saved_songs")
+      .select("artist, genre")
+      .eq("user_id", activeContact.id)
+      .then(({ data }) => {
+        const songs = data || [];
+        setContactStats({
+          songCount: songs.length,
+          artistCount: new Set(songs.map((s) => s.artist)).size,
+          genreCount: new Set(songs.map((s) => s.genre)).size,
+        });
       });
   }
 
@@ -361,10 +389,22 @@ function MessagesPage({ savedSongs = [] }) {
                 >
                   ←
                 </button>
-                <div className="messages-contact__avatar">
-                  {activeContact.username ? activeContact.username.slice(0, 1).toUpperCase() : "?"}
-                </div>
-                <h2>{activeContact.username || "Anonymous"}</h2>
+                <button
+                  type="button"
+                  className="messages-thread__identity"
+                  onClick={() => setShowContactInfo(true)}
+                >
+                  <div className="messages-contact__avatar">
+                    {contactProfile?.avatar_url ? (
+                      <img src={contactProfile.avatar_url} alt="" />
+                    ) : activeContact.username ? (
+                      activeContact.username.slice(0, 1).toUpperCase()
+                    ) : (
+                      "?"
+                    )}
+                  </div>
+                  <h2>{activeContact.username || "Anonymous"}</h2>
+                </button>
               </div>
 
               <div className="messages-thread__body" ref={scrollRef}>
@@ -505,6 +545,93 @@ function MessagesPage({ savedSongs = [] }) {
                   Send
                 </button>
               </div>
+
+              {showContactInfo && (
+                <div className="contact-info-panel">
+                  <div className="contact-info-panel__header">
+                    <button
+                      type="button"
+                      className="contact-info-panel__close"
+                      onClick={() => setShowContactInfo(false)}
+                      aria-label="Close"
+                    >
+                      ✕
+                    </button>
+                    <span>Contact info</span>
+                  </div>
+
+                  <div className="contact-info-panel__body">
+                    <div className="contact-info-panel__avatar">
+                      {contactProfile?.avatar_url ? (
+                        <img src={contactProfile.avatar_url} alt="" />
+                      ) : activeContact.username ? (
+                        activeContact.username.slice(0, 1).toUpperCase()
+                      ) : (
+                        "?"
+                      )}
+                    </div>
+                    <h3>{activeContact.username || "Anonymous"}</h3>
+                    {contactProfile?.bio && <p className="contact-info-panel__bio">{contactProfile.bio}</p>}
+
+                    <Link to={`/profile/${activeContact.id}`} className="contact-info-panel__view-profile">
+                      View full profile →
+                    </Link>
+
+                    <div className="contact-info-panel__stats">
+                      <div>
+                        <strong>{contactStats.songCount}</strong>
+                        <span>Songs</span>
+                      </div>
+                      <div>
+                        <strong>{contactStats.artistCount}</strong>
+                        <span>Artists</span>
+                      </div>
+                      <div>
+                        <strong>{contactStats.genreCount}</strong>
+                        <span>Genres</span>
+                      </div>
+                    </div>
+
+                    <div className="contact-info-panel__section">
+                      <h4>Shared photos</h4>
+                      {(() => {
+                        const images = messages.filter((m) => m.message_type === "image" && m.image_url);
+                        return images.length === 0 ? (
+                          <p className="contact-info-panel__empty">No photos shared yet.</p>
+                        ) : (
+                          <div className="contact-info-panel__image-grid">
+                            {images.map((m) => (
+                              <img key={m.id} src={m.image_url} alt="" />
+                            ))}
+                          </div>
+                        );
+                      })()}
+                    </div>
+
+                    <div className="contact-info-panel__section">
+                      <h4>Shared songs</h4>
+                      {(() => {
+                        const songs = messages.filter((m) => m.message_type === "song" && m.song_data);
+                        return songs.length === 0 ? (
+                          <p className="contact-info-panel__empty">No songs shared yet.</p>
+                        ) : (
+                          <div className="contact-info-panel__song-list">
+                            {songs.map((m) => (
+                              <div className="contact-info-panel__song" key={m.id}>
+                                {m.song_data.thumbnail && <img src={m.song_data.thumbnail} alt="" />}
+                                <div>
+                                  <strong>{m.song_data.title}</strong>
+                                  <small>{m.song_data.artist}</small>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
