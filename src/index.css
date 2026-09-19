@@ -309,33 +309,33 @@ main {
 
 .topbar-search input {
   width: 100%;
-  padding-right: 92px;
 }
 
 .topbar-search-button {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--text-soft);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: color 150ms ease, background 150ms ease;
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
 }
 
 .topbar-search-button--mic {
-  right: 50px;
+  right: 58px;
 }
 
 .topbar-search-button--mic.listening {
   color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.4);
   background: rgba(255, 107, 107, 0.12);
   animation: mic-pulse 1.2s ease-in-out infinite;
 }
@@ -346,8 +346,9 @@ main {
 }
 
 .topbar-search-button:hover {
-  color: var(--text);
-  background: var(--surface-3);
+  color: #0a0a0f;
+  background: #c6ff3d;
+  border-color: #c6ff3d;
 }
 
 .topbar-search-results {
@@ -465,6 +466,21 @@ main {
     0 15px 35px rgba(0,0,0,0.2);
 
   transition: 0.2s ease;
+}
+
+/* .topbar input's shorthand padding above would otherwise cancel the
+   right-side padding reserved for the mic/search buttons — reassert it
+   here (same selector, later in the cascade, so this wins) */
+.topbar-search input {
+  padding-right: 108px;
+}
+
+.topbar-search input:focus {
+  border-color: rgba(198, 255, 61, 0.4);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.025),
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 0 0 3px rgba(198, 255, 61, 0.12);
 }
 
 .topbar input::placeholder {
