@@ -309,7 +309,7 @@ main {
 
 .topbar-search input {
   width: 100%;
-  padding-right: 54px;
+  padding-right: 92px;
 }
 
 .topbar-search-button {
@@ -328,6 +328,21 @@ main {
   justify-content: center;
   cursor: pointer;
   transition: color 150ms ease, background 150ms ease;
+}
+
+.topbar-search-button--mic {
+  right: 50px;
+}
+
+.topbar-search-button--mic.listening {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.12);
+  animation: mic-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(255, 107, 107, 0); }
 }
 
 .topbar-search-button:hover {
@@ -2071,9 +2086,68 @@ main {
     order: 1;
   }
 
+  /* The icon buttons (browse/spaces/messages/theme/notifications/profile)
+     were 60px+ square, which wrapped into a tall stack on phones */
+  .notification-bell__button,
+  .theme-toggle,
+  .profile,
+  .notification-bell .notification-bell__button {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 12px;
+    padding: 0;
+  }
+
+  .notification-bell__button svg,
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .profile {
+    width: auto;
+    padding: 0 10px;
+    font-size: 11px !important;
+  }
+
   .topbar-greeting-row {
     font-size: 26px;
     padding: 16px 16px 0;
+  }
+
+  /* Page containers felt cramped edge-to-edge; also shrink oversized headings */
+  .feed-page,
+  .collections-page,
+  .releases-page,
+  .profile-page,
+  .artist-page,
+  .explore-page,
+  .spaces-page {
+    padding: 16px 14px 30px !important;
+  }
+
+  .feed-header h1,
+  .profile-info h1,
+  .messages-sidebar h1,
+  .artist-page-header h1 {
+    font-size: 24px !important;
+  }
+
+  .feed-card {
+    padding: 16px;
+  }
+
+  .profile-stats {
+    gap: 8px;
+  }
+
+  .profile-stat {
+    padding: 12px 8px;
+  }
+
+  .post-modal {
+    padding: 18px;
   }
 
   .vibr-hero {
@@ -2097,6 +2171,36 @@ main {
 
   .hero-logo-mark {
     height: 46px;
+  }
+
+  /* Topbar icon row: 60px circles are way too chunky once wrapped on
+     a phone screen — this is the real source of the "congested" feel */
+  .topbar {
+    gap: 6px;
+  }
+
+  .topbar .notification-bell__button,
+  .topbar .theme-toggle,
+  .topbar .profile,
+  .notification-bell .notification-bell__button {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 12px;
+    padding: 0;
+    font-size: 10px;
+  }
+
+  .topbar svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .topbar .profile {
+    width: auto;
+    padding: 0 10px;
+    font-size: 11px;
+    white-space: nowrap;
   }
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
@@ -9,6 +9,7 @@ import Feed from "./components/feed";
 import Releases from "./components/Releases";
 import Profile from "./components/Profile";
 import PublicProfile from "./components/PublicProfile";
+import TrendingClips from "./components/TrendingClips";
 import ArtistPage from "./components/ArtistPage";
 import ExplorePage from "./components/ExplorePage";
 import { AnimatePresence } from "motion/react";
@@ -86,6 +87,41 @@ function App() {
       localStorage.setItem("vibr-search-history", JSON.stringify(next));
       return next;
     });
+  }
+
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
+  const voiceSupported =
+    typeof window !== "undefined" &&
+    (window.SpeechRecognition || window.webkitSpeechRecognition);
+
+  function handleVoiceSearch() {
+    if (!voiceSupported) return;
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchTerm(transcript);
+      setShowProfileResults(true);
+      commitSearch(transcript);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
   }
 
   function removeHistoryItem(term) {
@@ -222,6 +258,24 @@ function App() {
             </svg>
           </button>
 
+          {voiceSupported && (
+            <button
+              type="button"
+              className={isListening ? "topbar-search-button topbar-search-button--mic listening" : "topbar-search-button topbar-search-button--mic"}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handleVoiceSearch}
+              aria-label={isListening ? "Stop voice search" : "Search by voice"}
+              title={isListening ? "Listening..." : "Search by voice"}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" y1="19" x2="12" y2="23" />
+                <line x1="8" y1="23" x2="16" y2="23" />
+              </svg>
+            </button>
+          )}
+
           {showProfileResults && (
             <div className="topbar-search-results">
               {!searchTerm.trim() && searchHistory.length > 0 && (
@@ -293,6 +347,12 @@ function App() {
         <Link to="/spaces" className="notification-bell__button" style={{ textDecoration: "none" }} title="Spaces">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+          </svg>
+        </Link>
+        <Link to="/trending" className="notification-bell__button" style={{ textDecoration: "none" }} title="Trending in Clips">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+            <polyline points="17 6 23 6 23 12" />
           </svg>
         </Link>
                 <Link to="/messages" className="notification-bell__button" style={{ textDecoration: "none" }} title="Messages">
@@ -419,6 +479,14 @@ function App() {
               element={
                 <PageTransition>
                   <SpacesPage />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/trending"
+              element={
+                <PageTransition>
+                  <TrendingClips />
                 </PageTransition>
               }
             />
