@@ -14,7 +14,6 @@ import ArtistPage from "./components/ArtistPage";
 import ExplorePage from "./components/ExplorePage";
 import { AnimatePresence } from "motion/react";
 import PageTransition from "./components/PageTransition";
-import NotificationBell from "./components/NotificationBell";
 import BrowsePage from "./components/BrowsePage";
 import SpacesPage from "./components/SpacesPage";
 import { useAuth } from "./hooks/useAuth";
@@ -361,16 +360,15 @@ function App() {
           )}
         </button>
 
+        <button className="profile" onClick={() => setActivePage("profile")}>
+          {initials} ✦
+        </button>
         <button
           onClick={() => supabase.auth.signOut()}
           className="profile"
           style={{ fontSize: "12px" }}
         >
           Log Out
-        </button>
-        <NotificationBell />
-        <button className="profile" onClick={() => setActivePage("profile")}>
-          {initials} ✦
         </button>
       </header>
 

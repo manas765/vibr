@@ -47,6 +47,8 @@ function Navbar({ activePage, setActivePage }) {
 
         <div className="nav-divider" />
 
+        <NotificationBell variant="sidebar" />
+
         <Link to="/browse" className={isRoute("/browse") ? "nav-link active" : "nav-link"}>
           Browse
         </Link>
@@ -62,8 +64,6 @@ function Navbar({ activePage, setActivePage }) {
         <Link to="/spaces" className={isRoute("/spaces") ? "nav-link active" : "nav-link"}>
           Spaces
         </Link>
-
-        <NotificationBell variant="sidebar" />
 
       </nav>
 
