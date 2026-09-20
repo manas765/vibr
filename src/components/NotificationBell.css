@@ -224,7 +224,6 @@
 .notification-bell__sidebar-trigger {
   position: relative;
   justify-content: flex-start;
-  gap: 10px;
 }
 
 .notification-bell__sidebar-trigger svg {
