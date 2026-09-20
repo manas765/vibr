@@ -603,6 +603,42 @@ main {
   background-clip: text;
 }
 
+.topbar-greeting-row .greeting-vibr {
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  background: linear-gradient(
+    90deg,
+    #ff3d7f 0%,
+    #ff8a3d 16%,
+    #ffd23d 33%,
+    #3dff8a 50%,
+    #3dd6ff 66%,
+    #6a5dff 83%,
+    #ff3dcf 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: greeting-vibr-shimmer 6s linear infinite;
+  filter: drop-shadow(0 0 14px rgba(255, 61, 127, 0.25))
+    drop-shadow(0 0 22px rgba(61, 214, 255, 0.18));
+}
+
+@keyframes greeting-vibr-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar-greeting-row .greeting-vibr {
+    animation: none;
+  }
+}
+
 /* =========================================================
    HERO — MAIN LAYOUT
    ========================================================= */
