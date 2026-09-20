@@ -91,7 +91,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          ✦ YOUR SOUND. YOUR PEOPLE.
+          <span className="hero-badge-text">✦ YOUR SOUND. YOUR PEOPLE.</span>
         </motion.div>
 
         <motion.div
@@ -136,42 +136,18 @@ function Hero() {
         </Link>
       </div>
 
-      {/* 3D headphone stage */}
+      {/* headphone stage */}
       <div
         ref={stageRef}
         className="headphone-stage"
-        style={{
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        }}
       >
-        <motion.div
-          className="headphone-orbit orbit-purple"
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
-        <motion.div
-          className="headphone-orbit orbit-lime"
-          animate={{ rotate: -360 }}
-          transition={{
-            duration: 13,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
         <motion.div
           className="headphone"
           animate={{
-            y: [0, -18, 0],
-            rotate: [0, 2, 0, -2, 0],
+            y: [0, -8, 0],
           }}
           transition={{
-            duration: 5,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -190,12 +166,12 @@ function Hero() {
         {/* Floating album card — left */}
         <motion.div
           className="floating-album album-left liquid-glass"
+          initial={{ rotate: -6 }}
           animate={{
-            y: [0, -12, 0],
-            rotate: [-6, -3, -6],
+            y: [0, -6, 0],
           }}
           transition={{
-            duration: 4,
+            duration: 5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -215,12 +191,12 @@ function Hero() {
         {/* Floating album card — right */}
         <motion.div
           className="floating-album album-right liquid-glass"
+          initial={{ rotate: 5 }}
           animate={{
-            y: [0, 14, 0],
-            rotate: [5, 2, 5],
+            y: [0, 7, 0],
           }}
           transition={{
-            duration: 4.5,
+            duration: 5.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
