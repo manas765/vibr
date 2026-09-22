@@ -1,47 +1,23 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import vibrLogoDark from "../assets/vibr-logo-dark-theme.png";
 import vibrLogoLight from "../assets/vibr-logo-light-theme.png";
 
-const FALLBACK_ALBUMS = [
-  { title: "After Hours", artist: "The Weeknd", emoji: "🌃", verdict: "🔥 GOD LEVEL", accent: "purple" },
-  { title: "Snooze", artist: "SZA", emoji: "🌊", verdict: "💜 PERFECT", accent: "blue" },
+const POSTER_LINES = [
+  { text: "WE FOUND", size: "lg" },
+  { text: "OUR PEOPLE", size: "md" },
+  { text: "THROUGH THE", size: "sm" },
+  { text: "SOUND.", size: "xl" },
+  { text: "EVERY TRACK WE SHARE,", size: "sm" },
+  { text: "EVERY VERDICT WE DROP,", size: "sm" },
+  { text: "COMES FROM THE SAME PLACE —", size: "sm" },
+  { text: "TASTE THAT WON'T STAY QUIET.", size: "md" },
 ];
 
 function Hero() {
   const stageRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [albums, setAlbums] = useState(FALLBACK_ALBUMS);
-
-  useEffect(() => {
-    fetch("/api/youtube-search?q=trending music")
-      .then((r) => r.json())
-      .then((data) => {
-        const tracks = data.tracks || [];
-        if (tracks.length >= 2) {
-          setAlbums([
-            {
-              title: tracks[0].title,
-              artist: tracks[0].artist,
-              thumbnail: tracks[0].thumbnail,
-              verdict: "🔥 GOD LEVEL",
-              accent: "purple",
-            },
-            {
-              title: tracks[1].title,
-              artist: tracks[1].artist,
-              thumbnail: tracks[1].thumbnail,
-              verdict: "💜 PERFECT",
-              accent: "blue",
-            },
-          ]);
-        }
-      })
-      .catch(() => {
-        // keep the fallback data — this is decorative, not worth surfacing an error for
-      });
-  }, []);
 
   function handleMouseMove(e) {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -136,64 +112,28 @@ function Hero() {
         </Link>
       </div>
 
-      {/* Right-side visual — the VIBR mark itself, not stock headphone art */}
-      <div ref={stageRef} className="hero-visual">
+      {/* Right-side visual — a static typographic poster, no 3D/spin/orbit motion */}
+      <div ref={stageRef} className="hero-poster">
         <motion.div
-          className="hero-visual__mark"
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
-          transition={{
-            opacity: { duration: 1, delay: 0.2 },
-            scale: { duration: 1, delay: 0.2 },
-            y: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 },
-          }}
+          className="hero-poster__lines"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
         >
-          <img src={vibrLogoDark} alt="VIBR" className="hero-visual__logo hero-logo-mark-dark" />
-          <img src={vibrLogoLight} alt="VIBR" className="hero-visual__logo hero-logo-mark-light" />
-          <p className="hero-visual__slogan">for the vibr's, by the vibr's, to the vibr's</p>
+          {POSTER_LINES.map((line, i) => (
+            <span key={i} className={`hero-poster__line hero-poster__line--${line.size}`}>
+              {line.text}
+            </span>
+          ))}
+
+          <span className="hero-poster__vibr">VIBR</span>
+
+          <p className="hero-poster__body">
+            is the proof that what you listen to says who you are.
+            <br />
+            not everyone hears it the same way — and that's the whole point.
+          </p>
         </motion.div>
-
-        <motion.span
-          className="hero-visual__note hero-visual__note--1"
-          animate={{ y: [0, -14, 0], opacity: [0.4, 0.9, 0.4] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          ♪
-        </motion.span>
-        <motion.span
-          className="hero-visual__note hero-visual__note--2"
-          animate={{ y: [0, 16, 0], opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-        >
-          ♫
-        </motion.span>
-        <motion.span
-          className="hero-visual__note hero-visual__note--3"
-          animate={{ y: [0, -10, 0], opacity: [0.35, 0.85, 0.35] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        >
-          ♪
-        </motion.span>
-
-        {albums.slice(0, 2).map((album, i) => (
-          <motion.div
-            key={album.title}
-            className={i === 0 ? "hero-visual__spin-art spin-art-left" : "hero-visual__spin-art spin-art-right"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, rotate: 360 }}
-            transition={{
-              opacity: { duration: 0.8, delay: 0.5 + i * 0.2 },
-              rotate: { duration: 14 + i * 3, repeat: Infinity, ease: "linear" },
-            }}
-          >
-            {album.thumbnail ? (
-              <img src={album.thumbnail} alt={album.title} />
-            ) : (
-              <span>{album.emoji}</span>
-            )}
-            <span className="hero-visual__spin-art-hole" />
-          </motion.div>
-        ))}
       </div>
 
       <div className="hero-tagline">
