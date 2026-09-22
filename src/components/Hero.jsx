@@ -136,82 +136,64 @@ function Hero() {
         </Link>
       </div>
 
-      {/* headphone stage */}
-      <div
-        ref={stageRef}
-        className="headphone-stage"
-      >
+      {/* Right-side visual — the VIBR mark itself, not stock headphone art */}
+      <div ref={stageRef} className="hero-visual">
         <motion.div
-          className="headphone"
-          animate={{
-            y: [0, -8, 0],
-          }}
+          className="hero-visual__mark"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
           transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
+            opacity: { duration: 1, delay: 0.2 },
+            scale: { duration: 1, delay: 0.2 },
+            y: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 },
           }}
         >
-          <div className="headphone-band" />
-
-          <div className="earcup earcup-left">
-            <div className="earcup-inner">〽</div>
-          </div>
-
-          <div className="earcup earcup-right">
-            <div className="earcup-inner">〽</div>
-          </div>
+          <img src={vibrLogoDark} alt="VIBR" className="hero-visual__logo hero-logo-mark-dark" />
+          <img src={vibrLogoLight} alt="VIBR" className="hero-visual__logo hero-logo-mark-light" />
+          <p className="hero-visual__slogan">for the vibr's, by the vibr's, to the vibr's</p>
         </motion.div>
 
-        {/* Floating album card — left */}
-        <motion.div
-          className="floating-album album-left liquid-glass"
-          initial={{ rotate: -6 }}
-          animate={{
-            y: [0, -6, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+        <motion.span
+          className="hero-visual__note hero-visual__note--1"
+          animate={{ y: [0, -14, 0], opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className={`album-art album-${albums[0].accent}`}>
-            {albums[0].thumbnail ? (
-              <img src={albums[0].thumbnail} alt={albums[0].title} />
+          ♪
+        </motion.span>
+        <motion.span
+          className="hero-visual__note hero-visual__note--2"
+          animate={{ y: [0, 16, 0], opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        >
+          ♫
+        </motion.span>
+        <motion.span
+          className="hero-visual__note hero-visual__note--3"
+          animate={{ y: [0, -10, 0], opacity: [0.35, 0.85, 0.35] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        >
+          ♪
+        </motion.span>
+
+        {albums.slice(0, 2).map((album, i) => (
+          <motion.div
+            key={album.title}
+            className={i === 0 ? "hero-visual__spin-art spin-art-left" : "hero-visual__spin-art spin-art-right"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, rotate: 360 }}
+            transition={{
+              opacity: { duration: 0.8, delay: 0.5 + i * 0.2 },
+              rotate: { duration: 14 + i * 3, repeat: Infinity, ease: "linear" },
+            }}
+          >
+            {album.thumbnail ? (
+              <img src={album.thumbnail} alt={album.title} />
             ) : (
-              albums[0].emoji
+              <span>{album.emoji}</span>
             )}
-          </div>
-          <strong>{albums[0].title}</strong>
-          <small>{albums[0].artist}</small>
-          <span className="album-verdict">{albums[0].verdict}</span>
-        </motion.div>
-
-        {/* Floating album card — right */}
-        <motion.div
-          className="floating-album album-right liquid-glass"
-          initial={{ rotate: 5 }}
-          animate={{
-            y: [0, 7, 0],
-          }}
-          transition={{
-            duration: 5.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div className={`album-art album-${albums[1].accent}`}>
-            {albums[1].thumbnail ? (
-              <img src={albums[1].thumbnail} alt={albums[1].title} />
-            ) : (
-              albums[1].emoji
-            )}
-          </div>
-          <strong>{albums[1].title}</strong>
-          <small>{albums[1].artist}</small>
-          <span className="album-verdict purple">{albums[1].verdict}</span>
-        </motion.div>
+            <span className="hero-visual__spin-art-hole" />
+          </motion.div>
+        ))}
       </div>
 
       <div className="hero-tagline">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ReleaseCard from "./ReleaseCard";
 import { motion } from "motion/react";
+import { supabase } from "../supabaseClient";
 import "./Releases.css";
 
 const upcomingReleases = [
@@ -39,6 +40,40 @@ function Releases({ savedReleases, setSavedReleases }) {
   const [activeYear, setActiveYear] = useState("All");
   const [liveReleases, setLiveReleases] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUser(user);
+      if (!user) return;
+
+      supabase
+        .from("release_tracking")
+        .select("*")
+        .eq("user_id", user.id)
+        .then(({ data, error }) => {
+          if (error || !data) return;
+
+          setHeardReleases(data.filter((r) => r.heard).map((r) => r.title));
+
+          setSavedReleases(
+            data
+              .filter((r) => r.saved)
+              .map((r) => ({
+                title: r.title,
+                artist: r.artist,
+                genre: r.genre,
+                date: r.date,
+                year: r.year,
+                status: r.status,
+                emoji: r.emoji,
+                thumbnail: r.thumbnail,
+                videoUrl: r.video_url,
+              }))
+          );
+        });
+    });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -75,12 +110,36 @@ function Releases({ savedReleases, setSavedReleases }) {
     return matchesTab && matchesYear;
   });
 
-  function toggleHeard(title) {
+  function toggleHeard(release) {
+    const nowHeard = !heardReleases.includes(release.title);
+
     setHeardReleases((current) =>
-      current.includes(title)
-        ? current.filter((t) => t !== title)
-        : [...current, title]
+      nowHeard
+        ? [...current, release.title]
+        : current.filter((t) => t !== release.title)
     );
+
+    if (!currentUser) return;
+
+    supabase
+      .from("release_tracking")
+      .upsert(
+        {
+          user_id: currentUser.id,
+          title: release.title,
+          artist: release.artist,
+          genre: release.genre,
+          date: release.date,
+          year: release.year,
+          status: release.status,
+          emoji: release.emoji,
+          thumbnail: release.thumbnail,
+          video_url: release.videoUrl,
+          heard: nowHeard,
+        },
+        { onConflict: "user_id,title" }
+      )
+      .then(() => {});
   }
 
   function toggleSave(release) {
@@ -95,6 +154,28 @@ function Releases({ savedReleases, setSavedReleases }) {
     } else {
       setSavedReleases([...savedReleases, release]);
     }
+
+    if (!currentUser) return;
+
+    supabase
+      .from("release_tracking")
+      .upsert(
+        {
+          user_id: currentUser.id,
+          title: release.title,
+          artist: release.artist,
+          genre: release.genre,
+          date: release.date,
+          year: release.year,
+          status: release.status,
+          emoji: release.emoji,
+          thumbnail: release.thumbnail,
+          video_url: release.videoUrl,
+          saved: !alreadySaved,
+        },
+        { onConflict: "user_id,title" }
+      )
+      .then(() => {});
   }
 
   return (
@@ -173,7 +254,7 @@ function Releases({ savedReleases, setSavedReleases }) {
               <ReleaseCard
                 release={release}
                 isHeard={heardReleases.includes(release.title)}
-                onToggleHeard={() => toggleHeard(release.title)}
+                onToggleHeard={() => toggleHeard(release)}
                 isSaved={savedReleases.some(
                   (saved) => saved.title === release.title
                 )}
