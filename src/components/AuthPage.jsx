@@ -22,22 +22,37 @@ function EyeIcon({ open }) {
 const NOTE_GLYPHS = ["♪", "♫", "♬"];
 const NOTE_COLORS = ["#c6ff3d", "#8b5cf6", "#3dd6ff", "#ff6ec7", "#ff8a3d", "#f5f5f2"];
 
-// Deterministic pseudo-random scatter so the field looks dense but never shifts between renders
+// Deterministic pseudo-random so the field looks organic but never shifts between renders
 function seededRandom(seed) {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 }
 
-const AUTH_NOTES = Array.from({ length: 260 }, (_, i) => {
-  const top = seededRandom(i * 7.13) * 97;
-  const left = seededRandom(i * 3.71 + 1) * 97;
-  const size = 10 + seededRandom(i * 5.29 + 2) * 20;
-  const opacity = 0.12 + seededRandom(i * 2.17 + 3) * 0.26;
-  const delay = seededRandom(i * 9.41 + 4) * 6;
-  const glyph = NOTE_GLYPHS[i % NOTE_GLYPHS.length];
-  const color = NOTE_COLORS[Math.floor(seededRandom(i * 6.02 + 5) * NOTE_COLORS.length)];
-  return { top, left, size, opacity, delay, glyph, color };
-});
+// A jittered grid — one note per cell, nudged randomly within it — guarantees even
+// coverage with no empty patches, unlike pure random scatter which always leaves gaps.
+const GRID_COLS = 18;
+const GRID_ROWS = 13;
+
+const AUTH_NOTES = [];
+for (let row = 0; row < GRID_ROWS; row++) {
+  for (let col = 0; col < GRID_COLS; col++) {
+    const i = row * GRID_COLS + col;
+    const cellW = 100 / GRID_COLS;
+    const cellH = 100 / GRID_ROWS;
+    const jitterX = (seededRandom(i * 3.71 + 1) - 0.5) * cellW * 0.85;
+    const jitterY = (seededRandom(i * 7.13) - 0.5) * cellH * 0.85;
+
+    AUTH_NOTES.push({
+      top: row * cellH + cellH / 2 + jitterY,
+      left: col * cellW + cellW / 2 + jitterX,
+      size: 10 + seededRandom(i * 5.29 + 2) * 20,
+      opacity: 0.12 + seededRandom(i * 2.17 + 3) * 0.26,
+      delay: seededRandom(i * 9.41 + 4) * 6,
+      glyph: NOTE_GLYPHS[i % NOTE_GLYPHS.length],
+      color: NOTE_COLORS[Math.floor(seededRandom(i * 6.02 + 5) * NOTE_COLORS.length)],
+    });
+  }
+}
 
 function AuthScene() {
   return (
