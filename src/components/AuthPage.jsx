@@ -20,6 +20,7 @@ function EyeIcon({ open }) {
 }
 
 const NOTE_GLYPHS = ["♪", "♫", "♬"];
+const NOTE_COLORS = ["#c6ff3d", "#8b5cf6", "#3dd6ff", "#ff6ec7", "#ff8a3d", "#f5f5f2"];
 
 // Deterministic pseudo-random scatter so the field looks dense but never shifts between renders
 function seededRandom(seed) {
@@ -27,14 +28,15 @@ function seededRandom(seed) {
   return x - Math.floor(x);
 }
 
-const AUTH_NOTES = Array.from({ length: 55 }, (_, i) => {
-  const top = seededRandom(i * 7.13) * 96;
-  const left = seededRandom(i * 3.71 + 1) * 96;
-  const size = 12 + seededRandom(i * 5.29 + 2) * 22;
-  const opacity = 0.08 + seededRandom(i * 2.17 + 3) * 0.16;
+const AUTH_NOTES = Array.from({ length: 120 }, (_, i) => {
+  const top = seededRandom(i * 7.13) * 97;
+  const left = seededRandom(i * 3.71 + 1) * 97;
+  const size = 12 + seededRandom(i * 5.29 + 2) * 24;
+  const opacity = 0.14 + seededRandom(i * 2.17 + 3) * 0.28;
   const delay = seededRandom(i * 9.41 + 4) * 6;
   const glyph = NOTE_GLYPHS[i % NOTE_GLYPHS.length];
-  return { top, left, size, opacity, delay, glyph };
+  const color = NOTE_COLORS[Math.floor(seededRandom(i * 6.02 + 5) * NOTE_COLORS.length)];
+  return { top, left, size, opacity, delay, glyph, color };
 });
 
 function AuthScene() {
@@ -53,6 +55,7 @@ function AuthScene() {
             left: `${n.left}%`,
             fontSize: `${n.size}px`,
             opacity: n.opacity,
+            color: n.color,
             animationDelay: `${n.delay}s`,
           }}
         >
