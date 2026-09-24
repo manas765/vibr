@@ -19,6 +19,24 @@ function EyeIcon({ open }) {
   );
 }
 
+const NOTE_GLYPHS = ["♪", "♫", "♬"];
+
+// Deterministic pseudo-random scatter so the field looks dense but never shifts between renders
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+const AUTH_NOTES = Array.from({ length: 55 }, (_, i) => {
+  const top = seededRandom(i * 7.13) * 96;
+  const left = seededRandom(i * 3.71 + 1) * 96;
+  const size = 12 + seededRandom(i * 5.29 + 2) * 22;
+  const opacity = 0.08 + seededRandom(i * 2.17 + 3) * 0.16;
+  const delay = seededRandom(i * 9.41 + 4) * 6;
+  const glyph = NOTE_GLYPHS[i % NOTE_GLYPHS.length];
+  return { top, left, size, opacity, delay, glyph };
+});
+
 function AuthScene() {
   return (
     <div className="auth-scene" aria-hidden="true">
@@ -26,26 +44,21 @@ function AuthScene() {
       <div className="auth-glow auth-glow-blue" />
       <div className="auth-glow auth-glow-lime" />
 
-      <span className="auth-note auth-note-1">♪</span>
-      <span className="auth-note auth-note-2">♫</span>
-      <span className="auth-note auth-note-3">♪</span>
-      <span className="auth-note auth-note-4">♫</span>
-      <span className="auth-note auth-note-5">♪</span>
-      <span className="auth-note auth-note-6">♬</span>
-      <span className="auth-note auth-note-7">♪</span>
-      <span className="auth-note auth-note-8">♫</span>
-      <span className="auth-note auth-note-9">♪</span>
-      <span className="auth-note auth-note-10">♬</span>
-      <span className="auth-note auth-note-11">♪</span>
-      <span className="auth-note auth-note-12">♫</span>
-      <span className="auth-note auth-note-13">♪</span>
-      <span className="auth-note auth-note-14">♬</span>
-      <span className="auth-note auth-note-15">♫</span>
-      <span className="auth-note auth-note-16">♪</span>
-      <span className="auth-note auth-note-17">♫</span>
-      <span className="auth-note auth-note-18">♪</span>
-      <span className="auth-note auth-note-19">♬</span>
-      <span className="auth-note auth-note-20">♪</span>
+      {AUTH_NOTES.map((n, i) => (
+        <span
+          key={i}
+          className="auth-note"
+          style={{
+            top: `${n.top}%`,
+            left: `${n.left}%`,
+            fontSize: `${n.size}px`,
+            opacity: n.opacity,
+            animationDelay: `${n.delay}s`,
+          }}
+        >
+          {n.glyph}
+        </span>
+      ))}
     </div>
   );
 }
