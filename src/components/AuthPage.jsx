@@ -28,11 +28,11 @@ function seededRandom(seed) {
   return x - Math.floor(x);
 }
 
-const AUTH_NOTES = Array.from({ length: 120 }, (_, i) => {
+const AUTH_NOTES = Array.from({ length: 260 }, (_, i) => {
   const top = seededRandom(i * 7.13) * 97;
   const left = seededRandom(i * 3.71 + 1) * 97;
-  const size = 12 + seededRandom(i * 5.29 + 2) * 24;
-  const opacity = 0.14 + seededRandom(i * 2.17 + 3) * 0.28;
+  const size = 10 + seededRandom(i * 5.29 + 2) * 20;
+  const opacity = 0.12 + seededRandom(i * 2.17 + 3) * 0.26;
   const delay = seededRandom(i * 9.41 + 4) * 6;
   const glyph = NOTE_GLYPHS[i % NOTE_GLYPHS.length];
   const color = NOTE_COLORS[Math.floor(seededRandom(i * 6.02 + 5) * NOTE_COLORS.length)];
