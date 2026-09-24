@@ -29,6 +29,23 @@ function AuthScene() {
       <span className="auth-note auth-note-1">♪</span>
       <span className="auth-note auth-note-2">♫</span>
       <span className="auth-note auth-note-3">♪</span>
+      <span className="auth-note auth-note-4">♫</span>
+      <span className="auth-note auth-note-5">♪</span>
+      <span className="auth-note auth-note-6">♬</span>
+      <span className="auth-note auth-note-7">♪</span>
+      <span className="auth-note auth-note-8">♫</span>
+      <span className="auth-note auth-note-9">♪</span>
+      <span className="auth-note auth-note-10">♬</span>
+      <span className="auth-note auth-note-11">♪</span>
+      <span className="auth-note auth-note-12">♫</span>
+      <span className="auth-note auth-note-13">♪</span>
+      <span className="auth-note auth-note-14">♬</span>
+      <span className="auth-note auth-note-15">♫</span>
+      <span className="auth-note auth-note-16">♪</span>
+      <span className="auth-note auth-note-17">♫</span>
+      <span className="auth-note auth-note-18">♪</span>
+      <span className="auth-note auth-note-19">♬</span>
+      <span className="auth-note auth-note-20">♪</span>
     </div>
   );
 }

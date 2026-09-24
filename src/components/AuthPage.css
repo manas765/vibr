@@ -88,6 +88,136 @@
   animation-delay: 3s;
 }
 
+.auth-note-4 {
+  top: 6%;
+  left: 42%;
+  font-size: 18px;
+  opacity: 0.16;
+  animation-delay: 0.8s;
+}
+
+.auth-note-5 {
+  top: 38%;
+  left: 6%;
+  font-size: 30px;
+  opacity: 0.15;
+  animation-delay: 2.2s;
+}
+
+.auth-note-6 {
+  top: 10%;
+  right: 8%;
+  font-size: 24px;
+  animation-delay: 4s;
+}
+
+.auth-note-7 {
+  bottom: 34%;
+  right: 22%;
+  font-size: 20px;
+  opacity: 0.18;
+  animation-delay: 1s;
+}
+
+.auth-note-8 {
+  bottom: 8%;
+  right: 10%;
+  font-size: 28px;
+  animation-delay: 2.6s;
+}
+
+.auth-note-9 {
+  top: 48%;
+  left: 22%;
+  font-size: 16px;
+  opacity: 0.14;
+  animation-delay: 3.4s;
+}
+
+.auth-note-10 {
+  top: 54%;
+  right: 6%;
+  font-size: 22px;
+  animation-delay: 0.4s;
+}
+
+.auth-note-11 {
+  bottom: 44%;
+  left: 38%;
+  font-size: 18px;
+  opacity: 0.16;
+  animation-delay: 1.8s;
+}
+
+.auth-note-12 {
+  top: 16%;
+  left: 26%;
+  font-size: 20px;
+  opacity: 0.15;
+  animation-delay: 2.9s;
+}
+
+.auth-note-13 {
+  bottom: 14%;
+  left: 30%;
+  font-size: 24px;
+  animation-delay: 4.4s;
+}
+
+.auth-note-14 {
+  top: 30%;
+  left: 48%;
+  font-size: 16px;
+  opacity: 0.13;
+  animation-delay: 0.6s;
+}
+
+.auth-note-15 {
+  top: 62%;
+  left: 14%;
+  font-size: 22px;
+  animation-delay: 3.7s;
+}
+
+.auth-note-16 {
+  top: 4%;
+  right: 30%;
+  font-size: 18px;
+  opacity: 0.14;
+  animation-delay: 2s;
+}
+
+.auth-note-17 {
+  bottom: 26%;
+  right: 4%;
+  font-size: 20px;
+  opacity: 0.17;
+  animation-delay: 5s;
+}
+
+.auth-note-18 {
+  top: 70%;
+  right: 34%;
+  font-size: 26px;
+  animation-delay: 1.3s;
+}
+
+.auth-note-19 {
+  bottom: 6%;
+  left: 46%;
+  font-size: 16px;
+  opacity: 0.13;
+  animation-delay: 3.1s;
+}
+
+.auth-note-20 {
+  top: 44%;
+  right: 42%;
+  font-size: 18px;
+  opacity: 0.15;
+  animation-delay: 4.8s;
+}
+
 @keyframes authNoteFloat {
   0%,
   100% {
