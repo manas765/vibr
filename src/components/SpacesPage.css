@@ -24,22 +24,23 @@
 .spaces-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 24px;
   max-width: 640px;
 }
 
 .topic-card {
   display: flex;
-  gap: 16px;
-  padding: 20px;
+  gap: 20px;
+  padding: 28px;
+  min-height: 150px;
   border-radius: 18px;
   background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
   border: 1px solid rgba(198, 255, 61, 0.1);
 }
 
 .topic-card__cover {
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
   flex-shrink: 0;
   border-radius: 14px;
   background: radial-gradient(circle at 35% 30%, rgba(139, 92, 246, 0.22), rgba(20, 20, 28, 0.9) 70%);
