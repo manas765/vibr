@@ -2391,6 +2391,21 @@ main {
   text-transform: uppercase;
   letter-spacing: 0.01em;
   animation: pageHeadingIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: linear-gradient(
+    90deg,
+    #ff3d7f 0%,
+    #ff8a3d 16%,
+    #ffd23d 33%,
+    #3dff8a 50%,
+    #3dd6ff 66%,
+    #6a5dff 83%,
+    #ff3dcf 100%
+  ) !important;
+  background-size: 200% auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  filter: drop-shadow(0 0 14px rgba(255, 61, 127, 0.2)) drop-shadow(0 0 22px rgba(61, 214, 255, 0.15));
 }
 
 @keyframes pageHeadingIn {
