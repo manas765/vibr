@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import MovieModal from "./MovieModal";
-import "./SongOfTheDay.css";
+import "./Songoftheday.css";
 
 const QUICK_REACTIONS = ["🔥", "❤️", "😭", "💀", "👎"];
 
-function SongOfTheDay() {
+function Songoftheday() {
   const [currentUser, setCurrentUser] = useState(null);
   const [song, setSong] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -154,4 +154,4 @@ function SongOfTheDay() {
   );
 }
 
-export default SongOfTheDay;
+export default Songoftheday;

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
-import SongOfTheDay from "./components/Songoftheday";
+import SongofthdDay from "./components/Songoftheday";
 import MusicSection from "./components/MusicSection";
 import ChartsWidget from "./components/ChartsWidget";
 import Collections from "./components/collections";
@@ -378,7 +378,7 @@ function App() {
       {activePage === "discover" && (
         <>
           <Hero />
-          <SongOfTheDay />
+          <Songoftheday />
           <ChartsWidget />
           <MusicSection
             searchTerm={searchTerm}
