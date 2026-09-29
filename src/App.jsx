@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
+import SongOfTheDay from "./components/Songoftheday";
 import MusicSection from "./components/MusicSection";
 import ChartsWidget from "./components/ChartsWidget";
 import Collections from "./components/collections";
@@ -179,16 +180,16 @@ function App() {
    const toggleFollowArtist = async (artistName, channelId) => {
     if (!user) return;
 
-    const isFollowing = followedArtists.some((a) => a.name === artistName);
+    const isFollowing = followedArtists.some((a) => a.channelId === channelId);
 
     if (isFollowing) {
       await supabase
         .from("followed_artists")
         .delete()
         .eq("user_id", user.id)
-        .eq("artist_name", artistName);
+        .eq("channel_id", channelId);
 
-      setFollowedArtists((current) => current.filter((a) => a.name !== artistName));
+      setFollowedArtists((current) => current.filter((a) => a.channelId !== channelId));
     } else {
       await supabase
         .from("followed_artists")
@@ -377,6 +378,7 @@ function App() {
       {activePage === "discover" && (
         <>
           <Hero />
+          <SongOfTheDay />
           <ChartsWidget />
           <MusicSection
             searchTerm={searchTerm}

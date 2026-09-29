@@ -295,6 +295,7 @@ function Feed() {
         artist: selectedSong.artist,
         genre: "Music",
         thumbnail: selectedSong.thumbnail,
+        video_id: selectedSong.id,
         verdict: selectedVerdict,
         review_text: reviewText.trim(),
       })

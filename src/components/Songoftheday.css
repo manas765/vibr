@@ -1,0 +1,149 @@
+.song-of-day {
+  max-width: 900px;
+  margin: 0 auto 32px;
+  padding: 0 40px;
+}
+
+.song-of-day__label {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.song-of-day__card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(198, 255, 61, 0.08), rgba(139, 92, 246, 0.06));
+  border: 1px solid rgba(198, 255, 61, 0.18);
+}
+
+.song-of-day__thumb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, rgba(198, 255, 61, 0.25), rgba(20, 20, 28, 0.9) 70%);
+}
+
+.song-of-day__thumb:disabled {
+  cursor: default;
+}
+
+.song-of-day__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-of-day__thumb span:not(.song-of-day__play-badge) {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.song-of-day__play-badge {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.song-of-day__thumb:hover .song-of-day__play-badge {
+  opacity: 1;
+}
+
+.song-of-day__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.song-of-day__info strong {
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-of-day__info span {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  color: var(--text-soft);
+}
+
+.song-of-day__reactions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.song-of-day__reaction {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: var(--surface-2);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.song-of-day__reaction span {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.song-of-day__reaction:hover {
+  border-color: #c6ff3d;
+}
+
+.song-of-day__reaction.active {
+  background: rgba(198, 255, 61, 0.15);
+  border-color: #c6ff3d;
+}
+
+@media (max-width: 800px) {
+  .song-of-day {
+    padding: 0 18px;
+  }
+
+  .song-of-day__card {
+    flex-wrap: wrap;
+  }
+
+  .song-of-day__reactions {
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 82px;
+  }
+}
