@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
-import Songofthdday from "./components/Songoftheday";
+import Songoftheday from "./components/Songoftheday";
 import MusicSection from "./components/MusicSection";
 import ChartsWidget from "./components/ChartsWidget";
 import Collections from "./components/collections";
