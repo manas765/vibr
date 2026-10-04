@@ -3,6 +3,29 @@ import { supabase } from "../supabaseClient";
 import { useAuth } from "../hooks/useAuth";
 import "./Profile.css";
 
+function computeStreak(timestamps) {
+  if (!timestamps || timestamps.length === 0) return 0;
+
+  const dates = new Set(timestamps.map((t) => new Date(t).toISOString().slice(0, 10)));
+
+  const cursor = new Date();
+  const todayStr = cursor.toISOString().slice(0, 10);
+
+  // If they haven't posted yet today, start counting from yesterday instead —
+  // not having posted *today* shouldn't zero out a streak that's still alive
+  if (!dates.has(todayStr)) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  let streak = 0;
+  while (dates.has(cursor.toISOString().slice(0, 10))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  return streak;
+}
+
 function Profile({ savedSongs }) {
   const { user } = useAuth();
   const fileInputRef = useRef(null);
@@ -16,6 +39,7 @@ function Profile({ savedSongs }) {
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [streak, setStreak] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -32,6 +56,15 @@ function Profile({ savedSongs }) {
           setAvatarUrl(data.avatar_url || null);
         }
         setLoading(false);
+      });
+
+    supabase
+      .from("reviews")
+      .select("created_at")
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (error || !data) return;
+        setStreak(computeStreak(data.map((r) => r.created_at)));
       });
   }, [user]);
 
@@ -227,6 +260,11 @@ function Profile({ savedSongs }) {
         <div className="profile-stat">
           <strong>{genreCount}</strong>
           <span>Genres</span>
+        </div>
+
+        <div className="profile-stat">
+          <strong>{streak > 0 ? `🔥 ${streak}` : "—"}</strong>
+          <span>Day Streak</span>
         </div>
       </div>
 

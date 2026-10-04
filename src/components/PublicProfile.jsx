@@ -3,6 +3,27 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./Profile.css";
 
+function computeStreak(timestamps) {
+  if (!timestamps || timestamps.length === 0) return 0;
+
+  const dates = new Set(timestamps.map((t) => new Date(t).toISOString().slice(0, 10)));
+
+  const cursor = new Date();
+  const todayStr = cursor.toISOString().slice(0, 10);
+
+  if (!dates.has(todayStr)) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  let streak = 0;
+  while (dates.has(cursor.toISOString().slice(0, 10))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  return streak;
+}
+
 function PublicProfile({ setActivePage }) {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -15,6 +36,7 @@ function PublicProfile({ setActivePage }) {
   const [requestPending, setRequestPending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [streak, setStreak] = useState(0);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -45,6 +67,14 @@ function PublicProfile({ setActivePage }) {
           .select("*")
           .eq("user_id", userId)
           .then(({ data: songs }) => setSavedSongs(songs || []));
+
+        supabase
+          .from("reviews")
+          .select("created_at")
+          .eq("user_id", userId)
+          .then(({ data: reviewRows }) => {
+            if (reviewRows) setStreak(computeStreak(reviewRows.map((r) => r.created_at)));
+          });
 
         if (user && user.id !== userId) {
           supabase
@@ -235,6 +265,10 @@ function PublicProfile({ setActivePage }) {
         <div className="profile-stat">
           <strong>{genreCount}</strong>
           <span>Genres</span>
+        </div>
+        <div className="profile-stat">
+          <strong>{streak > 0 ? `🔥 ${streak}` : "—"}</strong>
+          <span>Day Streak</span>
         </div>
       </div>
 
