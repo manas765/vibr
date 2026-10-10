@@ -1,0 +1,117 @@
+.taste-dna__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.taste-dna__header h2 {
+  margin: 0;
+}
+
+.taste-dna__download {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid #c6ff3d;
+  background: #c6ff3d;
+  color: #0a0a0f;
+  cursor: pointer;
+  transition: box-shadow 150ms ease;
+}
+
+.taste-dna__download:hover:not(:disabled) {
+  box-shadow: 0 0 14px rgba(198, 255, 61, 0.4);
+}
+
+.taste-dna__download:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.taste-dna__empty {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.taste-dna__preview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(198, 255, 61, 0.05));
+  border: 1px solid var(--border);
+  max-width: 560px;
+}
+
+.taste-dna__label {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.taste-dna__row {
+  margin-bottom: 10px;
+}
+
+.taste-dna__row span {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.taste-dna__bar {
+  height: 8px;
+  min-width: 24px;
+  border-radius: 999px;
+}
+
+.taste-dna__genres {
+  display: flex;
+  gap: 4px;
+  height: 36px;
+}
+
+.taste-dna__genre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0a0a0f;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.taste-dna__verdicts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.taste-dna__verdicts span {
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  color: var(--text);
+}

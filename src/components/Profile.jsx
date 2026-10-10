@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "../hooks/useAuth";
+import TasteDNACard from "./TasteDNACard";
 import "./Profile.css";
 
 function computeStreak(timestamps) {
@@ -283,6 +284,8 @@ function Profile({ savedSongs }) {
           )}
         </div>
       </div>
+
+      <TasteDNACard username={username} savedSongs={savedSongs} userId={user?.id} />
 
       <div className="profile-section">
         <h2>My Collection</h2>
