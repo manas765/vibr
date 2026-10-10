@@ -37,6 +37,7 @@ function PublicProfile({ setActivePage }) {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [streak, setStreak] = useState(0);
+  const [mySavedSongs, setMySavedSongs] = useState([]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -77,6 +78,12 @@ function PublicProfile({ setActivePage }) {
           });
 
         if (user && user.id !== userId) {
+          supabase
+            .from("saved_songs")
+            .select("*")
+            .eq("user_id", user.id)
+            .then(({ data: mine }) => setMySavedSongs(mine || []));
+
           supabase
             .from("followed_users")
             .select("followed_id")
@@ -178,6 +185,29 @@ function PublicProfile({ setActivePage }) {
   const genreCount = new Set(savedSongs.map((s) => s.genre)).size;
   const musicTaste = [...new Set(savedSongs.map((s) => s.genre))];
 
+  function jaccard(setA, setB) {
+    if (setA.size === 0 && setB.size === 0) return null;
+    const intersection = [...setA].filter((x) => setB.has(x)).length;
+    const union = new Set([...setA, ...setB]).size;
+    return union === 0 ? null : intersection / union;
+  }
+
+  const myArtists = new Set(mySavedSongs.map((s) => s.artist));
+  const theirArtists = new Set(savedSongs.map((s) => s.artist));
+  const myGenres = new Set(mySavedSongs.map((s) => s.genre));
+  const theirGenres = new Set(savedSongs.map((s) => s.genre));
+
+  const artistScore = jaccard(myArtists, theirArtists);
+  const genreScore = jaccard(myGenres, theirGenres);
+
+  const hasEnoughData = mySavedSongs.length > 0 && savedSongs.length > 0;
+  const matchPercent = hasEnoughData
+    ? Math.round(((artistScore || 0) * 0.65 + (genreScore || 0) * 0.35) * 100)
+    : null;
+
+  const myTitles = new Set(mySavedSongs.map((s) => s.song_title));
+  const blendSongs = savedSongs.filter((s) => !myTitles.has(s.song_title)).slice(0, 5);
+
   return (
     <section className="profile-page">
       <Link to="/" className="back-link">← Back to Discover</Link>
@@ -253,6 +283,20 @@ function PublicProfile({ setActivePage }) {
         </p>
       )}
 
+      {matchPercent !== null && (
+        <div className="taste-match">
+          <div className="taste-match__ring" style={{ "--pct": matchPercent }}>
+            <span>{matchPercent}%</span>
+          </div>
+          <div className="taste-match__text">
+            <strong>Taste Match</strong>
+            <span>
+              Based on overlapping artists and genres in your collections
+            </span>
+          </div>
+        </div>
+      )}
+
       <div className="profile-stats">
         <div className="profile-stat">
           <strong>{songCount}</strong>
@@ -271,6 +315,28 @@ function PublicProfile({ setActivePage }) {
           <span>Day Streak</span>
         </div>
       </div>
+
+      {blendSongs.length > 0 && (
+        <div className="profile-section">
+          <h2>Blend</h2>
+          <p className="blend-subtitle">Songs {profile.username} has that you haven't heard yet</p>
+          <div className="blend-list">
+            {blendSongs.map((song) => (
+              <div className="blend-item" key={song.id || song.song_title}>
+                {song.thumbnail ? (
+                  <img src={song.thumbnail} alt={song.song_title} />
+                ) : (
+                  <span className="blend-item__fallback">🎵</span>
+                )}
+                <div>
+                  <strong>{song.song_title}</strong>
+                  <small>{song.artist}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="profile-section">
         <h2>Music Taste</h2>
