@@ -7,7 +7,7 @@
 }
 
 .browse-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color:  var(--text);
@@ -15,7 +15,7 @@
 }
 
 .browse-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-soft);
   margin: 0;
@@ -52,7 +52,7 @@
 }
 
 .browse-tile__label {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   color:  var(--text);

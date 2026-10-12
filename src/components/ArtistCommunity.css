@@ -11,7 +11,7 @@
 }
 
 .artist-community__header h3 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 22px;
   font-weight: 400;
   color: var(--text);
@@ -19,7 +19,7 @@
 }
 
 .artist-community__header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text-muted);
   margin: 0;
@@ -27,13 +27,13 @@
 
 .artist-community__new-post {
   flex-shrink: 0;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 10px 18px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
   transition: all 150ms ease;
@@ -56,7 +56,7 @@
 
 .artist-community__composer input,
 .artist-community__composer textarea {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   padding: 12px 14px;
   border-radius: 10px;
@@ -69,18 +69,18 @@
 .artist-community__composer input:focus,
 .artist-community__composer textarea:focus {
   outline: none;
-  border-color: #c6ff3d;
+  border-color: var(--accent);
 }
 
 .artist-community__composer button {
   align-self: flex-end;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
 }
@@ -91,7 +91,7 @@
 }
 
 .artist-community__empty {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   color: var(--text-muted);
 }
@@ -121,7 +121,7 @@
 }
 
 .artist-community__post-main h4 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 400;
   color: var(--text);
@@ -129,7 +129,7 @@
 }
 
 .artist-community__post-main p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text-soft);
   margin: 0;
@@ -143,7 +143,7 @@
 .artist-community__post-meta {
   display: flex;
   gap: 6px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11.5px;
   color: var(--text-muted);
 }

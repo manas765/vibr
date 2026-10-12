@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-soft);
@@ -17,7 +17,7 @@
 }
 
 .back-link:hover {
-  color: #c6ff3d;
+  color: var(--accent);
 }
 
 .artist-page-header {
@@ -63,7 +63,7 @@
 }
 
 .artist-page-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color:  var(--text);
@@ -71,7 +71,7 @@
 }
 
 .artist-page-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   color: var(--text-soft);
   margin: 0;
@@ -80,7 +80,7 @@
 .artist-page-header .follow-button,
 .artist-page-header .following {
   position: relative;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 600;
   padding: 11px 26px;
@@ -97,19 +97,19 @@
 }
 
 .artist-page-header .follow-button:hover {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
+  border-color: var(--accent);
+  color: var(--accent);
   box-shadow: 0 0 16px rgba(198, 255, 61, 0.25);
 }
 
 .artist-page-header .following {
-  background: #c6ff3d;
-  border: 1px solid #c6ff3d;
+  background: var(--accent);
+  border: 1px solid var(--accent);
   color: #0a0a0f;
 }
 
 .artist-page-subheading {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -119,7 +119,7 @@
 }
 
 .artist-page h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   color:  var(--text);
 }
 
@@ -130,7 +130,7 @@
 }
 
 .artist-tab {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 9px 20px;
@@ -148,8 +148,8 @@
 }
 
 .artist-tab.active {
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #0a0a0f;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .artist-empty {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   color: var(--text-soft);
 }
