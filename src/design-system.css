@@ -1,0 +1,277 @@
+/* =========================================================
+   VIBR DESIGN SYSTEM — premium, restrained, editorial.
+   Loaded last (see main.jsx) so it overrides page-level
+   styles without !important. One typeface, one accent,
+   hairline borders, flat surfaces, quiet motion.
+   ========================================================= */
+
+:root {
+  /* Type scale (fluid) */
+  --text-xs: 12px;
+  --text-sm: 13.5px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-title: clamp(28px, 3.4vw, 40px);
+  --text-headline: clamp(32px, 4.4vw, 56px);
+  --text-display: clamp(44px, 8vw, 96px);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Accessibility ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Page headings: one calm, confident style ---------- */
+
+.artist-page-header h1,
+.artist-page h1,
+.browse-header h1,
+.explore-header h1,
+.feed-header h1,
+.messages-sidebar h1,
+.people-header h1,
+.profile-info h1,
+.releases-header h1,
+.spaces-header h1,
+.trending-header h1,
+.collections-header h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  text-transform: none;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  filter: none;
+  animation: none;
+}
+
+/* ---------- Greeting: a headline, not a rainbow ---------- */
+
+.topbar-greeting-row {
+  font-family: var(--font-display);
+  font-size: var(--text-headline);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  text-transform: none;
+  color: var(--text);
+}
+
+.topbar-greeting-row .greeting-vibr {
+  color: var(--text);
+}
+
+.topbar-greeting-row .greeting-name,
+[data-theme="light"] .topbar-greeting-row .greeting-name {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: var(--text-soft);
+}
+
+/* ---------- Navigation: quiet, translucent ---------- */
+
+nav,
+.navbar {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  backdrop-filter: saturate(180%) blur(24px);
+  border-right: 1px solid var(--border);
+}
+
+nav button,
+.navbar button,
+.nav-link {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-sm);
+}
+
+.nav-link {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.nav-link:hover,
+nav button:hover {
+  background: var(--surface-2);
+  border-color: transparent;
+}
+
+nav button.active,
+.navbar button.active,
+.nav-link.active {
+  background: var(--surface-2);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* ---------- Surfaces: flat, hairline, no decorative glow ---------- */
+
+.feed-card,
+.topic-card,
+.trending-card,
+.song-of-day__card,
+.taste-match,
+.taste-dna__preview,
+.blend-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.feed-card::before {
+  display: none;
+}
+
+.song-of-day__card:hover,
+.feed-card:hover,
+.topic-card:hover {
+  border-color: var(--border-light);
+}
+
+/* ---------- Hero ---------- */
+
+.hero2 {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(64px, 11vw, 140px) 24px clamp(48px, 8vw, 104px);
+  text-align: center;
+  isolation: isolate;
+}
+
+.hero2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(60% 55% at 50% 0%, rgba(198, 255, 61, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+[data-theme="light"] .hero2::before {
+  background: radial-gradient(60% 55% at 50% 0%, rgba(111, 154, 0, 0.1), transparent 70%);
+}
+
+.hero2 .hero-logo-mark {
+  height: clamp(40px, 5.5vw, 60px);
+  width: auto;
+  filter: none;
+  margin-bottom: 8px;
+}
+
+.hero2__eyebrow {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.hero2__title {
+  margin: 14px 0 20px;
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  color: var(--text);
+}
+
+.hero2__sub {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text-soft);
+}
+
+.hero2__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 36px;
+}
+
+.hero2__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out), background 0.2s ease, border-color 0.2s ease;
+}
+
+.hero2__btn:active {
+  transform: scale(0.98);
+}
+
+.hero2__btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.hero2__btn--primary:hover {
+  filter: brightness(1.06);
+}
+
+.hero2__btn--secondary {
+  border: 1px solid var(--border-light);
+  color: var(--text);
+}
+
+.hero2__btn--secondary:hover {
+  background: var(--surface-2);
+}
+
+.hero2__slogan {
+  margin: 44px 0 0;
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .hero2__btn {
+    width: 100%;
+  }
+}

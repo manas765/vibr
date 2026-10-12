@@ -7,7 +7,7 @@
 }
 
 .feed-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color:  var(--text);
@@ -15,7 +15,7 @@
 }
 
 .feed-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-soft);
   margin: 0;
@@ -62,7 +62,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 17px;
   color:  var(--text);
   margin-right: 12px;
@@ -82,7 +82,7 @@
 }
 
 .user-info h3 {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14.5px;
   font-weight: 600;
   color: var(--text);
@@ -90,7 +90,7 @@
 }
 
 .user-info p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   color: var(--text-soft);
   margin: 0;
@@ -99,7 +99,7 @@
 .feed-user .follow-button,
 .feed-user .following,
 .feed-user .pending {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 7px 16px;
@@ -116,13 +116,13 @@
 }
 
 .feed-user .follow-button:hover {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .feed-user .following {
-  background: #c6ff3d;
-  border: 1px solid #c6ff3d;
+  background: var(--accent);
+  border: 1px solid var(--accent);
   color: #0a0a0f;
 }
 
@@ -160,7 +160,7 @@
   background: none;
   border: none;
   color: var(--text-muted);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   cursor: pointer;
   padding: 0;
@@ -188,7 +188,7 @@
   background: none;
   border: none;
   color: var(--text-muted);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
@@ -196,7 +196,7 @@
 }
 
 .comment-reply-toggle:hover {
-  color: #c6ff3d;
+  color: var(--accent);
 }
 
 .comment-box--reply {
@@ -231,7 +231,7 @@
 }
 
 .feed-song h2 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 19px;
   font-weight: 400;
   color:  var(--text);
@@ -239,7 +239,7 @@
 }
 
 .feed-song p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   color: var(--text-soft);
   margin: 0 0 6px 0;
@@ -247,10 +247,10 @@
 
 .feed-verdict {
   display: inline-block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
-  color: #c6ff3d;
+  color: var(--accent);
 }
 
 .feed-actions {
@@ -260,7 +260,7 @@
 }
 
 .feed-actions button {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 8px 16px;
@@ -292,7 +292,7 @@
 
 .comment-box input {
   flex: 1;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   padding: 9px 14px;
   border-radius: 999px;
@@ -307,17 +307,17 @@
 
 .comment-box input:focus {
   outline: none;
-  border-color: #c6ff3d;
+  border-color: var(--accent);
 }
 
 .comment-box button {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 9px 18px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
 }
@@ -333,12 +333,12 @@
 }
 
 .comment {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
 }
 
 .comment strong {
-  color: #c6ff3d;
+  color: var(--accent);
   margin-right: 6px;
 }
 
@@ -354,14 +354,14 @@
 }
 
 .write-review-button {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 10px 18px;
   border-radius: 999px;
   border: 1px solid rgba(198, 255, 61, 0.4);
   background: rgba(198, 255, 61, 0.08);
-  color: #c6ff3d;
+  color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -380,7 +380,7 @@
 
 .review-composer > input,
 .review-composer textarea {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   padding: 10px 14px;
   border-radius: 10px;
@@ -424,13 +424,13 @@
 
 .composer-result strong {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color:  var(--text);
 }
 
 .composer-result p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   color: var(--text-soft);
   margin: 2px 0 0 0;
@@ -451,13 +451,13 @@
 
 .composer-selected-song strong {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text);
 }
 
 .composer-selected-song p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   color: var(--text-soft);
   margin: 2px 0 0 0;
@@ -465,7 +465,7 @@
 
 .composer-selected-song button {
   margin-left: auto;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   background: none;
   border: 1px solid rgba(242, 242, 245, 0.2);
@@ -482,7 +482,7 @@
 }
 
 .verdict-pill {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 7px 14px;
@@ -494,19 +494,19 @@
 }
 
 .verdict-pill.active {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
+  border-color: var(--accent);
+  color: var(--accent);
   background: rgba(198, 255, 61, 0.08);
 }
 
 .submit-review {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
   align-self: flex-start;
@@ -518,7 +518,7 @@
 }
 
 .feed-review-text {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   color: #d5d5dc;
   line-height: 1.5;
@@ -527,7 +527,7 @@
 }
 
 .feed-empty {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text-muted);
 }
@@ -541,7 +541,7 @@
 
 
 .comment-reply-toggle:hover {
-  color: #c6ff3d;
+  color: var(--accent);
 }
 
 .comment-box--reply {

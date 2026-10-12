@@ -75,7 +75,7 @@
 }
 
 .release-card__body h2 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 20px;
   font-weight: 400;
   color: #f2f2f5;
@@ -83,7 +83,7 @@
 }
 
 .release-card__body p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   color: #c8c8d2;
   margin: 0 0 8px 0;
@@ -91,7 +91,7 @@
 
 .release-date {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   color: #a3a3ae;
   margin-bottom: 16px;
@@ -106,7 +106,7 @@
 .heard-button,
 .release-save {
   flex: 1;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 9px 10px;
@@ -127,8 +127,8 @@
 
 .heard-button.heard,
 .release-save.saved {
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #0a0a0f;
 }
 
@@ -149,8 +149,8 @@
 }
 
 .release-open-link:hover {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 @media (hover: none) {

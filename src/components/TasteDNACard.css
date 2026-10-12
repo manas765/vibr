@@ -11,13 +11,13 @@
 }
 
 .taste-dna__download {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 9px 16px;
   border-radius: 999px;
-  border: 1px solid #c6ff3d;
-  background: #c6ff3d;
+  border: 1px solid var(--accent);
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
   transition: box-shadow 150ms ease;
@@ -33,7 +33,7 @@
 }
 
 .taste-dna__empty {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text-muted);
 }
@@ -51,7 +51,7 @@
 
 .taste-dna__label {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -66,7 +66,7 @@
 
 .taste-dna__row span {
   display: block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text);
   margin-bottom: 4px;
@@ -91,7 +91,7 @@
   min-width: 48px;
   padding: 0 8px;
   border-radius: 8px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
   color: #0a0a0f;
@@ -106,7 +106,7 @@
 }
 
 .taste-dna__verdicts span {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 6px 12px;

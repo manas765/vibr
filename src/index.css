@@ -2,7 +2,7 @@
    VIBR — GLOBAL STYLES
    ========================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
   --bg: #07070b;
@@ -23,8 +23,13 @@
   --purple: #b3b3b3;
   --blue: #8c8c8c;
 
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Instrument Serif", serif;
+  --accent: #c6ff3d;
+  --accent-ink: #0a0a0f;
+
+  /* One family: SF Pro on Apple devices, Inter everywhere else */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-serif: var(--font-display);
 }
 
 [data-theme="light"] {
@@ -45,6 +50,8 @@
   --lime: #0e0e12;
   --purple: #3a3a42;
   --blue: #5a5a62;
+
+  --accent: #6f9a00;
 }
 
 /* =========================================================
@@ -389,8 +396,8 @@ main {
 
 .topbar-search-button:hover {
   color: #0a0a0f;
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .topbar-search-results {
@@ -407,7 +414,7 @@ main {
 }
 
 .topbar-search-results__label {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -424,7 +431,7 @@ main {
   padding: 8px 10px;
   border-radius: 10px;
   color: var(--text);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   cursor: pointer;
 }
@@ -583,7 +590,7 @@ main {
 
 .topbar-greeting-row {
   padding: 20px 45px 0;
-  font-family: "Anton", "Inter", sans-serif;
+  font-family: var(--font-display);
   font-size: 38px;
   font-weight: 400;
   text-transform: uppercase;
@@ -604,41 +611,6 @@ main {
   background-clip: text;
 }
 
-.topbar-greeting-row .greeting-vibr {
-  position: relative;
-  font-family: "Anton", "Inter", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.02em;
-  background: linear-gradient(
-    90deg,
-    #ff3d7f 0%,
-    #ff8a3d 16%,
-    #ffd23d 33%,
-    #3dff8a 50%,
-    #3dd6ff 66%,
-    #6a5dff 83%,
-    #ff3dcf 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: greeting-vibr-shimmer 6s linear infinite;
-  filter: drop-shadow(0 0 14px rgba(255, 61, 127, 0.25))
-    drop-shadow(0 0 22px rgba(61, 214, 255, 0.18));
-}
-
-@keyframes greeting-vibr-shimmer {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .topbar-greeting-row .greeting-vibr {
-    animation: none;
-  }
-}
 
 /* =========================================================
    HERO — MAIN LAYOUT
@@ -745,7 +717,7 @@ main {
   bottom: -120px;
   left: 46%;
 
-  background: #c6ff3d;
+  background: var(--accent);
 
   opacity: 0.22;
 }
@@ -837,7 +809,7 @@ main {
 }
 
 .hero-badge-text {
-  background-image: linear-gradient(90deg, #b895ff 0%, #7dd8ff 50%, #c6ff3d 100%);
+  background-image: linear-gradient(90deg, #b895ff 0%, #7dd8ff 50%, var(--accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -968,7 +940,7 @@ main {
 }
 
 .hero-poster__line {
-  font-family: "Anton", "Inter", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   text-transform: uppercase;
   color: var(--text-soft);
@@ -1001,11 +973,11 @@ main {
 }
 
 .hero-poster__vibr {
-  font-family: "Anton", "Inter", sans-serif;
+  font-family: var(--font-display);
   font-size: 76px;
   line-height: 1;
   margin: 18px 0 16px;
-  background: linear-gradient(90deg, #c6ff3d 0%, #7dd8ff 55%, #b895ff 100%);
+  background: linear-gradient(90deg, var(--accent) 0%, #7dd8ff 55%, #b895ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1015,7 +987,7 @@ main {
 .hero-poster__body {
   max-width: 340px;
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   font-style: italic;
   line-height: 1.6;
@@ -1353,7 +1325,7 @@ main {
   border: 2px solid
     rgba(255,255,255,0.06);
 
-  color: #c6ff3d;
+  color: var(--accent);
 
   font-size: 38px;
 
@@ -1417,10 +1389,10 @@ main {
 
   border-radius: 50%;
 
-  background: #c6ff3d;
+  background: var(--accent);
 
   box-shadow:
-    0 0 8px #c6ff3d,
+    0 0 8px var(--accent),
     0 0 20px rgba(198,255,61,0.7),
     0 0 32px rgba(198,255,61,0.4);
 }
@@ -1562,7 +1534,7 @@ main {
 
   background: rgba(198, 255, 61, 0.14);
 
-  color: #c6ff3d;
+  color: var(--accent);
 
   font-size: 9px;
 
@@ -2076,7 +2048,7 @@ main {
 
 .hero-tagline strong {
   font-weight: 600;
-  background-image: linear-gradient(90deg, #c6ff3d 0%, #7dd8ff 100%);
+  background-image: linear-gradient(90deg, var(--accent) 0%, #7dd8ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -2105,7 +2077,7 @@ main {
 }
 
 .following-strip__label {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   color: var(--text-muted);
@@ -2113,7 +2085,7 @@ main {
 }
 
 .following-chip {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 6px 14px;
@@ -2343,7 +2315,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 700;
   color: var(--text);
@@ -2359,79 +2331,8 @@ main {
 
 .back-link:hover {
   color: #0a0a0f;
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
   box-shadow: 0 6px 20px rgba(198, 255, 61, 0.35);
   transform: translateX(-3px);
-}
-
-/* =========================================================
-   UNIFIED PAGE HEADINGS — same bold display treatment as the
-   VIBR wordmark, applied everywhere a page title appears.
-   !important is deliberate here: these rules must win over
-   each page's own component CSS regardless of import order,
-   since this is a site-wide consistency decision, not a
-   one-off tweak.
-   ========================================================= */
-
-.artist-page-header h1,
-.artist-page h1,
-.browse-header h1,
-.explore-header h1,
-.feed-header h1,
-.messages-sidebar h1,
-.people-header h1,
-.profile-info h1,
-.releases-header h1,
-.spaces-header h1,
-.trending-header h1,
-.collections-header h1 {
-  font-family: "Anton", "Inter", sans-serif !important;
-  font-weight: 400 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  animation: pageHeadingIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  background: linear-gradient(
-    90deg,
-    #ff3d7f 0%,
-    #ff8a3d 16%,
-    #ffd23d 33%,
-    #3dff8a 50%,
-    #3dd6ff 66%,
-    #6a5dff 83%,
-    #ff3dcf 100%
-  ) !important;
-  background-size: 200% auto;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
-  filter: drop-shadow(0 0 14px rgba(255, 61, 127, 0.2)) drop-shadow(0 0 22px rgba(61, 214, 255, 0.15));
-}
-
-@keyframes pageHeadingIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .artist-page-header h1,
-  .artist-page h1,
-  .browse-header h1,
-  .explore-header h1,
-  .feed-header h1,
-  .messages-sidebar h1,
-  .people-header h1,
-  .profile-info h1,
-  .releases-header h1,
-  .spaces-header h1,
-  .trending-header h1,
-  .collections-header h1 {
-    animation: none;
-  }
 }

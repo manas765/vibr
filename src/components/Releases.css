@@ -7,7 +7,7 @@
 }
 
 .releases-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color: var(--text);
@@ -15,7 +15,7 @@
 }
 
 .releases-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-soft);
   margin: 0;
@@ -35,7 +35,7 @@
 }
 
 .releases-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color:  var(--text);
@@ -43,7 +43,7 @@
 }
 
 .releases-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-soft);
   margin: 0;
@@ -62,7 +62,7 @@
 }
 
 .schedule-tab {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 9px 20px;
@@ -80,8 +80,8 @@
 }
 
 .schedule-tab.active {
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #0a0a0f;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .year-chip {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 6px 14px;

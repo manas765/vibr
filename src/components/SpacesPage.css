@@ -7,7 +7,7 @@
 }
 
 .spaces-header h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 34px;
   font-weight: 400;
   color:  var(--text);
@@ -15,7 +15,7 @@
 }
 
 .spaces-header p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-soft);
   margin: 0;
@@ -58,17 +58,17 @@
 
 .topic-card__tag {
   display: inline-block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: #c6ff3d;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
 .topic-card__body h2 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 400;
   color:  var(--text);
@@ -77,14 +77,14 @@
 }
 
 .topic-card__body p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text-soft);
   margin: 0 0 12px 0;
 }
 
 .topic-card__comment-toggle {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 7px 14px;
@@ -111,12 +111,12 @@
 }
 
 .topic-comment {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
 }
 
 .topic-comment strong {
-  color: #c6ff3d;
+  color: var(--accent);
   margin-right: 6px;
 }
 
@@ -134,7 +134,7 @@
 
 .topic-comment-box input {
   flex: 1;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   padding: 9px 14px;
   border-radius: 999px;
@@ -149,17 +149,17 @@
 
 .topic-comment-box input:focus {
   outline: none;
-  border-color: #c6ff3d;
+  border-color: var(--accent);
 }
 
 .topic-comment-box button {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   font-weight: 600;
   padding: 9px 18px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   cursor: pointer;
 }

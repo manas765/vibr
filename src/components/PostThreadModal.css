@@ -41,7 +41,7 @@
 }
 
 .post-modal__post h3 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 26px;
   font-weight: 400;
   color: #f5f5f2;
@@ -52,14 +52,14 @@
 .post-modal__meta {
   display: flex;
   gap: 6px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   color: #a9a9b5;
   margin-bottom: 14px;
 }
 
 .post-modal__body {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.6;
   color: #d5d5dc;
@@ -68,7 +68,7 @@
 }
 
 .post-modal__delete {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   background: none;
   border: none;
@@ -85,7 +85,7 @@
 }
 
 .post-modal__replies h4 {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -107,7 +107,7 @@
   border: 1px solid rgba(242, 242, 245, 0.15);
   background: transparent;
   color: #f5f5f2;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
 }
 
@@ -115,7 +115,7 @@
   padding: 10px 20px;
   border-radius: 999px;
   border: none;
-  background: #c6ff3d;
+  background: var(--accent);
   color: #0a0a0f;
   font-weight: 600;
   font-size: 13px;
@@ -128,7 +128,7 @@
 }
 
 .post-modal__empty {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: #70707d;
 }
@@ -140,7 +140,7 @@
 }
 
 .reply-item {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   padding: 10px 0;
 }

@@ -52,7 +52,7 @@
 }
 
 .notification-panel__header h3 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 400;
   color: var(--text);
@@ -74,7 +74,7 @@
 }
 
 .notification-panel__empty p {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 600;
   color: var(--text);
@@ -82,7 +82,7 @@
 }
 
 .notification-panel__empty span {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   color: var(--text-muted);
   line-height: 1.5;
@@ -108,7 +108,7 @@
   border-radius: 999px;
   background: #ff6b6b;
   color: #fff;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 10px;
   font-weight: 700;
   display: flex;
@@ -151,7 +151,7 @@
 }
 
 .notification-item__text {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--text);
   line-height: 1.4;
@@ -169,7 +169,7 @@
 }
 
 .notification-action {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 6px 14px;
@@ -179,8 +179,8 @@
 }
 
 .notification-action--accept {
-  background: #c6ff3d;
-  border: 1px solid #c6ff3d;
+  background: var(--accent);
+  border: 1px solid var(--accent);
   color: #0a0a0f;
 }
 
@@ -205,14 +205,14 @@
 }
 
 .notification-item__status {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
 .notification-item__time {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   color: var(--text-muted);
 }

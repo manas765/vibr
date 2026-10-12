@@ -74,7 +74,7 @@
 }
 
 .music-card__body h3 {
-  font-family: "Instrument Serif", serif;
+  font-family: var(--font-display);
   font-size: 21px;
   font-weight: 400;
   color: #f2f2f5;
@@ -83,7 +83,7 @@
 }
 
 .music-card__body .artist {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12.5px;
   color: #c8c8d2;
   margin: 0 0 14px 0;
@@ -101,8 +101,8 @@
 }
 
 .artist-link:hover {
-  color: #c6ff3d;
-  border-bottom-color: #c6ff3d;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .verdict-section {
@@ -111,10 +111,10 @@
 
 .verdict {
   display: inline-block;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: #c6ff3d;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .verdict-buttons button {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -140,13 +140,13 @@
 
 .verdict-buttons button:hover {
   border-color: rgba(198, 255, 61, 0.5);
-  color: #c6ff3d;
+  color: var(--accent);
   background: rgba(198, 255, 61, 0.1);
 }
 
 .verdict-buttons button.voted {
-  border-color: #c6ff3d;
-  color: #c6ff3d;
+  border-color: var(--accent);
+  color: var(--accent);
   background: rgba(198, 255, 61, 0.12);
 }
 
@@ -170,7 +170,7 @@
 }
 
 .verdict-meter__label {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 10px;
   color: #d5d5dc;
 }
@@ -182,7 +182,7 @@
 
 .card-actions button {
   flex: 1;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 9px 10px;
@@ -200,8 +200,8 @@
 }
 
 .card-actions button.selected {
-  background: #c6ff3d;
-  border-color: #c6ff3d;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #0a0a0f;
 }
 
