@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router-dom";
+import CoverWall from "./CoverWall";
 import vibrLogoDark from "../assets/vibr-logo-dark-theme.png";
 import vibrLogoLight from "../assets/vibr-logo-light-theme.png";
 
@@ -16,6 +17,7 @@ function Hero() {
         };
 
   return (
+    <>
     <section className="hero2" aria-labelledby="hero-title">
       <motion.div {...fadeUp(0)}>
         <img src={vibrLogoDark} alt="" className="hero-logo-mark hero-logo-mark-dark" />
@@ -47,6 +49,8 @@ function Hero() {
 
       <p className="hero2__slogan">for the vibr&rsquo;s, by the vibr&rsquo;s, to the vibr&rsquo;s</p>
     </section>
+    <CoverWall />
+    </>
   );
 }
 
