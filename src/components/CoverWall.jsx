@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import MovieModal from "./MovieModal";
 import "./CoverWall.css";
+import { cachedJson } from "../lib/cachedFetch";
 
 const ROWS = 3;
 const PER_ROW = 12;
@@ -14,8 +15,7 @@ function CoverWall() {
   useEffect(() => {
     let cancelled = false;
 
-    const charts = fetch("/api/youtube-charts")
-      .then((r) => (r.ok ? r.json() : { tracks: [] }))
+    const charts = cachedJson("/api/youtube-charts", 30 * 60 * 1000)
       .then((d) => d.tracks || [])
       .catch(() => []);
 

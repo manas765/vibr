@@ -3,6 +3,7 @@ import ReleaseCard from "./ReleaseCard";
 import { motion } from "motion/react";
 import { supabase } from "../supabaseClient";
 import "./Releases.css";
+import { cachedJson } from "../lib/cachedFetch";
 
 const upcomingReleases = [
   {
@@ -77,8 +78,7 @@ function Releases({ savedReleases, setSavedReleases }) {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/youtube-search?q=${encodeURIComponent("official music video 2026")}`)
-      .then((res) => res.json())
+    cachedJson(`/api/youtube-search?q=${encodeURIComponent("official music video 2026")}`, 60 * 60 * 1000)
       .then((data) => {
         const tracks = (data.tracks || []).map((t) => ({
           title: t.title,

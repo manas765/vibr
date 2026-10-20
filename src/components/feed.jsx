@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "./Feed.css";
+import { cachedJson, normalizeQuery } from "../lib/cachedFetch";
 
 const VERDICT_OPTIONS = [
   { key: "🔥 GOD LEVEL", label: "🔥 GOD LEVEL" },
@@ -264,15 +265,26 @@ function Feed() {
     }
   }
 
+  // Each YouTube search costs 100 quota units, so wait until the user pauses
+  // typing (and has typed enough to mean something) instead of firing per keystroke.
+  const searchTimer = useRef(null);
+  const latestQuery = useRef("");
+
   function searchSongs(query) {
     setSearchQuery(query);
-    if (!query.trim()) {
+    latestQuery.current = query;
+    clearTimeout(searchTimer.current);
+
+    if (query.trim().length < 3) {
       setSearchResults([]);
       return;
     }
-    fetch(`/api/youtube-search?q=${encodeURIComponent(query)}`)
-      .then((res) => res.json())
-      .then((data) => setSearchResults(data.tracks || []));
+
+    searchTimer.current = setTimeout(() => {
+      cachedJson(`/api/youtube-search?q=${encodeURIComponent(normalizeQuery(query))}`, 60 * 60 * 1000).then((data) => {
+        if (latestQuery.current === query) setSearchResults(data.tracks || []);
+      });
+    }, 600);
   }
 
   async function submitReview() {
