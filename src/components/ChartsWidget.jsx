@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ChartsWidget.css";
+import { cachedJson } from "../lib/cachedFetch";
 
 function formatViews(count) {
   if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1)}M views`;
@@ -14,8 +15,7 @@ function ChartsWidget() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/youtube-charts")
-      .then((r) => r.json())
+    cachedJson("/api/youtube-charts", 30 * 60 * 1000)
       .then((data) => {
         setTracks(data.tracks || []);
         setLoading(false);

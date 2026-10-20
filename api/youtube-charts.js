@@ -38,5 +38,6 @@ export default async function handler(req, res) {
     embedUrl: `https://www.youtube.com/embed/${item.id}`,
   }));
 
+  res.setHeader('Cache-Control', 'public, s-maxage=1800, stale-while-revalidate=7200');
   return res.status(200).json({ tracks });
 }

@@ -3,6 +3,7 @@ import MusicCard3D from "./MusicCard3D";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import MovieModal from "./MovieModal";
+import { cachedJson, normalizeQuery } from "../lib/cachedFetch";
 
 const GENRES = [
   { label: "Everything", query: null },
@@ -42,8 +43,7 @@ function MusicSection({ searchTerm, savedSongs, setSavedSongs, followedArtists }
 
     const timeoutId = setTimeout(() => {
       setLoading(true);
-      fetch(`/api/youtube-search?q=${encodeURIComponent(query)}`)
-        .then((res) => res.json())
+      cachedJson(`/api/youtube-search?q=${encodeURIComponent(normalizeQuery(query))}`, 60 * 60 * 1000)
         .then((data) => {
           setTracks(data.tracks || []);
           setLoading(false);

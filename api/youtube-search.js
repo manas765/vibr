@@ -41,5 +41,8 @@ export default async function handler(req, res) {
   embedUrl: `https://www.youtube.com/embed/${item.id.videoId}`,
 }));
 
+  // Identical searches from any user are served from Vercel's edge cache,
+  // so only the first one in 6 hours spends quota (100 units each).
+  res.setHeader('Cache-Control', 'public, s-maxage=21600, stale-while-revalidate=86400');
   return res.status(200).json({ tracks });
 }

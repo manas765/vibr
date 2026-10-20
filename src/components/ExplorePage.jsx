@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./ExplorePage.css";
+import { cachedJson, normalizeQuery } from "../lib/cachedFetch";
 
 const EXPLORE_CATEGORIES = [
   { label: "Trending Now", query: "trending music 2026", color: "#c6ff3d" },
@@ -18,8 +19,7 @@ function ExplorePage() {
 
     Promise.all(
       EXPLORE_CATEGORIES.map((cat) =>
-        fetch(`/api/youtube-search?q=${encodeURIComponent(cat.query)}`)
-          .then((res) => res.json())
+        cachedJson(`/api/youtube-search?q=${encodeURIComponent(normalizeQuery(cat.query))}`, 60 * 60 * 1000)
           .then((data) => ({ label: cat.label, tracks: data.tracks || [] }))
       )
     ).then((results) => {
