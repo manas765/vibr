@@ -6,6 +6,7 @@ import MovieCard from "./MovieCard";
 import MovieModal from "./MovieModal";
 import "./ArtistPage.css";
 import ArtistCommunity from "./ArtistCommunity";
+import { cachedJson } from "../lib/cachedFetch";
 
 function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowArtist }) {
   const { artistName } = useParams();
@@ -27,8 +28,7 @@ function ArtistPage({ savedSongs, setSavedSongs, followedArtists, toggleFollowAr
     }
 
     setLoading(true);
-    fetch(`/api/youtube-channel?channelId=${channelId}`)
-      .then((res) => res.json())
+    cachedJson(`/api/youtube-channel?channelId=${channelId}`, 60 * 60 * 1000)
       .then((data) => {
         setArtistSongs(data.tracks || []);
         setChannelThumbnail(data.channelThumbnail || null);
