@@ -275,3 +275,181 @@ nav button.active,
     width: 100%;
   }
 }
+/* =========================================================
+   PAGE POLISH — Profile, Collections, Releases, Messages,
+   Trending. Same rules as Discover: flat surfaces, hairline
+   borders, one pill style, no tilt / glow / sheen.
+   ========================================================= */
+
+/* Shared page shell + subtitle */
+.profile-page,
+.collections-page,
+.releases-page,
+.trending-page {
+  padding: 40px clamp(20px, 4vw, 56px) 72px;
+}
+
+.collections-header p,
+.releases-header p,
+.trending-header p {
+  margin-top: 8px;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text-soft);
+}
+
+.profile-section h2,
+.saved-header h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+/* One pill style for every tab / filter / chip */
+.schedule-tab,
+.year-chip,
+.trending-filter {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 18px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.schedule-tab:hover,
+.year-chip:hover,
+.trending-filter:hover {
+  background: var(--surface-2);
+  border-color: var(--border-light);
+  color: var(--text);
+}
+
+.schedule-tab.active,
+.year-chip.active,
+.trending-filter.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Flat surfaces — no decorative gradients, glows or lifts */
+.collection-card,
+.profile-stat,
+.trending-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+.collection-card::before {
+  display: none;
+}
+
+.collection-card:hover,
+.trending-card:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border-light);
+}
+
+.trending-card__platform,
+.collection-icon {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+/* Releases: remove the 3D tilt, glow and sheen entirely */
+.release-card-scene {
+  perspective: none;
+}
+
+.release-card {
+  transform: none !important; /* beats the inline tilt set by ReleaseCard.jsx */
+  transform-style: flat;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.release-card-scene:hover .release-card {
+  box-shadow: none;
+  border-color: var(--border-light);
+}
+
+.release-card__glow,
+.release-card__sheen {
+  display: none;
+}
+
+/* Profile */
+.profile-header {
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.profile-stat strong {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.profile-stat span {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.taste-tag {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.profile-collection-item__art {
+  border-radius: var(--radius-sm);
+}
+
+/* Messages */
+.messages-layout {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.message-bubble {
+  border: 0;
+  border-radius: 18px 18px 18px 6px;
+  padding: 10px 14px;
+}
+
+.message-bubble--mine {
+  border-radius: 18px 18px 6px 18px;
+}
+
+.message-bubble p {
+  font-size: var(--text-base);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+.messages-contact {
+  border-radius: var(--radius-sm);
+}
+
+.messages-contact.active {
+  border-color: transparent;
+}
