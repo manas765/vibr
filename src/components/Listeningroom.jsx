@@ -27,7 +27,7 @@ function loadYouTube() {
 const YT_PLAYING = 1;
 const YT_BUFFERING = 3;
 
-function Listeningroom() {
+function ListeningRoom() {
   const { roomId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -342,4 +342,4 @@ function Listeningroom() {
   );
 }
 
-export default Listeningroom;
+export default ListeningRoom;

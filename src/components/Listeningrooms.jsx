@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { useAuth } from "../hooks/useAuth";
 import SongPicker from "./SongPicker";
-import "./Listeningrooms.css";
+import "./ListeningRooms.css";
 
 const SIX_HOURS = 6 * 60 * 60 * 1000;
 
-function Listeningrooms() {
+function ListeningRooms() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
@@ -154,4 +154,4 @@ function Listeningrooms() {
   );
 }
 
-export default Listeningrooms;
+export default ListeningRooms;
