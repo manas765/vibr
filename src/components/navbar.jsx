@@ -92,6 +92,15 @@ function Navbar({ activePage, setActivePage }) {
           Trending in Clips
         </Link>
 
+        <Link to="/rooms" className={location.pathname.startsWith("/rooms") ? "nav-link active" : "nav-link"}>
+          <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 14v-2a9 9 0 0 1 18 0v2" />
+            <path d="M21 15a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2z" />
+            <path d="M3 15a2 2 0 0 0 2 2h1v-5H5a2 2 0 0 0-2 2z" />
+          </svg>
+          Listening Rooms
+        </Link>
+
         <Link to="/spaces" className={isRoute("/spaces") ? "nav-link active" : "nav-link"}>
           <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-4 4V6c0-1.1.9-2 2-2z" />

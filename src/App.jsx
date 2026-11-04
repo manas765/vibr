@@ -11,6 +11,8 @@ import Releases from "./components/Releases";
 import Profile from "./components/Profile";
 import PublicProfile from "./components/PublicProfile";
 import TrendingClips from "./components/TrendingClips";
+import ListeningRooms from "./components/ListeningRooms";
+import ListeningRoom from "./components/ListeningRoom";
 import ArtistPage from "./components/ArtistPage";
 import ExplorePage from "./components/ExplorePage";
 import { AnimatePresence } from "motion/react";
@@ -463,6 +465,22 @@ function App() {
               element={
                 <PageTransition>
                   <TrendingClips />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/rooms"
+              element={
+                <PageTransition>
+                  <ListeningRooms />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/rooms/:roomId"
+              element={
+                <PageTransition>
+                  <ListeningRoom />
                 </PageTransition>
               }
             />
