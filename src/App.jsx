@@ -21,6 +21,8 @@ import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./components/AuthPage";
 import { supabase } from "./supabaseClient";
 import MessagesPage from "./components/MessagesPage";
+import ListeningRooms from "./components/ListeningRooms";
+import ListeningRoom from "./components/ListeningRoom";
 
 
 function App() {
